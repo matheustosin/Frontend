@@ -1,8 +1,8 @@
 import React from "react";
 
 import logo from "../../assets/logo.png";
-import interview from '../../assets/interview.png';
-import teacher from '../../assets/teacher.png';
+import interview from "../../assets/interview.png";
+import teacher from "../../assets/teacher.png";
 
 import "./Register.css";
 
@@ -12,7 +12,9 @@ export default function Register() {
       <div className="register-background-container"></div>
       <div className="register-panel-container">
         <img className="logo" alt="rede-de-mentores-logo" src={logo} />
-        <a href="#" className="login-user">User</a>
+        <a href="#" className="login-user">
+          User
+        </a>
 
         <div className="register-panel-form">
           <div>
@@ -31,4 +33,3 @@ export default function Register() {
     </div>
   );
 }
-
