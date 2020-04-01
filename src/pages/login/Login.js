@@ -1,10 +1,10 @@
 import React from 'react';
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
 
 import './Login.css';
 
 
-function Login() {
+export default function Login() {
   return (
 
      <div className="Login">
@@ -43,5 +43,3 @@ function Login() {
   </div>
   );
 }
-
-export default Login;
