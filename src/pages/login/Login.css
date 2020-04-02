@@ -20,7 +20,7 @@
 .login-background-container {
   height: 100vh;
   width: 70vw;
-  background-image: url('../assets/idear2.png');
+  background-image: url('../../assets/idear2.png');
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
@@ -68,33 +68,6 @@ input:focus {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-}
-
-button {
-  width: 35vh;
-  height: 6vh;
-  font-size: 2.5vh;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-}
-
-.login-panel-container button {
-  border: 1.5px solid #00273F;
-  color: #00273F;
-}
-
-.login-panel-form button {
-
-  background-color: #FFEF52;
-  border: none;
-  color: #00273F;
-  transition: 0.3s;
-}
-
-.login-panel-form button:hover {
-  box-shadow: 0 0 3vh rgb(255, 240, 109);
-  transition: 0.3s;
 }
 
 .login-input-field {
