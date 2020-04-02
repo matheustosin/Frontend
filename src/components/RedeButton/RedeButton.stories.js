@@ -8,3 +8,4 @@ export default {
 };
 
 export const Default = () => <RedeButton descricao="Teste" onClick={action('Clicou')} />;
+export const Disabled = () => <RedeButton descricao="Teste" onClick={action('Clicou')} desabilitado />;
