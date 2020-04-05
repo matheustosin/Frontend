@@ -31,7 +31,7 @@ function Login() {
           <button type="button">Entrar</button>
         </form>
 
-        <div className='login-separator'>
+        <div className="login-separator">
           <hr/>
             <h4>Novo por aqui?</h4>
           <hr/>
@@ -43,5 +43,9 @@ function Login() {
   </div>
   );
 }
+
+// attemptLogin = async () => {
+//   console.log("Hello Function")
+// }
 
 export default Login;
