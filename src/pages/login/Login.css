@@ -20,7 +20,7 @@
 .login-background-container {
   height: 100vh;
   width: 70vw;
-  background-image: url('../assets/idear2.png');
+  background-image: url('../../assets/idear2.png');
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;

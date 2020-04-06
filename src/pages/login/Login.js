@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
 
 import './Login.css';
+
+import {login} from '../../services/user'
 
 class Login extends Component{
 
@@ -47,7 +49,22 @@ class Login extends Component{
   }
 
   attemptLogin = async () => {
-    console.log("Hello Function")
+    let data = {
+      "user": "usuario",
+      "password": "abc123"
+    }
+    login(data).then(res => {
+      if (res.status == '200') {
+        console.log("Success")
+      } else {
+        console.log("invalid argument")
+      }
+    }).catch(err => {
+        console.log("retornou um erro")
+        console.error(err)
+      }
+    )
+    
   }
 
 }
