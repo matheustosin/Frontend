@@ -7,6 +7,24 @@ import {login} from '../../services/user'
 
 class Login extends Component{
 
+
+  constructor(props) {
+    super(props);
+    this.state = {name: '',
+                    password: ''};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.passwordChange = this.passwordChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({name: event.target.value});
+  }
+
+  passwordChange(event) {
+    this.setState({password: event.target.value});
+  }
+
   render(){
     return (
 
@@ -22,12 +40,12 @@ class Login extends Component{
          <form className='login-panel-form'>
              <div className='login-input-field'>
                <label htmlFor="email-input">Email</label>
-               <input id="email-input" type='email'/>
+               <input id="email-input" type='email' value={this.state.name} onChange = {this.handleChange}  />
              </div>
  
              <div className="login-input-field">
                <label htmlFor="pw-input">Senha</label>
-               <input id="pw-input" type='password'/>
+               <input id="pw-input" type='password' value={this.state.password} onChange = {this.passwordChange}/>
              </div>
  
              <a href='#'>Esqueci minha senha</a>
@@ -45,16 +63,20 @@ class Login extends Component{
        </div>
    </div>
     )
-
   }
+
+
 
   attemptLogin = async () => {
     let data = {
-      "user": "usuario",
-      "password": "abc123"
+      "user": this.state.name,
+      "password": this.state.password
     }
+
+    console.log(data)
+
     login(data).then(res => {
-      if (res.status == '200') {
+      if (res.status === '200') {
         console.log("Success")
       } else {
         console.log("invalid argument")
