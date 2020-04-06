@@ -5,16 +5,16 @@ const Button = styled.button`
   border: none;
   width: 250px;
   height: 40px;
-  color: #00273F;
+  color: #00273f;
   cursor: pointer;
   font-size: 1rem;
   transition: 0.3s;
   font-weight: 600;
   border-radius: 10px;
-  background-color: #FFEF52;
+  background-color: #ffef52;
 
   :hover {
-  box-shadow: 0 0 15px rgb(255, 240, 109);
+    box-shadow: 0 0 15px rgb(255, 240, 109);
   }
 
   :focus {

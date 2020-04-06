@@ -1,5 +1,5 @@
 @media only screen and (max-width: 1200px) {
-  .login-background-container  {
+  .login-background-container {
     display: none;
   }
 
@@ -20,7 +20,7 @@
 .login-background-container {
   height: 100vh;
   width: 70vw;
-  background-image: url('../../assets/idear2.png');
+  background-image: url("../../assets/idear2.png");
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
@@ -86,7 +86,7 @@ input:focus {
 .login-panel-form a {
   text-align: end;
   font-weight: bold;
-  color: #00273F;
+  color: #00273f;
   text-decoration: none;
   width: 35vh;
   display: block;
