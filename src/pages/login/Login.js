@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
 import logo from '../../assets/logo.png';
-
 import './Login.css';
-
 import {login} from '../../services/user'
 
 class Login extends Component{
-
 
   constructor(props) {
     super(props);
@@ -25,9 +22,33 @@ class Login extends Component{
     this.setState({password: event.target.value});
   }
 
+  attemptLogin = async () => {
+    let data = {
+      "user": this.state.name,
+      "password": this.state.password
+    }
+
+    console.log(data)
+
+    login(data).then(res => {
+      console.log(res.status)
+      if (res.status === 200) {
+        console.log("Success")
+        //setar token e ir para próxima página
+        console.log(res.data.token)
+      } else {
+        console.log("unauthorized")
+      }
+    }).catch(err => {
+      //alert("Acesso não autorizado. Verifique seu nome de usuário e senha.")
+        console.error(err)
+      }
+    )
+    
+  }
+
   render(){
     return (
-
       <div className="Login">
        <div className="login-background-container"></div>
        <div className="login-panel-container">
@@ -63,32 +84,7 @@ class Login extends Component{
        </div>
    </div>
     )
-  }
-
-
-
-  attemptLogin = async () => {
-    let data = {
-      "user": this.state.name,
-      "password": this.state.password
     }
-
-    console.log(data)
-
-    login(data).then(res => {
-      if (res.status === '200') {
-        console.log("Success")
-      } else {
-        console.log("invalid argument")
-      }
-    }).catch(err => {
-        console.log("retornou um erro")
-        console.error(err)
-      }
-    )
-    
-  }
-
 }
 
 export default Login;
