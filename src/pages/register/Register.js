@@ -15,21 +15,21 @@ export default function Register() {
         <a href="#" className="login-user">
           User
         </a>
+      </div>
+      <div className="register-panel-form">
+        <div className="register-space">
+          <img className="logo" alt="rede-de-mentores-logo" src={teacher} />
+          <button type="button">CADASTRAR COMO MENTOR</button>
+        </div>
 
-        <div className="register-panel-form">
-          <div>
-            <img className="logo" alt="rede-de-mentores-logo" src={teacher} />
-            <button type="button">CADASTRAR COMO MENTOR</button>
-          </div>
+        <div className="register-separator" />
 
-          <div className="register-separator" />
-
-          <div>
-            <img className="logo" alt="rede-de-mentores-logo" src={interview} />
-            <button type="button">CADASTRAR COMO ALUNO</button>
-          </div>
+        <div className="register-space">
+          <img className="logo" alt="rede-de-mentores-logo" src={interview} />
+          <button type="button">CADASTRAR COMO ALUNO</button>
         </div>
       </div>
     </div>
+    
   );
 }

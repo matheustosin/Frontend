@@ -1,0 +1,13 @@
+.register-space {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.register-panel-form{
+    display: flex;
+    justify-content: center;
+}
+
+

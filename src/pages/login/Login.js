@@ -31,7 +31,7 @@ export default function Login() {
           <hr />
         </div>
 
-        <button type="button">Cadastrar</button>
+        <button type="button" onClick={ _=> window.location.href = "http://localhost:3000/register" }>Cadastrar</button>
       </div>
     </div>
   );
