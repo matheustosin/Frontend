@@ -1,13 +1,82 @@
+.register-panel-container {
+  height: 90px;
+  background: #00273f 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+
 .register-space {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.register-panel-form{
-    display: flex;
-    justify-content: center;
+.circle {
+  width: 350px;
+  height: 350px;
+  border: 2px solid #000;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.image {
+  width: 250px;
+  height: 250px;
+}
 
+.register-panel-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.logo {
+  width: 203px;
+  height: 107px;
+}
+
+button {
+  top: 658px;
+  left: 136px;
+  width: 372px;
+  height: 48px;
+  font-size: 2.5vh;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  margin-top: 35px;
+}
+
+.register-panel-container button {
+  border: 1.5px solid #00273f;
+  color: #00273f;
+}
+
+.register-panel-form button {
+  background-color: #ffef52;
+  border: none;
+  color: #00273f;
+  transition: 0.3s;
+}
+
+.register-panel-form button:hover {
+  box-shadow: 0 0 3vh rgb(255, 240, 109);
+  transition: 0.3s;
+}
+
+.register-separator {
+  height: 450px;
+  border-left: 2px solid;
+  color: #97c0e2;
+  margin-left: 75px;
+  margin-right: 75px;
+}
+
+.title {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #00273f;
+}
