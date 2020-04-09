@@ -4,20 +4,16 @@ import logo from "../../assets/logo2.png";
 import interview from "../../assets/interview.png";
 import teacher from "../../assets/teacher.png";
 
+import RedeButton from '../../components/RedeButton/RedeButton';
+import Header from '../../components/Header/Header';
+import Container from './StyledComponents';
 import "./Register.css";
 
 export default function Register() {
   return (
-    <React.Fragment>
-      <div className="register-background-container">
-        <div className="register-panel-container">
-          <img className="logo" alt="rede-de-mentores-logo" src={logo} />
-        </div>
-      </div>
-
-      <div className="title">
-        <h1>COMO DESEJA SE CADASTRAR NA REDE?</h1>
-      </div>
+  <React.Fragment>
+    <Header/>
+    <Container.Title>COMO DESEJA SE CADASTRAR NA REDE?</Container.Title>
 
       <div className="Register">
         <div className="register-panel-form">
@@ -29,7 +25,8 @@ export default function Register() {
                 src={teacher}
               />
             </div>
-            <button type="button">CADASTRAR COMO MENTOR</button>
+            <RedeButton type="button" descricao="CADASTRAR COMO MENTOR" />
+
           </div>
 
           <div className="register-separator" />
@@ -42,7 +39,7 @@ export default function Register() {
                 src={interview}
               />
             </div>
-            <button type="button">CADASTRAR COMO ALUNO</button>
+            <RedeButton type="button" descricao="CADASTRAR COMO ALUNO" />
           </div>
         </div>
       </div>

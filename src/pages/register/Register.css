@@ -32,11 +32,6 @@
   justify-content: center;
 }
 
-.logo {
-  width: 203px;
-  height: 107px;
-}
-
 button {
   top: 658px;
   left: 136px;
@@ -74,9 +69,3 @@ button {
   margin-right: 75px;
 }
 
-.title {
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  color: #00273f;
-}
