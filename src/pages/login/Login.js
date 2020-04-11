@@ -29,22 +29,23 @@ class Login extends Component {
     let data = {
       "user": this.state.name,
       "password": this.state.password
+    };
+    if (!data.user || !data.password) {
+      alert("Preencha os campos de usuário e senha.");
+    } else {
+      login(data).then(res => {
+        console.log(res.status);
+        if (res.status === 200) {
+          sessionStorage.setItem('token', res.data.token);
+          this.props.history.push({
+            pathname: '/login-test'
+          });
+        }
+      }).catch(err => {
+        alert("Acesso não autorizado. Verifique seu nome de usuário e senha.");
+        console.error(err);
+      })
     }
-    login(data).then(res => {
-      console.log(res.status)
-      if (res.status === 200) {
-        console.log("Success")
-        //setar token e ir para próxima página
-        this.props.history.push("/main")
-        console.log(res.data.token)
-      } else {
-        console.log("unauthorized")
-      }
-    }).catch(err => {
-      //alert("Acesso não autorizado. Verifique seu nome de usuário e senha.")
-      console.error(err)
-    })
-
   }
 
   render() {
