@@ -9,7 +9,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      email: '',
       password: ''
     };
 
@@ -18,7 +18,7 @@ class Login extends Component {
   }
 
   handleChange(event) {
-    this.setState({ name: event.target.value });
+    this.setState({ email: event.target.value });
   }
 
   passwordChange(event) {
@@ -27,24 +27,25 @@ class Login extends Component {
 
   attemptLogin = async () => {
     let data = {
-      "user": this.state.name,
+      "email": this.state.email,
       "password": this.state.password
+    };
+    if (!data.email || !data.password) {
+      alert("Preencha os campos de usuário e senha.");
+    } else {
+      login(data).then(res => {
+        console.log(res.status);
+        if (res.status === 200) {
+          sessionStorage.setItem('token', res.data.token);
+          this.props.history.push({
+            pathname: '/login-test'
+          });
+        }
+      }).catch(err => {
+        alert("Acesso não autorizado. Verifique seu nome de usuário e senha.");
+        console.error(err);
+      })
     }
-    login(data).then(res => {
-      console.log(res.status)
-      if (res.status === 200) {
-        console.log("Success")
-        //setar token e ir para próxima página
-        this.props.history.push("/main")
-        console.log(res.data.token)
-      } else {
-        console.log("unauthorized")
-      }
-    }).catch(err => {
-      //alert("Acesso não autorizado. Verifique seu nome de usuário e senha.")
-      console.error(err)
-    })
-
   }
 
   render() {
