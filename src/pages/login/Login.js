@@ -9,7 +9,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      email: '',
       password: ''
     };
 
@@ -18,7 +18,7 @@ class Login extends Component {
   }
 
   handleChange(event) {
-    this.setState({ name: event.target.value });
+    this.setState({ email: event.target.value });
   }
 
   passwordChange(event) {
@@ -27,10 +27,10 @@ class Login extends Component {
 
   attemptLogin = async () => {
     let data = {
-      "user": this.state.name,
+      "email": this.state.email,
       "password": this.state.password
     };
-    if (!data.user || !data.password) {
+    if (!data.email || !data.password) {
       alert("Preencha os campos de usuário e senha.");
     } else {
       login(data).then(res => {
