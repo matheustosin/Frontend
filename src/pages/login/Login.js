@@ -80,7 +80,7 @@ class Login extends Component {
             <hr />
           </div>
 
-          <button type="button">Cadastrar</button>
+          <Link to={"/register"}><button type="button">Cadastrar</button></Link>
 
         </div>
       </div>
