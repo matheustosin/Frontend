@@ -60,12 +60,44 @@ button {
   box-shadow: 0 0 3vh rgb(255, 240, 109);
   transition: 0.3s;
 }
-
-.register-separator {
-  height: 450px;
-  border-left: 2px solid;
-  color: #97c0e2;
-  margin-left: 75px;
-  margin-right: 75px;
+@media (min-width: 1200px) {
+  .register-separator {
+    height: 450px;
+    border-left: 2px solid;
+    color: #97c0e2;
+    margin-left: 75px;
+    margin-right: 75px;
+  }
 }
-
+@media (min-width: 768px) and (max-width: 1199px) {
+  .register-separator {
+    height: 0px;
+    margin-left: 700px;
+    margin-top: 50px;
+  }
+  .circle {
+    width: 400px;
+    height: 400px;
+  }
+  .image {
+    width: 300px;
+    height: 300px;
+  }
+}
+@media (max-width: 767px) {
+  .register-separator {
+    height: 50px;
+    margin-left: 75px;
+    margin-right: 75px;
+  }
+}
+@media (max-width: 480px) { 
+  .circle {
+    width: 300px;
+    height: 300px;
+  }
+  .image {
+    width: 225px;
+    height: 225px;
+  }
+}
