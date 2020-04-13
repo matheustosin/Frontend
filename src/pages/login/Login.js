@@ -38,7 +38,7 @@ class Login extends Component {
         if (res.status === 200) {
           sessionStorage.setItem('token', res.data.token);
           this.props.history.push({
-            pathname: '/login-test'
+            pathname: '/main'
           });
         }
       }).catch(err => {

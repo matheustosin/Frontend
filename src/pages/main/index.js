@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
-class LoginTest extends Component {
+class Main extends Component {
 
   constructor(props) {
     super(props);
@@ -12,9 +12,12 @@ class LoginTest extends Component {
 
   render() {
     return (
-      <h1>Token Key: {this.state.token}</h1>
+      <div>
+        <h1>Bem vindo a Rede de Mentores</h1>
+        <p>sua chave de acesso: {this.state.token}</p>
+      </div>
     )
   }
 }
 
-export default withRouter(LoginTest);
+export default withRouter(Main);
