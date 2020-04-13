@@ -3,16 +3,16 @@ import styled from 'styled-components';
 import logo from '../../../assets/idear2.png';
 
 const SideImage = styled.div`
-  height: 100vh;
+  opacity: 0.7;
   width: 70vw;
-  background-image: url(${logo});
+  height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
-  opacity: 0.7;
+  background-image: url(${logo});
 
-  @media screen and (max-width: 1300px) {
-    background-image: none;
+  @media screen and (max-width: 1200px) {
     display: none;
+    background-image: none;
   }
 `;
 

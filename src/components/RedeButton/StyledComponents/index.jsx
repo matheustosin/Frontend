@@ -1,20 +1,23 @@
 import styled from 'styled-components';
 import Desabilitado from './Desabilitado';
 
+import COLOR from '../../../utils/colors.constants';
+
 const Button = styled.button`
   border: none;
   width: 250px;
   height: 40px;
-  color: #00273f;
+  margin: 10px 0;
   cursor: pointer;
   font-size: 1rem;
   transition: 0.3s;
   font-weight: 600;
   border-radius: 10px;
-  background-color: #ffef52;
+  color: ${COLOR.AZUL};
+  background-color: ${COLOR.AMARELO};
 
   :hover {
-    box-shadow: 0 0 15px rgb(255, 240, 109);
+    box-shadow: 0 0 15px ${COLOR.AMARELO};
   }
 
   :focus {

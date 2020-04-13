@@ -1,20 +1,25 @@
 import styled from 'styled-components';
 
+import Logo from './logo';
+import Form from './Form';
 import SideImage from './SideImage';
 import SideLogin from './SideLogin';
-import Logo from './logo';
+import ForgotPassword from './ForgotPassword';
 
 const Container = styled.div`
-  display: flex;
-  justify-content: space-around;
-  position: relative;
+  margin: 0;
   width: 100%;
-  flex-direction: row;
+  display: flex;
   text-align: left;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-around;
 `;
 
-Container.SideImage = SideImage;
-Container.SideLogin = SideLogin;
 Container.Logo = Logo;
+Container.Form = Form;
+Container.SideLogin = SideLogin;
+Container.SideImage = SideImage;
+Container.ForgotPassword = ForgotPassword;
 
 export default Container;
