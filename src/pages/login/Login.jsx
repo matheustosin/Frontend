@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { Component } from 'react';
 import logo from '../../assets/logo.png';
 import Container from './StyledComponents';
 import { login } from '../../services/user';
@@ -32,6 +31,9 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password,
     };
+
+    console.log(data)
+
     if (!data.email || !data.password) {
       alert('Preencha os campos de usuário e senha.');
     } else {
