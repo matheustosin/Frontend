@@ -2,7 +2,7 @@ import React from 'react';
 import { string } from 'prop-types';
 import TextField from './StyledComponents';
 
-const RedeTextField = ({ descricao }) => (
+const RedeTextField = ({ descricao, tipo }) => (
   <TextField>
     <TextField.Label>{descricao}</TextField.Label>
     <TextField.Input />
