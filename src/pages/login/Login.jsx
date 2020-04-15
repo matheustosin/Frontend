@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from '../../assets/logo.png';
 import Container from './StyledComponents';
 import { login } from '../../services/user';
+import { Link, withRouter } from 'react-router-dom';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeSeparator from '../../components/RedeSeparator/RedeSeparator';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
@@ -70,7 +71,7 @@ class Login extends Component {
             <Container.ForgotPassword> Esqueci minha senha </Container.ForgotPassword>
             <RedeButton descricao="Entrar" onClick={this.attemptLogin} />
             <RedeSeparator descricao="Novo na Rede ?"> </RedeSeparator>
-            <RedeButton descricao="Cadastrar" />
+            <Link to={"/register"}><RedeButton descricao="Cadastrar" /></Link>
           </Container.Form>
         </Container.SideLogin>
       </Container>
@@ -78,4 +79,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
