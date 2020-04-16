@@ -33,7 +33,7 @@ class Login extends Component {
       password: this.state.password,
     };
 
-    console.log(data)
+    console.log(data);
 
     if (!data.email || !data.password) {
       alert('Preencha os campos de usuário e senha.');
@@ -65,13 +65,16 @@ class Login extends Component {
             <RedeTextField descricao="Email" value={this.state.name} onChange={this.handleChange} />
             <RedeTextField
               descricao="Senha"
+              tipo="password"
               value={this.state.password}
               onChange={this.passwordChange}
             />
             <Container.ForgotPassword> Esqueci minha senha </Container.ForgotPassword>
             <RedeButton descricao="Entrar" onClick={this.attemptLogin} />
             <RedeSeparator descricao="Novo na Rede ?"> </RedeSeparator>
-            <Link to={"/register"}><RedeButton descricao="Cadastrar" /></Link>
+            <Link to={'/register'}>
+              <RedeButton descricao="Cadastrar" />
+            </Link>
           </Container.Form>
         </Container.SideLogin>
       </Container>
