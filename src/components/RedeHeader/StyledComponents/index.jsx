@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import Logo from './Logo'
+import Title from './Title'
 
 const Container = styled.div`
   display: flex;
@@ -7,6 +9,8 @@ const Container = styled.div`
   opacity: 1;
 `;
 
+Container.Logo = Logo;
+Container.Title = Title;
 Container.displayName = 'Container';
 export default Container;
 
