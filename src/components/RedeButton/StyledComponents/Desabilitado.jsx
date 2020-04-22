@@ -1,8 +1,10 @@
 import { css } from 'styled-components';
 
+import COLOR from '../../../utils/colors.constants';
+
 const Desabilitado = css`
-  background-color: #d2d0d0;
-  color: #ffffff;
+  background-color: ${COLOR.CINZA};
+  color: ${COLOR.BRANCO};
 `;
 
 export default Desabilitado;

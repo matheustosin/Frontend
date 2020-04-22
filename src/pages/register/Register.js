@@ -1,19 +1,18 @@
-import React from "react";
+import React from 'react';
 
-import logo from "../../assets/logo2.png";
-import interview from "../../assets/interview.png";
-import teacher from "../../assets/teacher.png";
+import interview from '../../assets/interview.png';
+import teacher from '../../assets/teacher.png';
 
 import RedeButton from '../../components/RedeButton/RedeButton';
 import Header from '../../components/Header/Header';
 import Container from './StyledComponents';
-import "./Register.css";
+import './Register.css';
 
 export default function Register() {
   return (
-  <React.Fragment>
-    <Header/>
-    <Container.Title>COMO DESEJA SE CADASTRAR NA REDE?</Container.Title>
+    <>
+      <Header />
+      <Container.Title>COMO DESEJA SE CADASTRAR NA REDE?</Container.Title>
 
       <div className="Register">
         <div className="register-panel-form">
@@ -43,6 +42,6 @@ export default function Register() {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 }
