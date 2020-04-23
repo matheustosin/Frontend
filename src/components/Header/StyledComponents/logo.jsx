@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 const Logo = styled.img`
-margin-left: auto;
-margin-right: auto;
-height: 6em;
-
+  margin-left: 0;
+  height: 70px;
 `;
 
 export default Logo;
