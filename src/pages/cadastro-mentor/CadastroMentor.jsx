@@ -15,11 +15,21 @@ const CadastroMentor = () => (
         <RedeHeader title='cadastro de mentor'/>
 
     <Container.Form>
+
     <Container.UserImage src={user} />
     <Container.Button>Adicionar Foto</Container.Button>
     
-
     <RedeTextField descricao="Nome Completo" />
+    <RedeTextField descricao="CPF" />
+    <RedeTextField descricao="Telefone" />
+    <RedeTextField descricao="Áreas de Conhecimento" />
+    <RedeTextField descricao="LinkedIn" />
+
+    <Container.Separator/>
+
+    <RedeTextField descricao="Email" />
+    <RedeTextField descricao="Senha" />
+    <RedeTextField descricao="Confirmação de Senha" />
 
     <RedeButton descricao="Cadastrar"></RedeButton>
 

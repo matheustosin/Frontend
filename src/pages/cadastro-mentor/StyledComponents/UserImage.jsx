@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 const UserImage = styled.img`
-  padding-left: 10px;
+  padding: 10px;
+  
 `;
 
 export default UserImage;
