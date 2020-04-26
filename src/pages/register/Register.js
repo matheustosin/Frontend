@@ -4,14 +4,14 @@ import interview from '../../assets/interview.png';
 import teacher from '../../assets/teacher.png';
 
 import RedeButton from '../../components/RedeButton/RedeButton';
-import Header from '../../components/Header/Header';
+import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Container from './StyledComponents';
 import './Register.css';
 
 export default function Register() {
   return (
     <>
-      <Header />
+      <RedeHeader />
       <Container.Title>COMO DESEJA SE CADASTRAR NA REDE?</Container.Title>
 
       <div className="Register">
