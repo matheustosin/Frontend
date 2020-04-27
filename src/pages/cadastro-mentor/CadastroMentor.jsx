@@ -3,8 +3,9 @@ import user from '../../assets/user.png';
 
 import './CadastroMentor.css';
 import RedeButton from '../../components/RedeButton/RedeButton';
-import RedeHeader from '../../components/RedeHeader/RedeHeader';
+import Header from '../../components/Header/Header';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
+import RedeLineSeparator from '../../components/RedeLineSeparator/RedeLineSeparator';
 
 import Container from './StyledComponents';
 
@@ -12,7 +13,7 @@ import Container from './StyledComponents';
 
 const CadastroMentor = () => (
     <Container>
-        <RedeHeader title='cadastro de mentor'/>
+        <Header title='cadastro de mentor'/>
 
         <Container.FlexContainer>
             <Container.Center>
@@ -32,7 +33,7 @@ const CadastroMentor = () => (
             </Container.Item>
 
             <Container.Center>
-                <Container.Separator/>
+                <RedeLineSeparator/>
             </Container.Center>
 
             <Container.Item>
