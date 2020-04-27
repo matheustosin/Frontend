@@ -14,27 +14,39 @@ const CadastroMentor = () => (
     <Container>
         <RedeHeader title='cadastro de mentor'/>
 
-    <Container.Form>
+        <Container.FlexContainer>
+            <Container.Center>
+                <Container.UserImage src={user} />
+                <Container.Button>Adicionar Foto</Container.Button>
+            </Container.Center>
+        </Container.FlexContainer>
+        
+        <Container.FlexContainer>
+            
+            <Container.Item>
+                <RedeTextField descricao="Nome Completo" />
+                <RedeTextField descricao="CPF" />
+                <RedeTextField descricao="Telefone" />
+                <RedeTextField descricao="Áreas de Conhecimento" />
+                <RedeTextField descricao="LinkedIn" />
+            </Container.Item>
 
-    <Container.UserImage src={user} />
-    <Container.Button>Adicionar Foto</Container.Button>
-    
-    <RedeTextField descricao="Nome Completo" />
-    <RedeTextField descricao="CPF" />
-    <RedeTextField descricao="Telefone" />
-    <RedeTextField descricao="Áreas de Conhecimento" />
-    <RedeTextField descricao="LinkedIn" />
+            <Container.Center>
+                <Container.Separator/>
+            </Container.Center>
 
-    <Container.Separator/>
+            <Container.Item>
+            <RedeTextField descricao="Email" />
+                <RedeTextField descricao="Senha" />
+                <RedeTextField descricao="Confirmação de Senha" />
 
-    <RedeTextField descricao="Email" />
-    <RedeTextField descricao="Senha" />
-    <RedeTextField descricao="Confirmação de Senha" />
+                <RedeTextField descricao="Aceito o Termo de Privacidade" tipo="checkbox" />
 
-    <RedeButton descricao="Cadastrar"></RedeButton>
+                <RedeButton descricao="Cadastrar"></RedeButton>
+            </Container.Item>
 
-    </Container.Form>
-    
+
+        </Container.FlexContainer>
     </Container>
 
 
