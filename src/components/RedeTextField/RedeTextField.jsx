@@ -1,8 +1,10 @@
-import React from "react";
-import { string, func } from "prop-types";
-import TextField from "./StyledComponents";
+import React from 'react';
+import { string, func } from 'prop-types';
+import TextField from './StyledComponents';
 
-const RedeTextField = ({ descricao, tipo, valor, onChange }) => (
+const RedeTextField = ({
+  descricao, tipo, valor, onChange,
+}) => (
   <TextField>
     <TextField.Label>{descricao}</TextField.Label>
     <TextField.Input type={tipo} value={valor} onChange={onChange} />
@@ -17,8 +19,8 @@ RedeTextField.propTypes = {
 };
 
 RedeTextField.defaultProps = {
-  descricao: "",
-  tipo: "",
+  descricao: '',
+  tipo: '',
   onChange: () => {},
 };
 

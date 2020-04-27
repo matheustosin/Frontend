@@ -51,7 +51,7 @@ class Login extends Component {
         })
         .catch((err) => {
           alert('Acesso não autorizado. Verifique seu nome de usuário e senha.');
-          console.error(err) ;
+          console.error(err);
         });
     }
   };
@@ -63,7 +63,11 @@ class Login extends Component {
         <Container.SideLogin>
           <Container.Logo src={logo} />
           <Container.Form>
-            <RedeTextField descricao="Email" valor={this.state.email} onChange={this.handleChange} />
+            <RedeTextField
+              descricao="Email"
+              valor={this.state.email}
+              onChange={this.handleChange}
+            />
             <RedeTextField
               descricao="Senha"
               tipo="password"

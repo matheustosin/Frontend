@@ -8,7 +8,7 @@ import Container from './StyledComponents';
 const Header = ({ descricao }) => (
   <Container>
     <Container.Logo src={logo} />
-    {descricao}
+    <Container.Title>{descricao}</Container.Title>
   </Container>
 );
 
