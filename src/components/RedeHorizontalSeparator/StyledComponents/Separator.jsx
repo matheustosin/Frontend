@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import COLOR from '../../../utils/colors.constants';
 
 const Separator = styled.hr`
-height: 400px;
+height: 350px;
 border: 4px solid ${COLOR.AZUL_CLARO};
 border-radius: 5px;
-color: ${COLOR.AZUL_CLARO};
 margin-left: 75px;
 margin-right: 75px;
 margin-top: 25px;
