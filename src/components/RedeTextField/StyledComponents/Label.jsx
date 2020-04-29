@@ -5,7 +5,7 @@ import COLOR from '../../../utils/colors.constants';
 const Label = styled.label`
   margin: 5px 2px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   color: ${COLOR.AZUL};
 `;
 
