@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Logon from './pages/login/Login.jsx';
 import CadastroMentor from './pages/cadastro-mentor/CadastroMentor';
+import CadastroMentoria from './pages/cadastro-mentoria/CadastroMentoria';
 import Main from './pages/main';
 import Register from './pages/register/Register';
 
@@ -12,6 +13,7 @@ export default function Routes() {
       <Switch>
         <Route path="/" exact component={Logon} />
         <Route path="/cadastro-mentor" component={CadastroMentor} />
+        <Route path="/cadastro-mentoria" component={CadastroMentoria} />
         <Route path="/main" component={Main} />
         <Route path="/register" component={Register} />
       </Switch>
