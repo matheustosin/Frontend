@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import user from '../../assets/user.png';
+import { cadastrarMentor } from '../../services/user';
 
 import './CadastroMentor.css';
 import RedeButton from '../../components/RedeButton/RedeButton';
@@ -20,6 +21,7 @@ class CadastroMentor extends Component {
             linkedin: '',
             image: '',
             phone: '',
+            areas: '',
         };
 
         this.handleName = this.handleName.bind(this);
@@ -28,6 +30,9 @@ class CadastroMentor extends Component {
         this.handleLinkedin = this.handleLinkedin.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
+        this.handleAreas = this.handleAreas.bind(this);
+        this.handlePrivacyTerms = this.handlePrivacyTerms.bind(this);
+        this.handleImage = this.handleImage.bind(this);
 
     }
 
@@ -41,14 +46,30 @@ class CadastroMentor extends Component {
             linkedin: this.state.linkedin,
             cpf: this.state.cpf,
             password: this.state.password,
+            areas: this.state.areas,
+            flag: this.state.areas,
+            image: this.state.image,
         };
-        
-        console.log(data.cpf);
-        console.log(data.name);
-        console.log(data.phone);
-        console.log(data.linkedin);
-        console.log(data.email);
-        console.log(data.password);
+
+        cadastrarMentor(data)
+        .then((res) => {
+            if (res.status === 200) {
+            alert('CADASTROU!!');
+            }
+          })
+          .catch((err) => {
+            alert('ERRO!!');
+            console.error(err);
+          });
+
+        console.log("cpf: " + data.cpf);
+        console.log("name: " + data.name);
+        console.log("phone: " + data.phone);
+        console.log("linkedin: " + data.linkedin);
+        console.log("email: " + data.email);
+        console.log("password: " + data.password);
+        console.log("areas: " + data.areas);
+        console.log("flag: " + data.flag);
 
     };
 
@@ -76,8 +97,16 @@ class CadastroMentor extends Component {
     handlePassword(event) {
         this.setState({ password: event.target.value });
     }
-    
-    
+    handleAreas(event) {
+        this.setState({ areas: event.target.value });
+    }
+    handlePrivacyTerms(event) {
+        this.setState({ flag: 1 });
+    }
+    handleImage(event) {
+        this.setState({ image: '' });
+    }
+
     render() {
         return (
         <Container>
@@ -96,7 +125,7 @@ class CadastroMentor extends Component {
                     <RedeTextField descricao="Nome Completo" valor={this.state.name} onChange={this.handleName}/>
                     <RedeTextField descricao="CPF" valor={this.state.cpf} onChange={this.handleCPF}/>
                     <RedeTextField descricao="Telefone" valor={this.state.phone} onChange={this.handlePhoneNumber} />
-                    <RedeTextField descricao="Áreas de Conhecimento" />
+                    <RedeTextField descricao="Áreas de Conhecimento" valor={this.state.areas} onChange={this.handleAreas}/>
                     <RedeTextField descricao="LinkedIn" valor={this.state.linkedin} onChange={this.handleLinkedin}/>
                 </Container.Item>
 
@@ -107,9 +136,9 @@ class CadastroMentor extends Component {
                 <Container.Item>
                     <RedeTextField descricao="Email" valor={this.state.email} onChange={this.handleEmail} />
                     <RedeTextField descricao="Senha" tipo="password" valor={this.state.password} onChange={this.handlePassword} />
-                    <RedeTextField descricao="Confirmação de Senha" />
+                    <RedeTextField descricao="Confirmação de Senha" tipo="password" />
 
-                    <RedeTextField descricao="Aceito o Termo de Privacidade" tipo="checkbox" />
+                    <RedeTextField descricao="Aceito o Termo de Privacidade" tipo="checkbox" valor={this.state.flag} onChange={this.handlePrivacyTerms}/>
 
                     <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
 
