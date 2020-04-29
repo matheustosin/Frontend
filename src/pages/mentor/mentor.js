@@ -10,23 +10,22 @@ import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
 import './mentor.css';
 
 class Mentor extends Component {
-  
   constructor(props) {
     super(props);
     this.state = {
-      token : token
+      name: null,
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const token = '123';
     const headers = { headers: { Authorization: `Bearer ${token}` } };
-    axios.get('http://localhost:8080/users', headers);
-    console.log(this.getInformations(1));
-  }
-
-  async getInformations() {
-    
-    return 
+    const res = await axios.get('http://localhost:8080/users', headers);
+    this.setState({
+      name: 'test',
+      linkedin: 'test',
+      occupation: 'test',
+    });
   }
 
   render() {
@@ -34,14 +33,19 @@ class Mentor extends Component {
       <>
         {/* <Header/> */}
         <Container>
-          <ProfileInfo name="ALAN MORAIS" linkedinProfile="/alan-morais" occupation="Professor de Design" />
+
+          <ProfileInfo 
+            name={this.state.name} 
+            linkedinProfile={this.state.linkedin} 
+            occupation={this.state.occupation} 
+          />
 
           <div className="titleMentoring">
 
             <h1 className="mainTitle">
               MINHAS MENTORIAS
             </h1>
-            <button className="buttonPlus">
+            <button type="button" className="buttonPlus">
               + NOVA MENTORIA
             </button>
           </div>
