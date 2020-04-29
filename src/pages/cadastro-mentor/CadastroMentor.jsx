@@ -5,7 +5,7 @@ import './CadastroMentor.css';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import Header from '../../components/Header/Header';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
-import RedeLineSeparator from '../../components/RedeLineSeparator/RedeLineSeparator';
+import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 
 import Container from './StyledComponents';
 
@@ -33,7 +33,7 @@ const CadastroMentor = () => (
             </Container.Item>
 
             <Container.Center>
-                <RedeLineSeparator/>
+                <RedeHorizontalSeparator/>
             </Container.Center>
 
             <Container.Item>
