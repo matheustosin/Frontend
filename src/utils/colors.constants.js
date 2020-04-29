@@ -4,5 +4,4 @@ export default {
   BRANCO: '#FFFFFF',
   AMARELO: '#FFEF52;',
   AZUL_CLARO: '#97C0E2',
-
 };

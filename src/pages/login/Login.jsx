@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import Container from './StyledComponents';
 import { login } from '../../services/user';
-import { Link, withRouter } from 'react-router-dom';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeSeparator from '../../components/RedeSeparator/RedeSeparator';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
@@ -15,33 +15,22 @@ class Login extends Component {
       password: '',
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.passwordChange = this.passwordChange.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({ email: event.target.value });
-  }
-
-  passwordChange(event) {
-    this.setState({ password: event.target.value });
+    this.handleEmail = this.handleEmail.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
   }
 
   attemptLogin = (event) => {
     event.preventDefault();
-    let data = {
+    const data = {
       email: this.state.email,
       password: this.state.password,
     };
 
-    console.log(data);
-
     if (!data.email || !data.password) {
-      alert('Preencha os campos de usuário e senha.');
+      alert('Preencha os campos de email e senha.');
     } else {
       login(data)
         .then((res) => {
-          console.log(res.status);
           if (res.status === 200) {
             sessionStorage.setItem('token', res.data.token);
             this.props.history.push({
@@ -50,11 +39,19 @@ class Login extends Component {
           }
         })
         .catch((err) => {
-          alert('Acesso não autorizado. Verifique seu nome de usuário e senha.');
+          alert('Acesso não autorizado. Verifique seu email e sua senha.');
           console.error(err);
         });
     }
   };
+
+  handleEmail(event) {
+    this.setState({ email: event.target.value });
+  }
+
+  handlePassword(event) {
+    this.setState({ password: event.target.value });
+  }
 
   render() {
     return (
@@ -63,21 +60,17 @@ class Login extends Component {
         <Container.SideLogin>
           <Container.Logo src={logo} />
           <Container.Form>
-            <RedeTextField
-              descricao="Email"
-              valor={this.state.email}
-              onChange={this.handleChange}
-            />
+            <RedeTextField descricao="Email" valor={this.state.email} onChange={this.handleEmail} />
             <RedeTextField
               descricao="Senha"
               tipo="password"
               valor={this.state.password}
-              onChange={this.passwordChange}
+              onChange={this.handlePassword}
             />
             <Container.ForgotPassword> Esqueci minha senha </Container.ForgotPassword>
             <RedeButton descricao="Entrar" onClick={this.attemptLogin} />
             <RedeSeparator descricao="Novo na Rede ?"> </RedeSeparator>
-            <Link to={'/register'}>
+            <Link to="/register">
               <RedeButton descricao="Cadastrar" />
             </Link>
           </Container.Form>
