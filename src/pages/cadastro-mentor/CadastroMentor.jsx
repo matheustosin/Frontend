@@ -7,6 +7,7 @@ import RedeButton from '../../components/RedeButton/RedeButton';
 import Header from '../../components/Header/Header';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
+import axios from 'axios';
 
 import Container from './StyledComponents';
 
@@ -19,7 +20,7 @@ class CadastroMentor extends Component {
             email: '',
             password: '',
             linkedin: '',
-            image: '',
+            image: new File([], ''),
             phone: '',
             areas: '',
         };
@@ -32,13 +33,14 @@ class CadastroMentor extends Component {
         this.handlePassword = this.handlePassword.bind(this);
         this.handleAreas = this.handleAreas.bind(this);
         this.handlePrivacyTerms = this.handlePrivacyTerms.bind(this);
-        this.handleImage = this.handleImage.bind(this);
+        this.addImage = this.addImage.bind(this);
 
     }
 
     attemptRegister = (event) => {
         event.preventDefault();
         console.log("ENTRA");
+        
         const data = {
             name: this.state.name,
             email: this.state.email,
@@ -51,16 +53,23 @@ class CadastroMentor extends Component {
             image: this.state.image,
         };
 
+        
+
+        data.flag = 1;
+
         cadastrarMentor(data)
-        .then((res) => {
-            if (res.status === 200) {
-            alert('CADASTROU!!');
-            }
-          })
-          .catch((err) => {
-            alert('ERRO!!');
-            console.error(err);
-          });
+        .then(res => {
+            console.log(res);
+        
+        // .then((res) => {
+        //     if (res.status === 200) {
+        //     alert('CADASTROU!!');
+        //     }
+        //   })
+        //   .catch((err) => {
+        //     alert('ERRO!!');
+        //     console.error(err);
+        //   });
 
         console.log("cpf: " + data.cpf);
         console.log("name: " + data.name);
@@ -70,17 +79,24 @@ class CadastroMentor extends Component {
         console.log("password: " + data.password);
         console.log("areas: " + data.areas);
         console.log("flag: " + data.flag);
-
+        console.log("image: " + data.image);
+    });
     };
 
-    addImage = (event) => {
-        event.preventDefault();
+    addImage(event) {
+        //event.preventDefault();
         console.log("ADD FOTO");
+        console.log(event.target.files[0]);
 
-    };
+        this.setState({ 
+            image:  event.target.files[0]
+        });
+    }
 
     handleName(event) {
         this.setState({ name: event.target.value });
+        console.log("NOME::" +this.state.name);
+
     }
     handleCPF(event) {
         this.setState({ cpf: event.target.value });
@@ -101,11 +117,18 @@ class CadastroMentor extends Component {
         this.setState({ areas: event.target.value });
     }
     handlePrivacyTerms(event) {
-        this.setState({ flag: 1 });
+        this.setState({ flag: event.target.value });
     }
-    handleImage(event) {
-        this.setState({ image: '' });
+    /*handleImage(event) {
+        //this.setState({ image: event.target.value });
+        console.log(event.target.files[0]);
     }
+
+    handleImageUpload = event => {
+        this.setState({ image: event.target.files[0] });
+    }*/
+    //<RedeButton descricao="Adicionar Foto" claro={true} onClick={this.handleImage}/>
+    
 
     render() {
         return (
@@ -115,7 +138,7 @@ class CadastroMentor extends Component {
             <Container.FlexContainer>
                 <Container.Center>
                     <Container.UserImage src={user} />
-                    <RedeButton descricao="Adicionar Foto" claro={true} onClick={this.addImage}/>
+                    <RedeTextField tipo="file" onChange={this.addImage} />
                 </Container.Center>
             </Container.FlexContainer>  
             
