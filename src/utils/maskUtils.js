@@ -35,8 +35,8 @@ export const formatDataNascimento = (input) => {
 
 export const formatMatricula = (input) => {
   const value = String(input)
-    .replace(/\D/g, '')
-    .slice(0, 9)
-    .replace(/(\d{8})(\d{1})/, '$1-$2');
+    .replace(/\D/g, '') // Retira o que não é número
+    .slice(0, 9) // Limita o tamanho
+    .replace(/(\d{8})(\d{1})/, '$1-$2'); // Coloca o traço para o último dígito
   return value;
 };

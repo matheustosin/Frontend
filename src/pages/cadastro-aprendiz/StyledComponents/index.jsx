@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Container = styled.div`
   width: unset;
@@ -12,7 +12,7 @@ const TextContainer = styled(Container)`
   flex-direction: row;
   flex-wrap: wrap;
   width: 100vw;
-`
+`;
 const Image = styled.img`
     margin: 5vh;
 `;
@@ -21,7 +21,7 @@ const SeparatorWrapper = styled.div`
   @media only screen and (max-width: 1200px) {
       display:none !important;
   }
-`
+`;
 
 Container.Image = Image;
 Container.TextContainer = TextContainer;
