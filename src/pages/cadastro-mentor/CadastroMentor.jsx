@@ -1,84 +1,179 @@
-import React from 'react';
-import logo_cabecalho from '../../assets/logo_cabecalho.png';
+import React, { Component } from 'react';
+import user from '../../assets/user.png';
+import { cadastrarMentor } from '../../services/user';
 
 import './CadastroMentor.css';
 import RedeButton from '../../components/RedeButton/RedeButton';
-import '@material/react-layout-grid/dist/layout-grid.css';
-import {Cell, Grid, Row} from '@material/react-layout-grid';
+import Header from '../../components/Header/Header';
+import RedeTextField from '../../components/RedeTextField/RedeTextField';
+import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
+import axios from 'axios';
 
-function CadastroMentor() {
-    return (
-    <div className="CadastroMentor">
-    <div className="cadmentor-background-container" />
+import Container from './StyledComponents';
 
-    <div className="cadmentor-cabecalho">
+class CadastroMentor extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            cpf: '',
+            email: '',
+            password: '',
+            linkedin: '',
+            image: new File([], ''),
+            phone: '',
+            areas: '',
+        };
 
-        <img className="logo_cabecalho" alt="rede-de-mentores-logo" src={logo_cabecalho} />
-        <p class="titulo_cabecalho">CADASTRO DE MENTOR</p>
+        this.handleName = this.handleName.bind(this);
+        this.handleCPF = this.handleCPF.bind(this);
+        this.handlePhoneNumber = this.handlePhoneNumber.bind(this);
+        this.handleLinkedin = this.handleLinkedin.bind(this);
+        this.handleEmail = this.handleEmail.bind(this);
+        this.handlePassword = this.handlePassword.bind(this);
+        this.handleAreas = this.handleAreas.bind(this);
+        this.handlePrivacyTerms = this.handlePrivacyTerms.bind(this);
+        this.addImage = this.addImage.bind(this);
 
-    </div>  
+    }
 
-    <Grid id="grid-panel">
-    <form className="">
-    <Row>
-        <Cell desktopColumns={4} order={1} phoneColumns={4} tabletColumns={4}>
+    attemptRegister = (event) => {
+        event.preventDefault();
+        console.log("ENTRA");
         
-            <div className="cadmentor-input-field">
-                <label htmlFor="nome-input">Nome Completo</label>
-                <input id="nome-input" type="text" />
-            </div>
+        const data = {
+            name: this.state.name,
+            email: this.state.email,
+            phone: this.state.phone,
+            linkedin: this.state.linkedin,
+            cpf: this.state.cpf,
+            password: this.state.password,
+            areas: this.state.areas,
+            flag: this.state.areas,
+            image: this.state.image,
+        };
 
-            <div className="cadmentor-input-field">
-                <label htmlFor="cpf-input">CPF</label>
-                <input id="cpf-input" type="text" maxlength="11" />
-            </div>
-
-            <div className="cadmentor-input-field">
-                <label htmlFor="telefone-input">Telefone</label>
-                <input id="telefone-input" type="text" />
-            </div>
-
-            <div className="cadmentor-input-field">
-                <label htmlFor="areas-conhecimento-input">Áreas de Conhecimento</label>
-                <input id="areas-conhecimento-input" type="text" />
-            </div>
-
-            <div className="cadmentor-input-field">
-                <label htmlFor="linkedin-input">LinkedIn</label>
-                <input id="linkedin-input" type="text" />
-            </div>
         
-        </Cell>
-        <Cell desktopColumns={2} order={2} phoneColumns={4} tabletColumns={4}>
-            <div class="vertical-line"></div>
-        </Cell>
-        <Cell desktopColumns={4} order={3} phoneColumns={4} tabletColumns={4}>
+
+        data.flag = 1;
+
+        cadastrarMentor(data)
+        .then(res => {
+            console.log(res);
         
-            <div className="cadmentor-input-field">
-                <label htmlFor="email-input">Email</label>
-                <input id="email-input" type="text" />
-            </div>
+        // .then((res) => {
+        //     if (res.status === 200) {
+        //     alert('CADASTROU!!');
+        //     }
+        //   })
+        //   .catch((err) => {
+        //     alert('ERRO!!');
+        //     console.error(err);
+        //   });
 
-            <div className="cadmentor-input-field">
-                <label htmlFor="senha-input">Senha</label>
-                <input id="senha-input" type="text" />
-            </div>
+        console.log("cpf: " + data.cpf);
+        console.log("name: " + data.name);
+        console.log("phone: " + data.phone);
+        console.log("linkedin: " + data.linkedin);
+        console.log("email: " + data.email);
+        console.log("password: " + data.password);
+        console.log("areas: " + data.areas);
+        console.log("flag: " + data.flag);
+        console.log("image: " + data.image);
+    });
+    };
 
-            <div className="cadmentor-input-field">
-                <label htmlFor="confirma-senha-input">Confirmação de Senha</label>
-                <input id="confirma-senha-input" type="text" />
-            </div>
+    addImage(event) {
+        //event.preventDefault();
+        console.log("ADD FOTO");
+        console.log(event.target.files[0]);
 
-            <RedeButton id="botao-cadastro" descricao="Cadastrar" />
-        </Cell>
-        
-    </Row>
-    </form>
+        this.setState({ 
+            image:  event.target.files[0]
+        });
+    }
 
-    </Grid>
+    handleName(event) {
+        this.setState({ name: event.target.value });
+        console.log("NOME::" +this.state.name);
 
-    </div>
-  );
+    }
+    handleCPF(event) {
+        this.setState({ cpf: event.target.value });
+    }
+    handlePhoneNumber(event) {
+        this.setState({ phone: event.target.value });
+    }
+    handleLinkedin(event) {
+        this.setState({ linkedin: event.target.value });
+    }
+    handleEmail(event) {
+        this.setState({ email: event.target.value });
+    }
+    handlePassword(event) {
+        this.setState({ password: event.target.value });
+    }
+    handleAreas(event) {
+        this.setState({ areas: event.target.value });
+    }
+    handlePrivacyTerms(event) {
+        this.setState({ flag: event.target.value });
+    }
+    /*handleImage(event) {
+        //this.setState({ image: event.target.value });
+        console.log(event.target.files[0]);
+    }
+
+    handleImageUpload = event => {
+        this.setState({ image: event.target.files[0] });
+    }*/
+    //<RedeButton descricao="Adicionar Foto" claro={true} onClick={this.handleImage}/>
+    
+
+    render() {
+        return (
+        <Container>
+            <Header title='cadastro de mentor'/>
+
+            <Container.FlexContainer>
+                <Container.Center>
+                    <Container.UserImage src={user} />
+                    <RedeTextField tipo="file" onChange={this.addImage} />
+                </Container.Center>
+            </Container.FlexContainer>  
+            
+            <Container.FlexContainer>
+                
+                <Container.Item>
+                    <RedeTextField descricao="Nome Completo" valor={this.state.name} onChange={this.handleName}/>
+                    <RedeTextField descricao="CPF" valor={this.state.cpf} onChange={this.handleCPF}/>
+                    <RedeTextField descricao="Telefone" valor={this.state.phone} onChange={this.handlePhoneNumber} />
+                    <RedeTextField descricao="Áreas de Conhecimento" valor={this.state.areas} onChange={this.handleAreas}/>
+                    <RedeTextField descricao="LinkedIn" valor={this.state.linkedin} onChange={this.handleLinkedin}/>
+                </Container.Item>
+
+                <Container.Center>
+                    <RedeHorizontalSeparator/>
+                </Container.Center>
+
+                <Container.Item>
+                    <RedeTextField descricao="Email" valor={this.state.email} onChange={this.handleEmail} />
+                    <RedeTextField descricao="Senha" tipo="password" valor={this.state.password} onChange={this.handlePassword} />
+                    <RedeTextField descricao="Confirmação de Senha" tipo="password" />
+
+                    <RedeTextField descricao="Aceito o Termo de Privacidade" tipo="checkbox" valor={this.state.flag} onChange={this.handlePrivacyTerms}/>
+
+                    <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
+
+                </Container.Item>
+
+
+            </Container.FlexContainer>
+        </Container>
+
+
+);
+}
 }
 
 export default CadastroMentor;
