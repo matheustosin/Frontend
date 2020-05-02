@@ -13,7 +13,7 @@ const RedeTextField = ({
   <TextField erro={erro}>
     <TextField.Label>{descricao}</TextField.Label>
     <TextField.Input type={tipo} value={valor} onChange={onChange} />
-    {(msgAjuda) ? (<TextField.MsgAjuda>{msgAjuda}</TextField.MsgAjuda>) : undefined}
+    <TextField.MsgAjuda>{msgAjuda}</TextField.MsgAjuda>
   </TextField>
 );
 

@@ -7,6 +7,7 @@ const MsgAjuda = styled.div`
   font-size: 0.8rem;
   font-weight: 500;
   color: ${COLOR.AZUL};
+  min-height: 15px;
 `;
 
 export default MsgAjuda;
