@@ -5,6 +5,7 @@ import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import AccountImage from '../../assets/account.png';
+import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 import {
   formatCPF,
   formatTelefone,
@@ -56,14 +57,14 @@ class CadastroAprendiz extends Component {
           {/* Isso foi necessário pois o componente "RedeHorizontalSeparator"
                 não apresentou um comportamento responsivo em algumas resoluções */}
           <Container.SeparatorWrapper>
-            {/* <RedeHorizontalSeparator /> */}
+            <RedeHorizontalSeparator />
           </Container.SeparatorWrapper>
 
           <Container>
             <RedeTextField descricao="Matrícula" valor={matricula} onChange={(evt) => this.setState({ matricula: formatMatricula(evt.target.value) })} />
             <RedeTextField descricao="Email" valor={email} onChange={(evt) => this.setState({ email: evt.target.value })} />
             <RedeTextField descricao="Senha" valor={senha} tipo="password" onChange={(evt) => this.setState({ senha: evt.target.value })} />
-            <RedeTextField descricao="Confirmar Senha" valor={confirmarSenha} tipo="password" onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })} />
+            <RedeTextField descricao="Confirmar Senha" valor={confirmarSenha} tipo="password" onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })} msgAjuda="Senhas não conferem" erro />
           </Container>
 
         </Container.TextContainer>
