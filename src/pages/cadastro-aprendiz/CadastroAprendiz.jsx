@@ -62,8 +62,8 @@ class CadastroAprendiz extends Component {
           <Container>
             <RedeTextField descricao="Matrícula" valor={matricula} onChange={(evt) => this.setState({ matricula: formatMatricula(evt.target.value) })} />
             <RedeTextField descricao="Email" valor={email} onChange={(evt) => this.setState({ email: evt.target.value })} />
-            <RedeTextField descricao="Senha" valor={senha} onChange={(evt) => this.setState({ senha: evt.target.value })} />
-            <RedeTextField descricao="Confirmar Senha" valor={confirmarSenha} onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })} />
+            <RedeTextField descricao="Senha" valor={senha} tipo="password" onChange={(evt) => this.setState({ senha: evt.target.value })} />
+            <RedeTextField descricao="Confirmar Senha" valor={confirmarSenha} tipo="password" onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })} />
           </Container>
 
         </Container.TextContainer>
