@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 import Separator from './Separator';
 
-const Container = styled.div``;
+const Container = styled.div`
+`;
 
 Container.displayName = 'Container';
 

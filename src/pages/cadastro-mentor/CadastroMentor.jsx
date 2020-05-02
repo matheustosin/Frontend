@@ -4,10 +4,9 @@ import { cadastrarMentor } from '../../services/user';
 
 import './CadastroMentor.css';
 import RedeButton from '../../components/RedeButton/RedeButton';
-import Header from '../../components/Header/Header';
+import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
-import axios from 'axios';
 
 import Container from './StyledComponents';
 
@@ -96,7 +95,6 @@ class CadastroMentor extends Component {
     handleName(event) {
         this.setState({ name: event.target.value });
         console.log("NOME::" +this.state.name);
-
     }
     handleCPF(event) {
         this.setState({ cpf: event.target.value });
@@ -133,17 +131,16 @@ class CadastroMentor extends Component {
     render() {
         return (
         <Container>
-            <Header title='cadastro de mentor'/>
+            <RedeHeader title="cadastro de mentor" />
 
             <Container.FlexContainer>
-                <Container.Center>
-                    <Container.UserImage src={user} />
-                    <RedeTextField tipo="file" onChange={this.addImage} />
-                </Container.Center>
+                <Container.Item>
+                        <Container.UserImage src={user} />
+                        <RedeTextField tipo="file" onChange={this.addImage} />
+                </Container.Item>
             </Container.FlexContainer>  
             
             <Container.FlexContainer>
-                
                 <Container.Item>
                     <RedeTextField descricao="Nome Completo" valor={this.state.name} onChange={this.handleName}/>
                     <RedeTextField descricao="CPF" valor={this.state.cpf} onChange={this.handleCPF}/>
@@ -152,21 +149,16 @@ class CadastroMentor extends Component {
                     <RedeTextField descricao="LinkedIn" valor={this.state.linkedin} onChange={this.handleLinkedin}/>
                 </Container.Item>
 
-                <Container.Center>
-                    <RedeHorizontalSeparator/>
-                </Container.Center>
+                <RedeHorizontalSeparator/>
 
                 <Container.Item>
                     <RedeTextField descricao="Email" valor={this.state.email} onChange={this.handleEmail} />
                     <RedeTextField descricao="Senha" tipo="password" valor={this.state.password} onChange={this.handlePassword} />
                     <RedeTextField descricao="Confirmação de Senha" tipo="password" />
-
                     <RedeTextField descricao="Aceito o Termo de Privacidade" tipo="checkbox" valor={this.state.flag} onChange={this.handlePrivacyTerms}/>
 
-                    <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
-
+                    <Container><RedeButton descricao="Cadastrar" onClick={this.attemptRegister} /></Container>
                 </Container.Item>
-
 
             </Container.FlexContainer>
         </Container>
