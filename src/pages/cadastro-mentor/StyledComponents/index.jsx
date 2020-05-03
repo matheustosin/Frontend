@@ -3,7 +3,6 @@ import UserImage from './UserImage';
 import FlexContainer from './FlexContainer';
 import Item from './Item';
 
-
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -17,9 +16,7 @@ const Container = styled.div`
     justify-content: center;
 
   }
-  
 `;
-
 
 Container.UserImage = UserImage;
 Container.FlexContainer = FlexContainer;
