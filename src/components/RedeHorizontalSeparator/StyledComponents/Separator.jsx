@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import COLOR from '../../../utils/colors.constants';
 
 const Separator = styled.hr`
-  height: 400px;
+  height: ${(props) => props.size};
   border-left: 6px solid;
   border-radius: 5px;
   color: ${COLOR.AZUL_CLARO};
