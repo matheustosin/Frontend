@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { cadastrarUsuario } from '../../services/user';
+import { Redirect } from 'react-router';
 import Container from './StyledComponents';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
@@ -28,13 +29,14 @@ class CadastroAprendiz extends Component {
       confirmarSenha: '',
       imageurl: AccountImage,
       imagem: '',
+      acceptTerms: false,
     };
     this.handleImage = this.handleImage.bind(this);
   }
 
   attemptRegister = (event) => {
     event.preventDefault();
-    
+
     const data = new FormData()
     data.append('image', this.state.imagem);
     data.append('name', this.state.nome);
@@ -46,16 +48,28 @@ class CadastroAprendiz extends Component {
     data.append('registration', this.state.matricula);
     data.append('flag', 2); // mentorado flag
 
-    cadastrarUsuario(data)
-    .then((res) => {
-        if (res.status === 200) {
-            alert('Usuário cadastrado com sucesso!');
-            this.setState({redirect: true});
-        }
-    })
-    .catch((err) => {
-        alert("Não foi possível realizar o cadastro. ");                
-    });
+    if (!data.get('name') || !data.get('email') || !data.get('birthDate') || !data.get('cpf') 
+    || !data.get('phone') || !data.get('password') || !data.get('registration') || !this.state.confirmarSenha) {
+      alert('Preencha todos os campos.');
+    }
+    else if (!data.get('image')){
+      alert('Insira uma foto de perfil.');
+    }
+    else if (!this.state.acceptTerms) {
+      alert('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.')
+    }
+    else {
+      cadastrarUsuario(data)
+      .then((res) => {
+          if (res.status === 200) {
+              alert('Usuário cadastrado com sucesso!');
+              this.setState({redirect: true});
+          }
+      })
+      .catch((err) => {
+          alert("Não foi possível realizar o cadastro. ");                
+      });
+    }
   }
 
   handleImage() {
@@ -75,6 +89,9 @@ class CadastroAprendiz extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to="/" />;
+    }
     const {
       nome,
       dataNascimento,
@@ -85,6 +102,7 @@ class CadastroAprendiz extends Component {
       senha,
       confirmarSenha,
       imageurl,
+      acceptTerms,
     } = this.state;
     const erroSenha = Boolean(senha && confirmarSenha && (senha !== confirmarSenha));
     return (
@@ -114,7 +132,7 @@ class CadastroAprendiz extends Component {
             <RedeTextField descricao="Email" valor={email} onChange={(evt) => this.setState({ email: evt.target.value })} />
             <RedeTextField descricao="Senha" valor={senha} tipo="password" onChange={(evt) => this.setState({ senha: evt.target.value })} />
             <RedeTextField descricao="Confirmar Senha" valor={confirmarSenha} tipo="password" onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })} msgAjuda={erroSenha ? 'Senhas não conferem' : ''} erro={erroSenha} />
-            <Container.RedeCheckbox id="termos"/>
+            <Container.RedeCheckbox id="termos" valor={acceptTerms} onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })} />
 
             <Container>
               <Container.Label for="termos">Aceito os termos de uso</Container.Label>
