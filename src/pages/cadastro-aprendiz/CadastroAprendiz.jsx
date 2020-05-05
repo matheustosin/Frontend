@@ -65,13 +65,16 @@ class CadastroAprendiz extends Component {
             <RedeTextField descricao="Email" valor={email} onChange={(evt) => this.setState({ email: evt.target.value })} />
             <RedeTextField descricao="Senha" valor={senha} tipo="password" onChange={(evt) => this.setState({ senha: evt.target.value })} />
             <RedeTextField descricao="Confirmar Senha" valor={confirmarSenha} tipo="password" onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })} msgAjuda={erroSenha ? 'Senhas não conferem' : ''} erro={erroSenha} />
+            <Container.RedeCheckbox id="termos"/>
+
+            <Container>
+              <Container.Label for="termos">Aceito os termos de uso</Container.Label>
+              <RedeButton descricao="Cadastrar" onClick={() => { }} />
+            </Container>
+
           </Container>
 
         </Container.TextContainer>
-
-        <Container style={{ marginTop: '2vh' }}>
-          <RedeButton descricao="Cadastrar" onClick={() => { }} />
-        </Container>
       </Container>
     );
   }
