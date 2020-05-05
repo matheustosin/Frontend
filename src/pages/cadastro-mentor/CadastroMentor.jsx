@@ -55,9 +55,12 @@ class CadastroMentor extends Component {
         data.append('flag', 1);
         
         
-        if (!data.get('name') || !data.get('image') || !data.get('email') || !data.get('phone') || !data.get('linkedin') 
+        if (!data.get('name') || !data.get('email') || !data.get('phone') || !data.get('linkedin') 
         || !data.get('cpf') || !data.get('areas') || !data.get('password') || !this.state.confirmPassword) {
             alert('Preencha todos os campos.');
+        }
+        else if (!data.get('image')){
+            alert('Insira uma foto de perfil.');
         }
         else if (data.get('password') && this.state.confirmPassword && (data.get('password') !== this.state.confirmPassword) ) {
             alert('Senhas não são iguais.')
