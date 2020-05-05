@@ -22,7 +22,7 @@ class CadastroMentor extends Component {
             phone: '',
             areas: [],
             imageurl: user,
-            mentorFlag: '',
+            acceptTerms: false,
         };
 
         this.handleName = this.handleName.bind(this);
@@ -49,19 +49,20 @@ class CadastroMentor extends Component {
         data.append('cpf', this.state.cpf);
         data.append('password', this.state.password);
         data.append('areas', this.state.areas);
+        data.append('flag', 1);
         
-        if (!this.state.mentorFlag) {
-            alert('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.')
-        }
-        else if (!data.get('name') || !data.get('image') || !data.get('email') || !data.get('phone') || !data.get('linkedin') 
+        
+        if (!data.get('name') || !data.get('image') || !data.get('email') || !data.get('phone') || !data.get('linkedin') 
         || !data.get('cpf') || !data.get('areas') ) {
             alert('Preencha todos os campos.');
         }
         else if (data.get('password') && this.state.confirmPassword && (data.get('password') !== this.state.confirmPassword) ) {
             alert('Senhas não são iguais.')
         }
+        else if (!this.state.acceptTerms) {
+            alert('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.')
+        }
         else{
-            data.append('mentorFlag', 1);
             cadastrarMentor(data)
             .then((res) => {
                 if (res.status === 200) {
@@ -69,8 +70,7 @@ class CadastroMentor extends Component {
                 }
             })
             .catch((err) => {
-                console.log(err);
-                alert(err);
+                alert("Não foi possível realizar o cadastro. ");                
             });
         }
     };
@@ -98,10 +98,9 @@ class CadastroMentor extends Component {
     }
     handleAreas(event) {
         this.setState({ areas: [event.target.value] });
-        //this.setState({ areas: ['Design'] });
     }
     handlePrivacyTerms(event) {
-        this.setState({ mentorFlag: event.target.checked });
+        this.setState({ acceptTerms: event.target.checked });
     }
     handleImage() {
         document.getElementById('fileButton').click();
@@ -142,7 +141,7 @@ class CadastroMentor extends Component {
                     <RedeTextField descricao="Email" valor={this.state.email} onChange={this.handleEmail} />
                     <RedeTextField descricao="Senha" tipo="password" valor={this.state.password} onChange={this.handlePassword} />
                     <RedeTextField descricao="Confirmação de Senha" tipo="password" valor={this.state.confirmPassword} onChange={this.handleConfirmPassword} />
-                    <RedeTextField descricao="Aceito o Termo de Privacidade" tipo="checkbox" valor={this.state.mentorFlag} onChange={this.handlePrivacyTerms}/>
+                    <RedeTextField descricao="Aceito o Termo de Privacidade" tipo="checkbox" valor={this.state.acceptTerms} onChange={this.handlePrivacyTerms}/>
 
                     <Container><RedeButton descricao="Cadastrar" onClick={this.attemptRegister} /></Container>
                 </Container.Item>
