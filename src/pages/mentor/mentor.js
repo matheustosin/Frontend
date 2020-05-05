@@ -5,6 +5,7 @@ import axios from 'axios';
 import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
+import Header from '../../components/Header/Header';
 // import Header from '../../';
 
 import './mentor.css';
@@ -23,15 +24,13 @@ class Mentor extends Component {
   }
 
   async componentDidMount() {
-    //test
-    //sessionStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiIxMTExMTExMTEiLCJlbWFpbCI6InJlZGVtZW50b3JAcHVjcnMuYnIiLCJpYXQiOjE1ODg2MzU0MDQsImV4cCI6MTU4ODcyMTgwNH0.dIyPacOWiSdXQjxt6_zbSgsPbGRm5JcZ6ddBBdNFHnk');
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
     const {
-      name, linkedin, occupation, image,cpf
+      name, linkedin, occupation, image, cpf,
     } = (await axios.get('http://localhost:3000/users', headers)).data;
     const urlImage = `static/media/${image}`;
-    
+
     const mentorias = (await axios.get('http://localhost:3000/mentoriaSession', headers)).data;
     this.mentorias = mentorias.map((mentoria) => (
       <Card
@@ -40,18 +39,17 @@ class Mentor extends Component {
         image={mentoria.image}
       />
     ));
-    
+
     this.setState({
       name,
       linkedin,
       occupation,
       image: urlImage,
     });
-
   }
 
   generateMentoriasComp() {
-    
+
 
   }
 
@@ -59,7 +57,7 @@ class Mentor extends Component {
   render() {
     return (
       <>
-        {/* <Header/> */}
+        <Header />
         <Container>
 
           <ProfileInfo

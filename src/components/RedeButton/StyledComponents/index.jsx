@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Desabilitado from './Desabilitado';
+import Claro from './Claro';
+import Cancelar from './Cancelar';
 
 import COLOR from '../../../utils/colors.constants';
 
@@ -25,6 +27,8 @@ const Button = styled.button`
   }
 
   ${({ disabled }) => disabled && Desabilitado}
+  ${({ cancelar }) => cancelar && Cancelar}
+  ${({ claro }) => claro && Claro}
 `;
 
 Button.displayName = 'Button';
