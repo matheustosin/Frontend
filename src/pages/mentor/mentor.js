@@ -6,8 +6,9 @@ import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
 import Header from '../../components/Header/Header';
-import { mentorias } from '../../services/mentor';
+import { mentoriasByMentor } from '../../services/mentor';
 import { profile } from '../../services/user';
+import { urlFiles } from '../../services/http';
 
 
 import './mentor.css';
@@ -18,7 +19,6 @@ class Mentor extends Component {
     this.state = {
       name: null,
       linkedin: null,
-      occupation: null,
       image: null,
     };
     this.mentorias = [];
@@ -32,13 +32,12 @@ class Mentor extends Component {
       (res) => {
         if (res.status === 200) {
           const {
-            name, linkedin, occupation, image, cpf,
+            name, linkedin, image,
           } = res.data;
-          const urlImage = `http://localhost:3000/files/${image}`;
+          const urlImage = `${urlFiles}/${image}`;
           this.setState({
             name,
             linkedin,
-            occupation,
             image: urlImage,
           });
         }
@@ -47,14 +46,14 @@ class Mentor extends Component {
       alert('Problema ao buscar informações. Tente novamente.');
       console.error(err);
     });
-    mentorias(headers).then(
+    mentoriasByMentor(headers).then(
       (res) => {
         this.mentorias = res.data.map((mentoria) => (
           <Card
             key={mentoria}
             title={mentoria.title}
             description={mentoria.description}
-            image={`http://localhost:3000/files/${mentoria.image}`}
+            image={`${urlFiles}/${mentoria.image}`}
           />
         ));
       },
@@ -74,7 +73,6 @@ class Mentor extends Component {
           <ProfileInfo
             name={this.state.name}
             linkedinProfile={this.state.linkedin}
-            occupation={this.state.occupation}
             image={this.state.image}
           />
 

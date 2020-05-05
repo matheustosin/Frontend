@@ -5,7 +5,7 @@ import Logon from './pages/login/Login.jsx';
 import CadastroMentor from './pages/cadastro-mentor/CadastroMentor';
 import Main from './pages/main';
 import Register from './pages/register/Register';
-import Mentor from './pages/mentor/Mentor';
+import Mentor from './pages/mentor/mentor';
 
 export default function Routes() {
   return (
@@ -13,9 +13,9 @@ export default function Routes() {
       <Switch>
         <Route path="/" exact component={Logon} />
         <Route path="/cadastro-mentor" component={CadastroMentor} />
-        {/* <Route path="/main" component={Main} /> */}
+        <Route path="/main" component={Main} />
         <Route path="/register" component={Register} />
-        <Route path="/main" component={Mentor} />
+        <Route path="/mentor" component={Mentor} />
       </Switch>
     </BrowserRouter>
   );

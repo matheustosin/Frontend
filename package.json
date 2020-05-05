@@ -17,7 +17,7 @@
     "styled-components": "^5.0.1"
   },
   "scripts": {
-    "start": "env-cmd -r .env-cmdrc.json -e dev react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "start-hom": "env-cmd -r .env-cmdrc.json -e hom react-scripts start",
     "test": "react-scripts test",

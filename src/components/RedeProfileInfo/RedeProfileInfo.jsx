@@ -4,13 +4,10 @@ import { string, func, bool } from 'prop-types';
 import Container from './StyledComponents';
 import edition from '../../assets/create-new-pencil-button.png';
 import linkedin from '../../assets/linkedin.png';
-import work from '../../assets/work.png';
-// import logo from "../../assets/aaaaaf.png";
 
 const ProfileInfo = ({
   name,
   linkedinProfile,
-  occupation,
   image,
 }) => (
   <Container>
@@ -20,12 +17,6 @@ const ProfileInfo = ({
         <Name>
           {name}
         </Name>
-        <Detail>
-          <Icon src={work} />
-          <DetailText>
-            {occupation}
-          </DetailText>
-        </Detail>
         <Detail>
           <Icon src={linkedin} />
           <DetailText>

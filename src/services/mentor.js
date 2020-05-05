@@ -1,4 +1,3 @@
-import Http from './http';
+import { client as Http } from './http';
 
-
-export const mentorias = (headers) => Http.get('/mentoriaSession', headers);
+export const mentoriasByMentor = (headers) => Http.get('/mentoriaSession', headers);
