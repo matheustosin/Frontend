@@ -30,7 +30,6 @@ class CadastroAprendiz extends Component {
       imagem: '',
     };
     this.handleImage = this.handleImage.bind(this);
-
   }
 
   attemptRegister = (event) => {
@@ -63,10 +62,15 @@ class CadastroAprendiz extends Component {
     document.getElementById('imageFile').click();
     document.getElementById('imageFile').onchange = (event) =>
     {   
+      try{
+        var url = URL.createObjectURL(event.target.files[0]);
+      }catch(e){
+        url = this.state.imageurl;
+      }
       this.setState({       
         imagem: event.target.files[0],
+        imageurl: url,
       });
-      console.log(this.state.imagem);
     }
   }
 
