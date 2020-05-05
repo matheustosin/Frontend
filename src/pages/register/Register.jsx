@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
-
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import teacher from '../../assets/teacher.png';
 import interview from '../../assets/interview.png';
 
@@ -21,7 +20,9 @@ class Register extends PureComponent {
             <Container.Circle>
               <Container.Image src={teacher} />
             </Container.Circle>
-            <RedeButton descricao="CADASTRAR COMO MENTOR" />
+            <Link to="/cadastro-mentor">
+              <RedeButton descricao="CADASTRAR COMO MENTOR" />
+            </Link>
           </Container.Option>
 
           <RedeHorizontalSeparator />
@@ -30,7 +31,7 @@ class Register extends PureComponent {
             <Container.Circle>
               <Container.Image src={interview} />
             </Container.Circle>
-            <RedeButton descricao="CADASTRAR COMO ALUNO" />
+            <RedeButton descricao="CADASTRAR COMO APRENDIZ" />
           </Container.Option>
         </Container.Form>
       </Container>

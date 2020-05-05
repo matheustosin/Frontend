@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 import user from '../../assets/user.png';
 import { cadastrarMentor } from '../../services/user';
 import {formatCPF, formatTelefone} from '../../utils/maskUtils';
@@ -23,6 +24,7 @@ class CadastroMentor extends Component {
             areas: [],
             imageurl: user,
             acceptTerms: false,
+            redirect: false,
         };
 
         this.handleName = this.handleName.bind(this);
@@ -35,6 +37,7 @@ class CadastroMentor extends Component {
         this.handleAreas = this.handleAreas.bind(this);
         this.handlePrivacyTerms = this.handlePrivacyTerms.bind(this);
         this.handleImage = this.handleImage.bind(this);
+        
     }
 
     attemptRegister = (event) => {
@@ -53,7 +56,7 @@ class CadastroMentor extends Component {
         
         
         if (!data.get('name') || !data.get('image') || !data.get('email') || !data.get('phone') || !data.get('linkedin') 
-        || !data.get('cpf') || !data.get('areas') ) {
+        || !data.get('cpf') || !data.get('areas') || !data.get('password') || !this.state.confirmPassword) {
             alert('Preencha todos os campos.');
         }
         else if (data.get('password') && this.state.confirmPassword && (data.get('password') !== this.state.confirmPassword) ) {
@@ -67,6 +70,7 @@ class CadastroMentor extends Component {
             .then((res) => {
                 if (res.status === 200) {
                     alert('Usuário cadastrado com sucesso!');
+                    this.setState({redirect: true});
                 }
             })
             .catch((err) => {
@@ -106,16 +110,24 @@ class CadastroMentor extends Component {
         document.getElementById('fileButton').click();
         document.getElementById('fileButton').onchange = (event) =>
         {   
+            try{
+                var url = URL.createObjectURL(event.target.files[0]);
+            }catch(e){
+                url = this.state.imageurl;
+            }
             this.setState({ 
                 image: event.target.files[0],
-                imageurl: URL.createObjectURL(event.target.files[0]),
+                imageurl: url,
             });
         }
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect push to="/" />;
+        }
         return (
-        <Container>
+            <Container>
             <RedeHeader title="cadastro de mentor" />
 
             <Container.FlexContainer>
