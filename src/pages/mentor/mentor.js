@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import axios from 'axios';
-// import logo from '../../assets/logo.png';
+import { withRouter } from 'react-router-dom';
 import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
