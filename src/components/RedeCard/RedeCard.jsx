@@ -8,10 +8,10 @@ import remove from '../../assets/rubbish-bin-delete-button.png';
 import edition from '../../assets/create-new-pencil-button.png';
 
 const Card = ({
-  title, description
+  title, description, image
 }) => (
     <Container>
-      <Logo src={logo} />
+      <Logo src={image} />
       <ContentSide>
         <Header>
           <Title>
