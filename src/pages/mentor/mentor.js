@@ -29,14 +29,15 @@ class Mentor extends Component {
     const {
       name, linkedin, occupation, image, cpf,
     } = (await axios.get('http://localhost:3000/users', headers)).data;
-    const urlImage = `static/media/${image}`;
+    const urlImage = `http://localhost:3000/files/${image}`;
 
     const mentorias = (await axios.get('http://localhost:3000/mentoriaSession', headers)).data;
-    this.mentorias = mentorias.map((mentoria) => (
+    this.mentorias = mentorias.map((mentoria, index) => (
       <Card
+        key={mentoria}
         title={mentoria.title}
         description={mentoria.description}
-        image={mentoria.image}
+        image={`http://localhost:3000/files/${mentoria.image}`}
       />
     ));
 
