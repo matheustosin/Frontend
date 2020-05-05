@@ -6,7 +6,9 @@ import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
 import Header from '../../components/Header/Header';
-// import Header from '../../';
+import { mentorias } from '../../services/mentor';
+import { profile } from '../../services/user';
+
 
 import './mentor.css';
 
@@ -18,7 +20,6 @@ class Mentor extends Component {
       linkedin: null,
       occupation: null,
       image: null,
-      mentorias: null,
     };
     this.mentorias = [];
   }
@@ -26,32 +27,41 @@ class Mentor extends Component {
   async componentDidMount() {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
-    const {
-      name, linkedin, occupation, image, cpf,
-    } = (await axios.get('http://localhost:3000/users', headers)).data;
-    const urlImage = `http://localhost:3000/files/${image}`;
 
-    const mentorias = (await axios.get('http://localhost:3000/mentoriaSession', headers)).data;
-    this.mentorias = mentorias.map((mentoria, index) => (
-      <Card
-        key={mentoria}
-        title={mentoria.title}
-        description={mentoria.description}
-        image={`http://localhost:3000/files/${mentoria.image}`}
-      />
-    ));
-
-    this.setState({
-      name,
-      linkedin,
-      occupation,
-      image: urlImage,
+    profile(headers).then(
+      (res) => {
+        if (res.status === 200) {
+          const {
+            name, linkedin, occupation, image, cpf,
+          } = res.data;
+          const urlImage = `http://localhost:3000/files/${image}`;
+          this.setState({
+            name,
+            linkedin,
+            occupation,
+            image: urlImage,
+          });
+        }
+      },
+    ).catch((err) => {
+      alert('Problema ao buscar informações. Tente novamente.');
+      console.error(err);
     });
-  }
-
-  generateMentoriasComp() {
-
-
+    mentorias(headers).then(
+      (res) => {
+        this.mentorias = res.data.map((mentoria) => (
+          <Card
+            key={mentoria}
+            title={mentoria.title}
+            description={mentoria.description}
+            image={`http://localhost:3000/files/${mentoria.image}`}
+          />
+        ));
+      },
+    ).catch((err) => {
+      alert('Problema ao buscar mentorias. Tente novamente.');
+      console.error(err);
+    });
   }
 
 
