@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import teacher from '../../assets/teacher.png';
 import interview from '../../assets/interview.png';
 
@@ -30,7 +30,9 @@ class Register extends PureComponent {
             <Container.Circle>
               <Container.Image src={interview} />
             </Container.Circle>
-            <RedeButton descricao="CADASTRAR COMO ALUNO" />
+            <Link to="/cadastro-aprendiz">
+              <RedeButton descricao="CADASTRAR COMO APRENDIZ" />
+            </Link>
           </Container.Option>
         </Container.Form>
       </Container>
