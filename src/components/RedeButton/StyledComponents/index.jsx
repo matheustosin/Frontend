@@ -26,9 +26,9 @@ const Button = styled.button`
     outline: none;
   }
 
-  ${({ disabled }) => disabled && Desabilitado}
-  ${({ cancelar }) => cancelar && Cancelar}
   ${({ claro }) => claro && Claro}
+  ${({ cancelar }) => cancelar && Cancelar}
+  ${({ disabled }) => disabled && Desabilitado}
 `;
 
 Button.displayName = 'Button';

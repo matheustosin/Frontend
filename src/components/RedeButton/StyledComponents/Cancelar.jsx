@@ -8,6 +8,8 @@ const Cancelar = css`
   border: solid 1px ${COLOR.AZUL};
 
   :hover {
+    color: ${COLOR.BRANCO};
+    background-color: ${COLOR.AZUL};
     box-shadow: 0 0 15px ${COLOR.AZUL};
   }
 `;

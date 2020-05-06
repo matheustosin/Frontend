@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
@@ -77,11 +77,13 @@ class Mentor extends Component {
           <div className="titleMentoring">
 
             <h1 className="mainTitle">
-              MINHAS MENTORIAS
+                MINHAS MENTORIAS
             </h1>
-            <button type="button" className="buttonPlus">
-              + NOVA MENTORIA
-            </button>
+            <Link to="/cadastro-mentoria">
+              <button type="button" className="buttonPlus">
+                + NOVA MENTORIA
+              </button>
+            </Link>
           </div>
           {this.mentorias}
         </Container>

@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 import COLOR from '../../../utils/colors.constants';
 
-const Label = styled.label`
+const LabelRadio = styled.label`
   margin: 5px 2px;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.8em;
+  font-weight: bold;
   color: ${COLOR.AZUL};
 `;
 
-export default Label;
+export default LabelRadio;

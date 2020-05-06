@@ -11,3 +11,5 @@ export default {
 
 export const Default = () => <RedeButton descricao="Teste" onClick={action('Clicou')} />;
 export const Disabled = () => <RedeButton descricao="Teste" onClick={action('Clicou')} desabilitado />;
+export const AzulClaro = () => <RedeButton descricao="Teste" onClick={action('Clicou')} claro />;
+export const Cancelar = () => <RedeButton descricao="Teste" onClick={action('Clicou')} cancelar />;

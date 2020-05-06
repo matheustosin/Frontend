@@ -2,11 +2,10 @@ import styled from 'styled-components';
 
 import COLOR from '../../../utils/colors.constants';
 
-const Label = styled.label`
-  margin: 5px 2px;
-  font-size: 1rem;
-  font-weight: 600;
+const Form = styled.h1`
+  margin: 15px 0;
+  text-align: center;
   color: ${COLOR.AZUL};
 `;
 
-export default Label;
+export default Form;
