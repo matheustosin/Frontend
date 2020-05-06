@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import Container from './StyledComponents';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
+import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import AccountImage from '../../assets/account.png';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
@@ -46,8 +47,8 @@ class CadastroAprendiz extends Component {
         <Container.Image src={AccountImage} width="100px" height="100px" style={{ marginBottom: '2vh' }} />
         <RedeButton descricao="Adicionar Foto" onClick={() => { }} claro />
 
-        <Container.TextContainer>
-          <Container>
+        <Container.FieldContainer>
+          <Container justify="start" height="100%">
             <RedeTextField descricao="Nome Completo" valor={nome} onChange={(evt) => this.setState({ nome: evt.target.value })} />
             <RedeTextField descricao="Data de Nascimento" valor={dataNascimento} onChange={(evt) => this.setState({ dataNascimento: formatDataNascimento(evt.target.value) })} />
             <RedeTextField descricao="CPF" valor={cpf} onChange={(evt) => this.setState({ cpf: formatCPF(evt.target.value) })} />
@@ -60,21 +61,22 @@ class CadastroAprendiz extends Component {
             <RedeHorizontalSeparator />
           </Container.SeparatorWrapper>
 
-          <Container>
+          <Container height="100%">
             <RedeTextField descricao="Matrícula" valor={matricula} onChange={(evt) => this.setState({ matricula: formatMatricula(evt.target.value) })} />
             <RedeTextField descricao="Email" valor={email} onChange={(evt) => this.setState({ email: evt.target.value })} />
             <RedeTextField descricao="Senha" valor={senha} tipo="password" onChange={(evt) => this.setState({ senha: evt.target.value })} />
             <RedeTextField descricao="Confirmar Senha" valor={confirmarSenha} tipo="password" onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })} msgAjuda={erroSenha ? 'Senhas não conferem' : ''} erro={erroSenha} />
-            <Container.RedeCheckbox id="termos"/>
-
-            <Container>
+          
+            <Container.TermsContainer>
+              <RedeCheckbox id="termos"/>
               <Container.Label for="termos">Aceito os termos de uso</Container.Label>
-              <RedeButton descricao="Cadastrar" onClick={() => { }} />
-            </Container>
+            </Container.TermsContainer>
+
+            <RedeButton descricao="Cadastrar" onClick={() => { }} />
 
           </Container>
 
-        </Container.TextContainer>
+        </Container.FieldContainer>
       </Container>
     );
   }
