@@ -18,11 +18,11 @@ class Mentor extends Component {
       name: null,
       linkedin: null,
       image: null,
+      mentorias: [],
     };
-    this.mentorias = [];
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
 
@@ -46,7 +46,7 @@ class Mentor extends Component {
     });
     mentoriasByMentor(headers).then(
       (res) => {
-        this.mentorias = res.data.map((mentoria) => (
+        const mentorias = res.data.map((mentoria) => (
           <Card
             key={mentoria}
             title={mentoria.title}
@@ -54,6 +54,9 @@ class Mentor extends Component {
             image={`${urlFiles}/${mentoria.image}`}
           />
         ));
+        this.setState({
+          mentorias,
+        });
       },
     ).catch((err) => {
       alert('Problema ao buscar mentorias. Tente novamente.');
@@ -77,7 +80,7 @@ class Mentor extends Component {
           <div className="titleMentoring">
 
             <h1 className="mainTitle">
-                MINHAS MENTORIAS
+              MINHAS MENTORIAS
             </h1>
             <Link to="/cadastro-mentoria">
               <button type="button" className="buttonPlus">
@@ -85,7 +88,7 @@ class Mentor extends Component {
               </button>
             </Link>
           </div>
-          {this.mentorias}
+          {this.state.mentorias}
         </Container>
       </>
     );

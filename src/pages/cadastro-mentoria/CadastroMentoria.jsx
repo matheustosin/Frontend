@@ -33,6 +33,7 @@ function CadastroMentoria() {
     event.preventDefault();
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
+
     const data = new FormData();
     data.append('title', title);
     data.append('description', description);
@@ -41,15 +42,23 @@ function CadastroMentoria() {
     data.append('dateTime', dateTime);
     data.append('dayOfWeek', dayOfWeek);
     data.append('image', image);
-    cadastrarMentoria(headers, data).then((res) => {
-      if (res.status === 200) {
-        alert('Cadastrado com sucesso');
-      }
-      history.push('/mentor');
-    }).catch((err) => {
-      alert('Problema ao cadastrar mentoria');
-      console.error(err);
-    });
+
+    if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('mentoringOption')
+        || !data.get('dateTime') || !data.get('dayOfWeek')) {
+      alert('Preencha todos os campos.');
+    } else if (!data.get('image')) {
+      alert('Insira uma foto para a mentoria.');
+    } else {
+      cadastrarMentoria(headers, data).then((res) => {
+        if (res.status === 200) {
+          alert('Cadastrado com sucesso');
+        }
+        history.push('/mentor');
+      }).catch((err) => {
+        alert('Problema ao cadastrar mentoria');
+        console.error(err);
+      });
+    }
   }
   function handleImage() {
     document.getElementById('fileButton').click();
