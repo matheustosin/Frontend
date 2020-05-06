@@ -2,4 +2,4 @@ import Http from './http';
 
 export const login = (data) => Http.post('/login', data);
 
-export const cadastrarMentor = (data) => Http.post('/users', data);
+export const cadastrarUsuario = (data) => Http.post('/users', data);
