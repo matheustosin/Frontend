@@ -12,15 +12,10 @@ margin-top: 25px;
 margin-bottom: 25px;
 width: 0px;
 
-@media only screen and (max-width: 1200px) {
-  display:none;
-}
-
 @media (min-width: 768px) and (max-width: 1199px) {
   height: 0px;
   margin-left: 700px;
   margin-top: 50px;
-  
 }
 @media (max-width: 767px) {
   height: 50px;

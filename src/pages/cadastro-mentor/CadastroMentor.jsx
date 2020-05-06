@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import user from '../../assets/user.png';
-import { cadastrarMentor } from '../../services/user';
+import { cadastrarUsuario } from '../../services/user';
 import {formatCPF, formatTelefone} from '../../utils/maskUtils';
 import Container from './StyledComponents';
 import RedeButton from '../../components/RedeButton/RedeButton';
@@ -69,7 +69,7 @@ class CadastroMentor extends Component {
             alert('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.')
         }
         else{
-            cadastrarMentor(data)
+            cadastrarUsuario(data)
             .then((res) => {
                 if (res.status === 200) {
                     alert('Usuário cadastrado com sucesso!');

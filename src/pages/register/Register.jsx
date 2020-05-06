@@ -31,7 +31,9 @@ class Register extends PureComponent {
             <Container.Circle>
               <Container.Image src={interview} />
             </Container.Circle>
-            <RedeButton descricao="CADASTRAR COMO APRENDIZ" />
+            <Link to="/cadastro-aprendiz">
+              <RedeButton descricao="CADASTRAR COMO APRENDIZ" />
+            </Link>
           </Container.Option>
         </Container.Form>
       </Container>
