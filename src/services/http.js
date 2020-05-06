@@ -15,4 +15,6 @@ const client = axios.create({
   },
 });
 
-export default client;
+const urlFiles = `${apiServer}:${port}/files`;
+
+export { client, urlFiles };
