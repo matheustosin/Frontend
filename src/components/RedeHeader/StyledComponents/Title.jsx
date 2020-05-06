@@ -1,14 +1,11 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-const Title = styled.p`
-    text-transform: uppercase;
-    font: Medium 30px/39px Roboto;
-    font-size: 30px;
-    color: #97C0E2;
-    font-weight: bold;
-    align-self: center;
-    margin: auto;
-    width: 30vw;
-`
+import COLOR from '../../../utils/colors.constants';
 
-export default Title;
+const Logo = styled.h3`
+  margin-left: auto;
+  margin-right: auto;
+  color: ${COLOR.AZUL_CLARO};
+`;
+
+export default Logo;

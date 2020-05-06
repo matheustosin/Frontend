@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
-import Header from '../../components/Header/Header';
+import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import { mentoriasByMentor } from '../../services/mentor';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
@@ -65,7 +65,7 @@ class Mentor extends Component {
   render() {
     return (
       <>
-        <Header />
+        <RedeHeader />
         <Container>
 
           <ProfileInfo
@@ -77,7 +77,7 @@ class Mentor extends Component {
           <div className="titleMentoring">
 
             <h1 className="mainTitle">
-                MINHAS MENTORIAS
+              MINHAS MENTORIAS
             </h1>
             <Link to="/cadastro-mentoria">
               <button type="button" className="buttonPlus">
