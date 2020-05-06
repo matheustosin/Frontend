@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeTextArea from '../../components/RedeTextArea/RedeTextArea';
@@ -8,6 +9,8 @@ import Container from './StyledComponents';
 
 import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
 import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
+
+import { cadastrarMentoria } from '../../services/mentor';
 
 import imgPlus from '../../assets/plus.png';
 
@@ -23,19 +26,13 @@ function CadastroMentoria() {
   const [dayOfWeek, setDayOfWeek] = useState('18');
   const [image, setImage] = useState('');
 
+  const history = useHistory();
 
-  function adicionaDataHora() {
-    alert('teste');
-  }
 
   function attempMentoria(event) {
     event.preventDefault();
-    console.log(title);
-    console.log(description);
-    console.log(knowledgeArea);
-    console.log(mentoringOption);
-    console.log(dateTime);
-    console.log(dayOfWeek);
+    const token = sessionStorage.getItem('token');
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
     const data = new FormData();
     data.append('title', title);
     data.append('description', description);
@@ -44,7 +41,15 @@ function CadastroMentoria() {
     data.append('dateTime', dateTime);
     data.append('dayOfWeek', dayOfWeek);
     data.append('image', image);
-    console.log(data);
+    cadastrarMentoria(headers, data).then((res) => {
+      if (res.status === 200) {
+        alert('Cadastrado com sucesso');
+      }
+      history.push('/mentor');
+    }).catch((err) => {
+      alert('Problema ao cadastrar mentoria');
+      console.error(err);
+    });
   }
   function handleImage() {
     document.getElementById('fileButton').click();
@@ -116,7 +121,6 @@ function CadastroMentoria() {
               <option value="21">22:00</option>
             </select>
 
-            <img className="button-plus" src={imgPlus} onClick={adicionaDataHora} />
           </div>
         </Container.Options>
       </Container.Form>
@@ -126,16 +130,6 @@ function CadastroMentoria() {
         <RedeButton descricao="Criar Mentoria" onClick={attempMentoria} />
 
       </Container.Submit>
-      {/* <div className="vertical-line" />
-
-      <div className="cadmentoria-input-field">
-        <h3 id="titulo">Opções de Mentoria</h3>
-        <input type="checkbox" id="checkbox" />
-        <label htmlFor="online">Online</label>
-        <input type="checkbox" id="checkbox" />
-        <label htmlFor="presencial">Presencial</label>
-        <h3 id="titulo">Datas e Horários </h3>
-      </div> */}
     </Container>
   );
 }

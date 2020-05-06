@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 const Submit = styled.div`
   display: flex;
-  margin: 0 400px;
+  width: 40%;
+  margin: 0 32%;
   align-items: center;
   justify-content: space-around;
 
