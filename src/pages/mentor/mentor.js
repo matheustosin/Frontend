@@ -22,7 +22,7 @@ class Mentor extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
 
