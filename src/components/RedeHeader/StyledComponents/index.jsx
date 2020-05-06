@@ -7,9 +7,10 @@ import Title from './Title';
 
 const Container = styled.div`
   opacity: 1;
+  width: 100%;
   height: 70px;
-  overflow: hidden;
   display: flex;
+  overflow: hidden;
   align-items: center;
   background: ${COLOR.AZUL} 0% 0% no-repeat padding-box;
 `;

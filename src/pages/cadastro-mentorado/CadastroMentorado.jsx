@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Redirect } from 'react-router';
-import { cadastrarUsuario } from '../../services/user';
 import Container from './StyledComponents';
+import AccountImage from '../../assets/account.png';
+import { cadastrarUsuario } from '../../services/user';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
-import AccountImage from '../../assets/account.png';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 import {
   formatCPF,
@@ -16,7 +16,7 @@ import {
   formatMatricula,
 } from '../../utils/maskUtils';
 
-class CadastroAprendiz extends Component {
+class CadastroMentorado extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,6 +74,7 @@ class CadastroAprendiz extends Component {
         })
         .catch((err) => {
           alert('Não foi possível realizar o cadastro. ');
+          console.log(err);
         });
     }
   };
@@ -113,7 +114,7 @@ class CadastroAprendiz extends Component {
     const erroSenha = Boolean(senha && confirmarSenha && senha !== confirmarSenha);
     return (
       <Container width="100vw">
-        <RedeHeader title="cadastro de aprendiz" />
+        <RedeHeader descricao="Cadastro de Mentorado" />
 
         <Container.Image
           src={imageurl}
@@ -199,4 +200,4 @@ class CadastroAprendiz extends Component {
   }
 }
 
-export default withRouter(CadastroAprendiz);
+export default withRouter(CadastroMentorado);

@@ -146,7 +146,7 @@ class CadastroMentor extends Component {
     }
     return (
       <Container>
-        <RedeHeader title="cadastro de mentor" />
+        <RedeHeader descricao="Cadastro de Mentor" />
 
         <Container.FlexContainer>
           <Container.Item>
