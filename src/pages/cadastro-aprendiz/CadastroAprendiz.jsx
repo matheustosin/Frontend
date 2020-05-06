@@ -4,8 +4,8 @@ import { cadastrarUsuario } from '../../services/user';
 import { Redirect } from 'react-router';
 import Container from './StyledComponents';
 import RedeButton from '../../components/RedeButton/RedeButton';
-import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
+import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import AccountImage from '../../assets/account.png';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
@@ -135,13 +135,12 @@ class CadastroAprendiz extends Component {
             <RedeTextField descricao="Confirmar Senha" valor={confirmarSenha} tipo="password" onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })} msgAjuda={erroSenha ? 'Senhas não conferem' : ''} erro={erroSenha} />
 
             <Container.TermsContainer>
-              <Container.RedeCheckbox id="termos" valor={acceptTerms} onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })} />
+              <RedeCheckbox id="termos" value={acceptTerms} onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })} />
               <Container.Label for="termos">Aceito os termos de uso</Container.Label>
             </Container.TermsContainer>
 
-            <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
-
-          </Container>
+            <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} /> 
+          </Container> 
 
         </Container.FieldContainer>
       </Container>
