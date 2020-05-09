@@ -10,3 +10,4 @@ export default {
 
 export const Email = () => <RedeTextField descricao="Email" />;
 export const Senha = () => <RedeTextField descricao="Senha" tipo="password" />;
+export const Erro = () => <RedeTextField descricao="Senha" tipo="password" erro msgAjuda="Mensagem de Ajuda" />;

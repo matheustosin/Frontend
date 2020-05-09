@@ -5,19 +5,19 @@ import logo from '../../assets/logo2.png';
 
 import Container from './StyledComponents';
 
-const Header = ({ descricao }) => (
+const RedeHeader = ({ descricao }) => (
   <Container>
     <Container.Logo src={logo} />
     <Container.Title>{descricao}</Container.Title>
   </Container>
 );
 
-Header.propTypes = {
+RedeHeader.propTypes = {
   descricao: string,
 };
 
-Header.defaultProps = {
+RedeHeader.defaultProps = {
   descricao: '',
 };
 
-export default Header;
+export default RedeHeader;

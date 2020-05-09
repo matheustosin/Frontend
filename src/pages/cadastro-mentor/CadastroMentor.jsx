@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
-import user from '../../assets/user.png';
+import AccountImage from '../../assets/account.png';
 import { cadastrarUsuario } from '../../services/user';
 import { formatCPF, formatTelefone } from '../../utils/maskUtils';
 import Container from './StyledComponents';
@@ -8,6 +8,7 @@ import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
+import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
 
 class CadastroMentor extends Component {
   constructor(props) {
@@ -21,22 +22,11 @@ class CadastroMentor extends Component {
       linkedin: '',
       image: '',
       phone: '',
-      areas: [],
-      imageurl: user,
+      areas: '', // [],
+      imageurl: AccountImage,
       acceptTerms: false,
       redirect: false,
     };
-
-    this.handleName = this.handleName.bind(this);
-    this.handleCPF = this.handleCPF.bind(this);
-    this.handlePhoneNumber = this.handlePhoneNumber.bind(this);
-    this.handleLinkedin = this.handleLinkedin.bind(this);
-    this.handleEmail = this.handleEmail.bind(this);
-    this.handlePassword = this.handlePassword.bind(this);
-    this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
-    this.handleAreas = this.handleAreas.bind(this);
-    this.handlePrivacyTerms = this.handlePrivacyTerms.bind(this);
-    this.handleImage = this.handleImage.bind(this);
   }
 
   attemptRegister = (event) => {
@@ -82,47 +72,11 @@ class CadastroMentor extends Component {
             this.setState({ redirect: true });
           }
         })
-        .catch((err) => {
+        .catch(() => {
           alert('Não foi possível realizar o cadastro. ');
         });
     }
   };
-
-  handleName(event) {
-    this.setState({ name: event.target.value });
-  }
-
-  handleCPF(event) {
-    this.setState({ cpf: formatCPF(event.target.value) });
-  }
-
-  handlePhoneNumber(event) {
-    this.setState({ phone: formatTelefone(event.target.value) });
-  }
-
-  handleLinkedin(event) {
-    this.setState({ linkedin: event.target.value });
-  }
-
-  handleEmail(event) {
-    this.setState({ email: event.target.value });
-  }
-
-  handlePassword(event) {
-    this.setState({ password: event.target.value });
-  }
-
-  handleConfirmPassword(event) {
-    this.setState({ confirmPassword: event.target.value });
-  }
-
-  handleAreas(event) {
-    this.setState({ areas: [event.target.value] });
-  }
-
-  handlePrivacyTerms(event) {
-    this.setState({ acceptTerms: event.target.checked });
-  }
 
   handleImage() {
     let url;
@@ -144,15 +98,28 @@ class CadastroMentor extends Component {
     if (this.state.redirect) {
       return <Redirect push to="/" />;
     }
+    const {
+      name,
+      cpf,
+      email,
+      password,
+      confirmPassword,
+      linkedin,
+      phone,
+      areas,
+      imageurl,
+      acceptTerms,
+    } = this.state;
+    const erroSenha = Boolean(password && confirmPassword && password !== confirmPassword);
     return (
       <Container>
         <RedeHeader descricao="Cadastro de Mentor" />
 
-        <Container.FlexContainer>
+        <Container.FlexContainer style={{ marginTop: '60px' }}>
           <Container.Item>
-            <Container.UserImage src={this.state.imageurl} />
+            <Container.UserImage src={imageurl} />
             <input id="fileButton" type="file" hidden />
-            <Container>
+            <Container style={{ marginBottom: '2vh' }}>
               <RedeButton descricao="Adicionar Foto" claro onClick={this.handleImage} />
             </Container>
           </Container.Item>
@@ -162,50 +129,59 @@ class CadastroMentor extends Component {
           <Container.Item>
             <RedeTextField
               descricao="Nome Completo"
-              valor={this.state.name}
-              onChange={this.handleName}
+              valor={name}
+              onChange={(evt) => this.setState({ name: evt.target.value })}
             />
-            <RedeTextField descricao="CPF" valor={this.state.cpf} onChange={this.handleCPF} />
+            <RedeTextField
+              descricao="CPF"
+              valor={cpf}
+              onChange={(evt) => this.setState({ cpf: formatCPF(evt.target.value) })}
+            />
             <RedeTextField
               descricao="Telefone"
-              valor={this.state.phone}
-              onChange={this.handlePhoneNumber}
+              valor={phone}
+              onChange={(evt) => this.setState({ phone: formatTelefone(evt.target.value) })}
             />
             <RedeTextField
               descricao="Áreas de Conhecimento"
-              valor={this.state.areas}
-              onChange={this.handleAreas}
+              valor={areas}
+              onChange={(evt) => this.setState({ areas: evt.target.value })}
             />
             <RedeTextField
               descricao="LinkedIn"
-              valor={this.state.linkedin}
-              onChange={this.handleLinkedin}
+              valor={linkedin}
+              onChange={(evt) => this.setState({ linkedin: evt.target.value })}
             />
           </Container.Item>
 
           <RedeHorizontalSeparator />
 
           <Container.Item>
-            <RedeTextField descricao="Email" valor={this.state.email} onChange={this.handleEmail} />
+            <RedeTextField descricao="Email" valor={email} onChange={(evt) => this.setState({ email: evt.target.value })} />
             <RedeTextField
               descricao="Senha"
               tipo="password"
-              valor={this.state.password}
-              onChange={this.handlePassword}
+              valor={password}
+              onChange={(evt) => this.setState({ password: evt.target.value })}
             />
             <RedeTextField
               descricao="Confirmação de Senha"
               tipo="password"
-              valor={this.state.confirmPassword}
-              onChange={this.handleConfirmPassword}
+              valor={confirmPassword}
+              onChange={(evt) => this.setState({ confirmPassword: evt.target.value })}
+              msgAjuda={erroSenha ? 'Senhas não conferem' : ''}
+              erro={erroSenha}
             />
-            <RedeTextField
-              descricao="Aceito o Termo de Privacidade"
-              tipo="checkbox"
-              valor={this.state.acceptTerms}
-              onChange={this.handlePrivacyTerms}
+            {/* <Container.TermsContainer> */}
+            <RedeCheckbox
+              id="termos"
+              value={acceptTerms}
+              onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })}
             />
-
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label htmlFor="termos">TODO: Aceito os termos de uso</label>
+            {/* <Container.Label for="termos">Aceito os termos de uso</Container.Label> */}
+            {/* </Container.TermsContainer> */}
             <Container>
               <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
             </Container>

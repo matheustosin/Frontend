@@ -1,12 +1,11 @@
 import React from 'react';
 import { withInfo } from '@storybook/addon-info';
-import RedeTextField from './RedeTextField';
+import RedeInputRadio from './RedeInputRadio';
 
 export default {
-  title: 'RedeTextField',
-  component: RedeTextField,
+  title: 'RedeInputRadio',
+  component: RedeInputRadio,
   decorators: [withInfo],
 };
 
-export const Email = () => <RedeTextField descricao="Email" />;
-export const Senha = () => <RedeTextField descricao="Senha" tipo="password" />;
+export const padrao = () => <RedeInputRadio />;

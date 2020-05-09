@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { Redirect } from 'react-router';
-import Container from './StyledComponents';
-import AccountImage from '../../assets/account.png';
+import { Redirect, withRouter } from 'react-router';
 import { cadastrarUsuario } from '../../services/user';
-import RedeButton from '../../components/RedeButton/RedeButton';
-import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
+import Container from '../cadastro-mentor/StyledComponents';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
+import AccountImage from '../../assets/account.png';
+import RedeButton from '../../components/RedeButton/RedeButton';
+import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
 import {
   formatCPF,
   formatTelefone,
@@ -81,8 +80,8 @@ class CadastroMentorado extends Component {
 
   handleImage() {
     let url;
-    document.getElementById('imageFile').click();
-    document.getElementById('imageFile').onchange = (event) => {
+    document.getElementById('fileButton').click();
+    document.getElementById('fileButton').onchange = (event) => {
       try {
         url = URL.createObjectURL(event.target.files[0]);
       } catch (e) {
@@ -113,20 +112,21 @@ class CadastroMentorado extends Component {
     } = this.state;
     const erroSenha = Boolean(senha && confirmarSenha && senha !== confirmarSenha);
     return (
-      <Container width="100vw">
+      <Container>
         <RedeHeader descricao="Cadastro de Mentorado" />
 
-        <Container.Image
-          src={imageurl}
-          width="100px"
-          height="100px"
-          style={{ marginBottom: '2vh' }}
-        />
-        <input id="imageFile" type="file" hidden />
-        <RedeButton descricao="Adicionar Foto" onClick={this.handleImage} claro />
+        <Container.FlexContainer style={{ marginTop: '60px' }}>
+          <Container.Item>
+            <Container.UserImage src={imageurl} />
+            <input id="fileButton" type="file" hidden />
+            <Container style={{ marginBottom: '2vh' }}>
+              <RedeButton descricao="Adicionar Foto" claro onClick={this.handleImage} />
+            </Container>
+          </Container.Item>
+        </Container.FlexContainer>
 
-        <Container.FieldContainer>
-          <Container justify="start" height="100%">
+        <Container.FlexContainer>
+          <Container.Item>
             <RedeTextField
               descricao="Nome Completo"
               valor={nome}
@@ -149,20 +149,16 @@ class CadastroMentorado extends Component {
               valor={telefone}
               onChange={(evt) => this.setState({ telefone: formatTelefone(evt.target.value) })}
             />
-          </Container>
-
-          {/* Isso foi necessário pois o componente "RedeHorizontalSeparator"
-                não apresentou um comportamento responsivo em algumas resoluções */}
-          <Container.SeparatorWrapper>
-            <RedeHorizontalSeparator />
-          </Container.SeparatorWrapper>
-
-          <Container height="100%">
             <RedeTextField
               descricao="Matrícula"
               valor={matricula}
               onChange={(evt) => this.setState({ matricula: formatMatricula(evt.target.value) })}
             />
+          </Container.Item>
+
+          <RedeHorizontalSeparator />
+
+          <Container.Item>
             <RedeTextField
               descricao="Email"
               valor={email}
@@ -175,7 +171,7 @@ class CadastroMentorado extends Component {
               onChange={(evt) => this.setState({ senha: evt.target.value })}
             />
             <RedeTextField
-              descricao="Confirmar Senha"
+              descricao="Confirmação de Senha"
               valor={confirmarSenha}
               tipo="password"
               onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })}
@@ -183,18 +179,23 @@ class CadastroMentorado extends Component {
               erro={erroSenha}
             />
 
-            <Container.TermsContainer>
-              <RedeCheckbox
-                id="termos"
-                value={acceptTerms}
-                onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })}
-              />
-              <Container.Label for="termos">Aceito os termos de uso</Container.Label>
-            </Container.TermsContainer>
+            {/* <Container.TermsContainer> */}
+            <RedeCheckbox
+              id="termos"
+              value={acceptTerms}
+              onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })}
+            />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label htmlFor="termos">TODO: Aceito os termos de uso</label>
+            {/* <Container.Label for="termos">Aceito os termos de uso</Container.Label> */}
+            {/* </Container.TermsContainer> */}
 
-            <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
-          </Container>
-        </Container.FieldContainer>
+            <Container>
+              <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
+            </Container>
+
+          </Container.Item>
+        </Container.FlexContainer>
       </Container>
     );
   }
