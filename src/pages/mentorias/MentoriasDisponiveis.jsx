@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
-class MentoriasDisponiveis extends Component {
+function MentoriasDisponiveis() {
 
-    
+    return (
+        "teste"
+    );
 }
 
 export default MentoriasDisponiveis;
