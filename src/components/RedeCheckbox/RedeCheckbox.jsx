@@ -6,19 +6,20 @@ import COLOR from '../../utils/colors.constants';
 const Checkbox = (props) => <input type="checkbox" {...props} />;
 
 const RedeCheckbox = styled(Checkbox)`
-  position: relative;
-  height: 25px;
   width: 25px;
-  appearance: none;
-  border: 3px solid ${COLOR.AZUL};
-  border-radius: 4px;
-  cursor: pointer;
-  text-align: center;
+  height: 25px;
   display: flex;
-  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 4px;
+  position: relative;
+  text-align: center;
   align-items: center;
+  justify-content: center;
+  border: 3px solid ${COLOR.AZUL};
 
-  &:focus{
+  &:focus {
     outline: none;
   }
 

@@ -193,7 +193,6 @@ class CadastroMentorado extends Component {
             <Container>
               <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
             </Container>
-
           </Container.Item>
         </Container.FlexContainer>
       </Container>

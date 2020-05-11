@@ -11,7 +11,7 @@ const Circle = styled.div`
   justify-content: center;
   border: 2px solid ${COLOR.AZUL};
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 767px) {
     width: 210px;
     height: 210px;
   }

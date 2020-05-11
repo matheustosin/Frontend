@@ -8,7 +8,6 @@ import { mentoriasByMentor } from '../../services/mentor';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
 
-
 import './mentor.css';
 
 class Mentor extends Component {
