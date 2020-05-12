@@ -10,6 +10,8 @@ function MentoriasDisponiveis() {
         <Container>
             <RedeHeader />
             <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
+            <Container.Search />
+            
         </Container>
     );
 }
