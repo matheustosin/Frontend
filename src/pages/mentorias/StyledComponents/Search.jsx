@@ -16,6 +16,16 @@ const Search = styled.input`
     background-image: url(${SEARCH_ICON});
     background-position: 99% 50%;
     background-repeat: no-repeat;
+  
+    @media only screen and (max-width: 768px) {
+        /* phones */
+        width: 80%;
+    }
+    
+    @media only screen and (max-width: 767px) and (orientation: portrait) {
+        /* portrait phones */
+        width: 80%;
+    }
 `;
 
 Search.defaultProps = {
