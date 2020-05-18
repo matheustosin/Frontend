@@ -5,7 +5,7 @@ display:flex;
 flex-direction:row;
 justify-content:space-between;
 @media screen and (max-width:1000px){
-  flex-direction:column;
+  flex-direction:row;
   justify-content:space-between;
 }
 `
