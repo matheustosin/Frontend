@@ -6,7 +6,7 @@ height: 100%;
 border-radius : 0px 0px 8px 8px;
 @media screen and (max-width:1000px){
     width: 100%;
-    height: 70vh;
+    height: 55vh;
   }
 `;
 
