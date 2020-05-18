@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import Logo from './logo';
-import InfoHolder from './info-holder';
+import InfoHolder from './header';
 
 
 const Container = styled.div`

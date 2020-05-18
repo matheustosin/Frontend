@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
 const Title = styled.h1`
-    font-family: Roboto;
-    font-size: 30px/39px;
-    letter-spacing : 0;
+    font-size: 2.1em;
 `;
 
-export default Title;
+export default Title;   
