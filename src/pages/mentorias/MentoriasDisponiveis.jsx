@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCard/RedeCard';
+import Caminho from './StyledComponents/Caminho';
 
 import Container from './StyledComponents';
 
@@ -18,6 +19,7 @@ function MentoriasDisponiveis() {
     return (
         <Container>
             <RedeHeader />
+            <Caminho/>
             <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
             <Container.Search onChange={(e) => setSearch(e.target.value)}  />
             <br/>
