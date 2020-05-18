@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import RedeButton from '../../RedeButton/RedeButton';
 
 const CardContent = styled.div`
 display:flex;
@@ -14,5 +15,5 @@ color:#00273F;
   padding:20px;
   margin-bottom:20px;
 }
-`
-export default CardContent;   
+`;
+export default CardContent;
