@@ -4,10 +4,10 @@ const CardFooterContent = styled.div`
 display:flex;
 flex-direction:row;
 justify-content:space-between;
+align-items:center;
 @media screen and (max-width:1000px){
   flex-direction:row;
   justify-content:space-between;
-    
 }
 `
 export default CardFooterContent;   

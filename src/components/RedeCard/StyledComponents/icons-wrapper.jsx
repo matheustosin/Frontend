@@ -6,6 +6,14 @@ const IconsWrapper = styled.div`
   display:flex;
   flex-direction:row;
   align-items:center;
-`
+  button{
+    display:none;
+  }
+  @media screen and (max-width:1000px){
+    button{
+      display:inline-block;
+    }
+  }
+`;
 
-export default IconsWrapper;   
+export default IconsWrapper;

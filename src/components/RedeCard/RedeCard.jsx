@@ -12,6 +12,8 @@ import CardHeader from './StyledComponents/card-header'
 import CardLogo from './StyledComponents/card-logo'
 import CardFooter from './StyledComponents/card-footer'
 import CardContent from './StyledComponents/card-content';
+import IconsWrapper from './StyledComponents/icons-wrapper';
+
 const Card = ({
   title, description, image
 }) => (
@@ -36,11 +38,13 @@ const Card = ({
               <RedeTimeSlot descricao="SEG - 18:00" deselecionado="true" />
               <RedeTimeSlot descricao="SEG - 18:00" selecionado="true" />
             </div>
-            <div>
+            <IconsWrapper>
+          <CardHeader.Button descricao="VER TODOS OS HORÁRIOS" claro = 'true' onClick={() => { alert('test') }} />
+
               <RedeIcon imageUrl={remove} />
               <RedeIcon imageUrl={visibility} />
               <RedeIcon imageUrl={edition} />
-            </div>
+            </IconsWrapper>
           </CardFooter.Content>
         </CardFooter>
       </CardContent>
