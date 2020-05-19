@@ -10,7 +10,7 @@ function MentoriasDisponiveis() {
 
     const [search, setSearch] = useState('');
 
-    function attemptSearch(event) {
+    function attemptSearch(event) { 
         console.log(search);
     }
     
@@ -19,11 +19,11 @@ function MentoriasDisponiveis() {
     return (
         <Container>
             <RedeHeader />
-            <Caminho/>
+            <Caminho />
             <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
             <Container.Search onChange={(e) => setSearch(e.target.value)}  />
             <br/>
-            <Card />
+            <Card title="MENTORIA" description="rersdsdhshdsjdhjshdhsjdhjadhkshkhkashfkasjhfkjshfkasdhafkshfkshfaskfhksdfasfhaskfasdfkjsdafkhfjkashfkashfkashfkashfakfh" />
         </Container>
     );
 }

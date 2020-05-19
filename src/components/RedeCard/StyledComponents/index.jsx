@@ -8,7 +8,8 @@ const Container = styled.div`
     overflow: hidden;
     display: flex;
     width: 1000px;
-    height: 210px;
+    min-height: 210px;
+    height:auto;
     margin-bottom: 50px;
     flex-direction:row;
     justify-content:center;
@@ -16,7 +17,8 @@ const Container = styled.div`
     @media screen and (max-width:1000px){
         flex-direction:column;
         width:85vw;
-        height:80vh;
+        min-height:80vh;
+        height:auto;
     }
 `;
 
