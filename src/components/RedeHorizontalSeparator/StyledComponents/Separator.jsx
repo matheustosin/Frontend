@@ -6,13 +6,13 @@ const Separator = styled.hr`
 height: 350px;
 border: 4px solid ${COLOR.AZUL_CLARO};
 border-radius: 5px;
-margin-left: 75px;
-margin-right: 75px;
+margin-left: 6vw;
+margin-right: 6vw;
 margin-top: 25px;
 margin-bottom: 25px;
 width: 0px;
 
-@media (max-width: 1199px) {
+@media (max-width: 750px) {
   display: none;
 }
 `;

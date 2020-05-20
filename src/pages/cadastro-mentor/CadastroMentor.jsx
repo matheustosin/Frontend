@@ -116,7 +116,7 @@ class CadastroMentor extends Component {
         <RedeHeader descricao="Cadastro de Mentor" />
 
         <Container.FlexContainer style={{ marginTop: '60px' }}>
-          <Container.Item>
+          <Container.Item style={{ textAlign: 'center' }}>
             <Container.UserImage src={imageurl} />
             <input id="fileButton" type="file" hidden />
             <Container style={{ marginBottom: '2vh' }}>
@@ -172,16 +172,17 @@ class CadastroMentor extends Component {
               msgAjuda={erroSenha ? 'Senhas não conferem' : ''}
               erro={erroSenha}
             />
-            {/* <Container.TermsContainer> */}
-            <RedeCheckbox
-              id="termos"
-              value={acceptTerms}
-              onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })}
-            />
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label htmlFor="termos">TODO: Aceito os termos de uso</label>
-            {/* <Container.Label for="termos">Aceito os termos de uso</Container.Label> */}
-            {/* </Container.TermsContainer> */}
+
+            <Container.FlexContainer style={{ flexDirection: 'row' }}>
+              <RedeCheckbox
+                id="termos"
+                value={acceptTerms}
+                onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })}
+              />
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label htmlFor="termos" style={{ marginTop: '5px' }}>Aceito os termos de uso</label>
+            </Container.FlexContainer>
+
             <Container>
               <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
             </Container>

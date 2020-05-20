@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, withRouter } from 'react-router';
 import { cadastrarUsuario } from '../../services/user';
-import Container from '../cadastro-mentor/StyledComponents';
+import Container from '../cadastro-mentor/StyledComponents'; //?
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
@@ -116,7 +116,7 @@ class CadastroMentorado extends Component {
         <RedeHeader descricao="Cadastro de Mentorado" />
 
         <Container.FlexContainer style={{ marginTop: '60px' }}>
-          <Container.Item>
+          <Container.Item style={{ textAlign: 'center' }}>
             <Container.UserImage src={imageurl} />
             <input id="fileButton" type="file" hidden />
             <Container style={{ marginBottom: '2vh' }}>
@@ -179,16 +179,15 @@ class CadastroMentorado extends Component {
               erro={erroSenha}
             />
 
-            {/* <Container.TermsContainer> */}
-            <RedeCheckbox
-              id="termos"
-              value={acceptTerms}
-              onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })}
-            />
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label htmlFor="termos">TODO: Aceito os termos de uso</label>
-            {/* <Container.Label for="termos">Aceito os termos de uso</Container.Label> */}
-            {/* </Container.TermsContainer> */}
+            <Container.FlexContainer style={{ flexDirection: 'row' }}>
+              <RedeCheckbox
+                id="termos"
+                value={acceptTerms}
+                onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })}
+              />
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label htmlFor="termos" style={{ marginTop: '5px' }}>Aceito os termos de uso</label>
+            </Container.FlexContainer>
 
             <Container>
               <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
