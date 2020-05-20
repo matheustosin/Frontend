@@ -12,7 +12,10 @@ margin-top: 25px;
 margin-bottom: 25px;
 width: 0px;
 
-@media (max-width: 750px) {
+@media (max-width: 767px) {
+  display: none;
+}
+@media (max-width: 1024px) {
   display: none;
 }
 `;

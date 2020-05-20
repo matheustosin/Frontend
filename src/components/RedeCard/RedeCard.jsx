@@ -40,7 +40,7 @@ const IconGroup = styled.div`
   .footerBtn {
     display: none;
   }
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     .footerBtn {
       display: flex;
       text-align: center;
@@ -52,7 +52,7 @@ const Bottom = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 5px;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     flex-direction: column;
     justify-content: space-between;
   }
@@ -76,7 +76,7 @@ const TimeSlotContainer = styled.div`
   width: 70%;
   height: auto;
   display: flex;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     margin-bottom: 25px;
   }
 `;
@@ -106,7 +106,7 @@ const ContentSide = styled.div`
   font-weight: 600;
   color: #00273f;
 
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     width: 90%;
     padding: 20px;
     margin-bottom: 20px;
@@ -128,7 +128,7 @@ const Logo = styled.img`
   width: 40%;
   height: 100%;
   border-radius: 8px 0px 0px 8px;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     width: 102%;
     height: 50vh;
     border-radius: 0px 8px 8px 0px;
@@ -143,7 +143,7 @@ const Button = styled.button`
   color: #00273f;
   border-radius: 10px;
   margin: 0px !important;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     display: none;
   }
 `;

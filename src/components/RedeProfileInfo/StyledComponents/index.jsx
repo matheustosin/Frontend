@@ -11,7 +11,7 @@ const Container = styled.div`
   height: 165px;
   align-items: space-between;
   color: #00273f;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
     width: 85vw;
   }
 `;

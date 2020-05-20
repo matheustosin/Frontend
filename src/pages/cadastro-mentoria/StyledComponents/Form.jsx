@@ -5,7 +5,7 @@ const Form = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 1024px) {
     flex-direction: column;
   }
 `;

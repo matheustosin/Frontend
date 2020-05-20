@@ -4,7 +4,7 @@ const Form = styled.div`
   display: flex;
   justify-content: center;
 
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 1024px) {
     flex-direction: column;
   }
 `;
