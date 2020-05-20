@@ -8,6 +8,7 @@ import Register from './pages/register/Register';
 import Mentor from './pages/mentor/mentor';
 import CadastroAprendiz from './pages/cadastro-aprendiz/CadastroAprendiz';
 import CadastroMentoria from './pages/cadastro-mentoria/CadastroMentoria';
+import Aprendiz from './pages/aprendiz/Aprendiz';
 
 
 export default function Routes() {
@@ -21,6 +22,7 @@ export default function Routes() {
         <Route path="/main" component={Main} />
         <Route path="/register" component={Register} />
         <Route path="/mentor" component={Mentor} />
+        <Route path="/aprendiz" component={Aprendiz} />
       </Switch>
     </BrowserRouter>
   );
