@@ -76,16 +76,14 @@ class Mentor extends Component {
   }
 
   changeVisibility = (mentoria) => {
-    alert('VISIBILITY FUNCTION CALLED!');
     const flagDesativado = !mentoria.flagDesativado;
-    mentoria.flagDesativado = flagDesativado;
+    alert(mentoria.flagDesativado);
     const token = sessionStorage.getItem('token');
     const config = {
       param: { flagDesativado },
       headers: { Authorization: `Bearer ${token}` },
     };
     atualizarMentoria(config);
-    alert(flagDesativado);
   }
 
   render() {
