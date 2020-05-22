@@ -10,6 +10,7 @@ import { urlFiles } from '../../services/http';
 import Subtitle from './StyledComponents/subtitle';
 
 import './mentor.css';
+import RedeButton from '../../components/RedeButton/RedeButton';
 
 class Mentor extends Component {
   constructor(props) {
@@ -47,8 +48,8 @@ class Mentor extends Component {
 
     mentoriasByMentor(headers).then(
       (res) => {
-        if (res.data.length === 0) {
-          const mentorias = <Subtitle> Nenhuma mentoria cadastrada! </Subtitle>;
+        if (res.data.length !== 0) {
+          const mentorias = <Subtitle> Nenhuma mentoria cadastrada!</Subtitle>;
           this.setState({
             mentorias,
           });
@@ -59,7 +60,7 @@ class Mentor extends Component {
               title={mentoria.title}
               description={mentoria.description}
               image={`${urlFiles}/${mentoria.image}`}
-              visibleFunction = {changeVisibility}
+              visibleFunction={this.changeVisibility}
             />
           ));
           this.setState({
@@ -70,12 +71,9 @@ class Mentor extends Component {
     ).catch((err) => {
       console.error(err);
     });
-
-    changeVisibility(mentoria){
-      return ;
-    }
   }
 
+  changeVisibility = () => true
 
   render() {
     return (
@@ -90,14 +88,11 @@ class Mentor extends Component {
           />
 
           <div className="titleMentoring">
-
             <h1 className="mainTitle">
               MINHAS MENTORIAS
             </h1>
             <Link to="/cadastro-mentoria">
-              <button type="button" className="buttonPlus">
-                + NOVA MENTORIA
-              </button>
+              <RedeButton descricao="+ NOVA MENTORIA" />
             </Link>
           </div>
           {this.state.mentorias}

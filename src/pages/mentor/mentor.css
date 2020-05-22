@@ -5,8 +5,9 @@
     margin-bottom: 21px;
     width:1000px;
     margin-top:30px;
+    
 }
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 500px){
     .titleMentoring{    
         flex-direction: column;   
         justify-content:center;
@@ -18,7 +19,7 @@
     color: #00273F;
     font-size : 40px;
     font-weight: 600;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
 
 }
 .buttonPlus{
