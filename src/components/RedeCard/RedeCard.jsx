@@ -1,64 +1,71 @@
 import React from 'react';
-import styled from 'styled-components';
+import { string, func } from 'prop-types';
 import Container from './StyledComponents';
-import { string, func, bool } from 'prop-types';
 import visibility from '../../assets/visibility-button.png';
 import remove from '../../assets/rubbish-bin-delete-button.png';
 import edition from '../../assets/create-new-pencil-button.png';
 import RedeTimeSlot from '../RedeTimeSlot/RedeTimeSlot';
 import RedeIcon from '../RedeIcon/RedeIcon';
 import CardDescription from './StyledComponents/card-description';
-import CardHeader from './StyledComponents/card-header'
-import CardLogo from './StyledComponents/card-logo'
-import CardFooter from './StyledComponents/card-footer'
+import CardHeader from './StyledComponents/card-header';
+import CardLogo from './StyledComponents/card-logo';
+import CardFooter from './StyledComponents/card-footer';
 import CardContent from './StyledComponents/card-content';
 import IconsWrapper from './StyledComponents/icons-wrapper';
+import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 
 const Card = ({
-  title, description, image
+  title, description, image, visibleFunction, removeFunction, editFunction,
 }) => (
-    <Container>
-      <CardLogo src={image} />
-      <CardContent>
-        <CardHeader>
-          <CardHeader.Title>
-            {title}
-          </CardHeader.Title>
-          <CardHeader.Button descricao="VER TODOS OS HORÁRIOS" /*claro = 'true'*/ onClick={() => { alert('test') }} />
-        </CardHeader>
-        <CardDescription>
-          {description}
-        </CardDescription>
-        <CardFooter>
-          <CardFooter.SubTitle>
-            Próximos horários
-          </CardFooter.SubTitle>
-          <CardFooter.Content>
+  <Container>
+    <CardLogo src={image} />
+    <CardContent>
+      <CardHeader>
+        <CardHeader.Title>
+          {title}
+        </CardHeader.Title>
+        <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { alert('test'); }} />
+      </CardHeader>
+      <CardDescription>
+        {description}
+      </CardDescription>
+      <CardFooter>
+        <CardFooter.SubTitle>
+          Próximos horários
+        </CardFooter.SubTitle>
+        <CardFooter.Content>
+          <TimeSlotWrapper>
+            <RedeTimeSlot descricao="SEG - 18:00" selecionado={false} />
+            <RedeTimeSlot descricao="SEG - 18:00" selecionado />
+          </TimeSlotWrapper>
+          <IconsWrapper>
+            <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
             <div>
-              <RedeTimeSlot descricao="SEG - 18:00" deselecionado="true" />
-              <RedeTimeSlot descricao="SEG - 18:00" selecionado="true" />
+              <RedeIcon imageUrl={remove} onClick={removeFunction} />
+              <RedeIcon imageUrl={visibility} onClick={visibleFunction} />
+              <RedeIcon imageUrl={edition} onClick={editFunction} />
             </div>
-            <IconsWrapper>
-          <CardHeader.Button descricao="VER TODOS OS HORÁRIOS" claro = 'true' onClick={() => { alert('test') }} />
-
-              <RedeIcon imageUrl={remove} />
-              <RedeIcon imageUrl={visibility} />
-              <RedeIcon imageUrl={edition} />
-            </IconsWrapper>
-          </CardFooter.Content>
-        </CardFooter>
-      </CardContent>
-    </Container>
-  );
+          </IconsWrapper>
+        </CardFooter.Content>
+      </CardFooter>
+    </CardContent>
+  </Container>
+);
 
 Card.propTypes = {
-  descricao: string,
+  description: string,
   title: string,
+  visibleFunction: func,
+  removeFunction: func,
+  editFunction: func,
 };
 
 Card.defaultProps = {
-  descricao: '',
+  description: '',
   title: '',
+  visibleFunction: null,
+  removeFunction: null,
+  editFunction: null,
 };
 
 export default Card;

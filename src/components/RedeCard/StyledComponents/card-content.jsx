@@ -12,8 +12,8 @@ font-weight: 600;
 color:${COLORS.AZUL};
 @media screen and (max-width:1000px){
   width:90%;
-  padding:20px;
-  margin-bottom:20px;
+  padding:0px;
+  margin-bottom:0px;
 }
 `;
 export default CardContent;

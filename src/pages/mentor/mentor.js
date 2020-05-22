@@ -7,7 +7,7 @@ import Header from '../../components/Header/Header';
 import { mentoriasByMentor } from '../../services/mentor';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
-
+import Subtitle from './StyledComponents/subtitle';
 
 import './mentor.css';
 
@@ -44,24 +44,36 @@ class Mentor extends Component {
       alert('Problema ao buscar informações. Tente novamente.');
       console.error(err);
     });
+
     mentoriasByMentor(headers).then(
       (res) => {
-        const mentorias = res.data.map((mentoria) => (
-          <Card
-            key={mentoria}
-            title={mentoria.title}
-            description={mentoria.description}
-            image={`${urlFiles}/${mentoria.image}`}
-          />
-        ));
-        this.setState({
-          mentorias,
-        });
+        if (res.data.length === 0) {
+          const mentorias = <Subtitle> Nenhuma mentoria cadastrada! </Subtitle>;
+          this.setState({
+            mentorias,
+          });
+        } else {
+          const mentorias = res.data.map((mentoria) => (
+            <Card
+              key={mentoria}
+              title={mentoria.title}
+              description={mentoria.description}
+              image={`${urlFiles}/${mentoria.image}`}
+              visibleFunction = {changeVisibility}
+            />
+          ));
+          this.setState({
+            mentorias,
+          });
+        }
       },
     ).catch((err) => {
-      alert('Problema ao buscar mentorias. Tente novamente.');
       console.error(err);
     });
+
+    changeVisibility(mentoria){
+      return ;
+    }
   }
 
 

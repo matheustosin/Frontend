@@ -1,5 +1,8 @@
 import styled from 'styled-components';
-
+import CardLogo from './card-logo';
+import CardHeader from './card-header';
+import CardDescription from './card-description';
+import CardFooter from './card-footer';
 
 const Container = styled.div`
     border: 3px solid #00273F;
@@ -14,12 +17,15 @@ const Container = styled.div`
     flex-direction:row;
     justify-content:center;
     align-items:center;
-    @media screen and (max-width:1000px){
+    font-family : Roboto, sans-serif;
+    @media screen and (max-width:500px){
         flex-direction:column;
         width:85vw;
         min-height:80vh;
         height:auto;
-    }
+        margin-bottom: 0px;
+    }    
+}
 `;
 
 export default Container;
