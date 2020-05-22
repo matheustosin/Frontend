@@ -8,8 +8,8 @@ import { mentoriasByMentor } from '../../services/mentor';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
 import Subtitle from './StyledComponents/subtitle';
-
-import './mentor.css';
+import Title from './StyledComponents/title';
+import HeaderPage from './StyledComponents/header-page';
 import RedeButton from '../../components/RedeButton/RedeButton';
 
 class Mentor extends Component {
@@ -86,15 +86,14 @@ class Mentor extends Component {
             linkedinProfile={this.state.linkedin}
             image={this.state.image}
           />
-
-          <div className="titleMentoring">
-            <h1 className="mainTitle">
+          <HeaderPage>
+            <Title>
               MINHAS MENTORIAS
-            </h1>
+            </Title>
             <Link to="/cadastro-mentoria">
               <RedeButton descricao="+ NOVA MENTORIA" />
             </Link>
-          </div>
+          </HeaderPage>
           {this.state.mentorias}
         </Container>
       </>
