@@ -25,6 +25,7 @@ const Container = styled.div`
         height:auto;
         margin-bottom: 0px;
     }    
+    ${({ visible }) => visible && visible}
 }
 `;
 

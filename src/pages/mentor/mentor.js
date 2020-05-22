@@ -11,6 +11,7 @@ import Subtitle from './StyledComponents/subtitle';
 import Title from './StyledComponents/title';
 import HeaderPage from './StyledComponents/header-page';
 import RedeButton from '../../components/RedeButton/RedeButton';
+import { atualizarMentoria } from '../../services/mentoria';
 
 class Mentor extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class Mentor extends Component {
 
     mentoriasByMentor(headers).then(
       (res) => {
-        if (res.data.length !== 0) {
+        if (res.data.length === 0) {
           const mentorias = <Subtitle> Nenhuma mentoria cadastrada!</Subtitle>;
           this.setState({
             mentorias,
@@ -60,7 +61,8 @@ class Mentor extends Component {
               title={mentoria.title}
               description={mentoria.description}
               image={`${urlFiles}/${mentoria.image}`}
-              visibleFunction={this.changeVisibility}
+              visibleFunction={() => this.changeVisibility(mentoria)}
+              isVisible={mentoria.flagDesativado}
             />
           ));
           this.setState({
@@ -73,14 +75,24 @@ class Mentor extends Component {
     });
   }
 
-  changeVisibility = () => true
+  changeVisibility = (mentoria) => {
+    alert('VISIBILITY FUNCTION CALLED!');
+    const flagDesativado = !mentoria.flagDesativado;
+    mentoria.flagDesativado = flagDesativado;
+    const token = sessionStorage.getItem('token');
+    const config = {
+      param: { flagDesativado },
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    atualizarMentoria(config);
+    alert(flagDesativado);
+  }
 
   render() {
     return (
       <>
         <Header />
         <Container>
-
           <ProfileInfo
             name={this.state.name}
             linkedinProfile={this.state.linkedin}
