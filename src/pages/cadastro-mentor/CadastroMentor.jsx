@@ -118,7 +118,7 @@ function CadastroMentor() {
           <RedeTextField
             descricao="Nome Completo"
             valor={name}
-            onChange={(evt) => setName(evt.target.name)}
+            onChange={(evt) => setName(evt.target.value)}
           />
           <RedeTextField
             descricao="CPF"
