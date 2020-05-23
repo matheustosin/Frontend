@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Redirect, withRouter } from 'react-router';
+import { useSnackbar } from 'notistack';
 import { cadastrarUsuario } from '../../services/user';
-import Container from '../cadastro-mentor/StyledComponents'; //?
+import Container from '../cadastro-mentor/StyledComponents';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
@@ -15,37 +16,37 @@ import {
   formatMatricula,
 } from '../../utils/maskUtils';
 
-class CadastroMentorado extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      nome: '',
-      dataNascimento: '',
-      cpf: '',
-      telefone: '',
-      matricula: '',
-      email: '',
-      senha: '',
-      confirmarSenha: '',
-      imageurl: AccountImage,
-      imagem: '',
-      acceptTerms: false,
-    };
-    this.handleImage = this.handleImage.bind(this);
-  }
+function CadastroMentorado() {
+  const [nome, setNome] = useState('');
+  const [dataNascimento, setDataNascimento] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [matricula, setMatricula] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [imageurl, setImageurl] = useState(AccountImage);
+  const [imagem, setImagem] = useState('');
+  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
-  attemptRegister = (event) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
+    enqueueSnackbar(msg, { variant, autoHideDuration });
+  };
+
+  const attemptRegister = (event) => {
     event.preventDefault();
 
     const data = new FormData();
-    data.append('image', this.state.imagem);
-    data.append('name', this.state.nome);
-    data.append('email', this.state.email);
-    data.append('birthDate', this.state.dataNascimento);
-    data.append('cpf', this.state.cpf);
-    data.append('phone', this.state.telefone);
-    data.append('password', this.state.senha);
-    data.append('registration', this.state.matricula);
+    data.append('image', imagem);
+    data.append('name', nome);
+    data.append('email', email);
+    data.append('birthDate', dataNascimento);
+    data.append('cpf', cpf);
+    data.append('phone', telefone);
+    data.append('password', senha);
+    data.append('registration', matricula);
     data.append('flag', 2); // mentorado flag
 
     if (
@@ -56,147 +57,130 @@ class CadastroMentorado extends Component {
       || !data.get('phone')
       || !data.get('password')
       || !data.get('registration')
-      || !this.state.confirmarSenha
+      || !confirmarSenha
     ) {
-      alert('Preencha todos os campos.');
+      enqueue('Preencha todos os campos.');
     } else if (!data.get('image')) {
-      alert('Insira uma foto de perfil.');
-    } else if (!this.state.acceptTerms) {
-      alert('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
+      enqueue('Insira uma foto de perfil.');
+    } else if (!acceptTerms) {
+      enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
     } else {
       cadastrarUsuario(data)
         .then((res) => {
           if (res.status === 200) {
-            alert('Usuário cadastrado com sucesso!');
-            this.setState({ redirect: true });
+            enqueue('Usuário cadastrado com sucesso!', 'success');
+            setRedirect(true);
           }
         })
         .catch((err) => {
-          alert('Não foi possível realizar o cadastro. ');
+          enqueue('Não foi possível realizar o cadastro. ');
           console.log(err);
         });
     }
   };
 
-  handleImage() {
+  const handleImage = () => {
     let url;
     document.getElementById('fileButton').click();
     document.getElementById('fileButton').onchange = (event) => {
       try {
         url = URL.createObjectURL(event.target.files[0]);
       } catch (e) {
-        url = this.state.imageurl;
+        url = imageurl;
       }
-      this.setState({
-        imagem: event.target.files[0],
-        imageurl: url,
-      });
+      setImagem(event.target.files[0]);
+      setImageurl(url);
     };
+  };
+
+  if (redirect) {
+    return <Redirect push to="/" />;
   }
 
-  render() {
-    if (this.state.redirect) {
-      return <Redirect push to="/" />;
-    }
-    const {
-      nome,
-      dataNascimento,
-      cpf,
-      telefone,
-      matricula,
-      email,
-      senha,
-      confirmarSenha,
-      imageurl,
-      acceptTerms,
-    } = this.state;
-    const erroSenha = Boolean(senha && confirmarSenha && senha !== confirmarSenha);
-    return (
-      <Container>
-        <RedeHeader descricao="Cadastro de Mentorado" />
+  const erroSenha = Boolean(senha && confirmarSenha && senha !== confirmarSenha);
+  return (
+    <Container>
+      <RedeHeader descricao="Cadastro de Mentorado" />
 
-        <Container.FlexContainer style={{ marginTop: '60px' }}>
-          <Container.Item style={{ textAlign: 'center' }}>
-            <Container.UserImage src={imageurl} />
-            <input id="fileButton" type="file" hidden />
-            <Container style={{ marginBottom: '2vh' }}>
-              <RedeButton descricao="Adicionar Foto" claro onClick={this.handleImage} />
-            </Container>
-          </Container.Item>
-        </Container.FlexContainer>
+      <Container.FlexContainer style={{ marginTop: '60px' }}>
+        <Container.Item style={{ textAlign: 'center' }}>
+          <Container.UserImage src={imageurl} />
+          <input id="fileButton" type="file" hidden />
+          <Container style={{ marginBottom: '2vh' }}>
+            <RedeButton descricao="Adicionar Foto" claro onClick={handleImage} />
+          </Container>
+        </Container.Item>
+      </Container.FlexContainer>
 
-        <Container.FlexContainer>
-          <Container.Item>
-            <RedeTextField
-              descricao="Nome Completo"
-              valor={nome}
-              onChange={(evt) => this.setState({ nome: evt.target.value })}
-            />
-            <RedeTextField
-              descricao="Data de Nascimento"
-              valor={dataNascimento}
-              onChange={(evt) => this.setState({
-                dataNascimento: formatDataNascimento(evt.target.value),
-              })}
-            />
-            <RedeTextField
-              descricao="CPF"
-              valor={cpf}
-              onChange={(evt) => this.setState({ cpf: formatCPF(evt.target.value) })}
-            />
-            <RedeTextField
-              descricao="Telefone"
-              valor={telefone}
-              onChange={(evt) => this.setState({ telefone: formatTelefone(evt.target.value) })}
-            />
-            <RedeTextField
-              descricao="Matrícula"
-              valor={matricula}
-              onChange={(evt) => this.setState({ matricula: formatMatricula(evt.target.value) })}
-            />
-          </Container.Item>
+      <Container.FlexContainer>
+        <Container.Item>
+          <RedeTextField
+            descricao="Nome Completo"
+            valor={nome}
+            onChange={(evt) => setNome(evt.target.value)}
+          />
+          <RedeTextField
+            descricao="Data de Nascimento"
+            valor={dataNascimento}
+            onChange={(evt) => setDataNascimento(formatDataNascimento(evt.target.value))}
+          />
+          <RedeTextField
+            descricao="CPF"
+            valor={cpf}
+            onChange={(evt) => setCpf(formatCPF(evt.target.value))}
+          />
+          <RedeTextField
+            descricao="Telefone"
+            valor={telefone}
+            onChange={(evt) => setTelefone(formatTelefone(evt.target.value))}
+          />
+          <RedeTextField
+            descricao="Matrícula"
+            valor={matricula}
+            onChange={(evt) => setMatricula(formatMatricula(evt.target.value))}
+          />
+        </Container.Item>
 
-          <RedeHorizontalSeparator />
+        <RedeHorizontalSeparator />
 
-          <Container.Item>
-            <RedeTextField
-              descricao="Email"
-              valor={email}
-              onChange={(evt) => this.setState({ email: evt.target.value })}
-            />
-            <RedeTextField
-              descricao="Senha"
-              valor={senha}
-              tipo="password"
-              onChange={(evt) => this.setState({ senha: evt.target.value })}
-            />
-            <RedeTextField
-              descricao="Confirmação de Senha"
-              valor={confirmarSenha}
-              tipo="password"
-              onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })}
-              msgAjuda={erroSenha ? 'Senhas não conferem' : ''}
-              erro={erroSenha}
-            />
+        <Container.Item>
+          <RedeTextField
+            descricao="Email"
+            valor={email}
+            onChange={(evt) => setEmail(evt.target.value)}
+          />
+          <RedeTextField
+            descricao="Senha"
+            valor={senha}
+            tipo="password"
+            onChange={(evt) => setSenha(evt.target.value)}
+          />
+          <RedeTextField
+            descricao="Confirmação de Senha"
+            valor={confirmarSenha}
+            tipo="password"
+            onChange={(evt) => setConfirmarSenha(evt.target.value)}
+            msgAjuda={erroSenha ? 'Senhas não conferem' : ''}
+            erro={erroSenha}
+          />
 
-            <Container.FlexContainer style={{ flexDirection: 'row' }}>
-              <RedeCheckbox
-                id="termos"
-                value={acceptTerms}
-                onChange={(evt) => this.setState({ acceptTerms: evt.target.checked })}
-              />
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label htmlFor="termos" style={{ marginTop: '5px' }}>Aceito os termos de uso</label>
-            </Container.FlexContainer>
+          <Container.FlexContainer style={{ flexDirection: 'row' }}>
+            <RedeCheckbox
+              id="termos"
+              value={acceptTerms}
+              onChange={(evt) => setAcceptTerms(evt.target.checked)}
+            />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label htmlFor="termos" style={{ marginTop: '5px' }}>Aceito os termos de uso</label>
+          </Container.FlexContainer>
 
-            <Container>
-              <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
-            </Container>
-          </Container.Item>
-        </Container.FlexContainer>
-      </Container>
-    );
-  }
+          <Container>
+            <RedeButton descricao="Cadastrar" onClick={attemptRegister} />
+          </Container>
+        </Container.Item>
+      </Container.FlexContainer>
+    </Container>
+  );
 }
 
 export default withRouter(CadastroMentorado);
