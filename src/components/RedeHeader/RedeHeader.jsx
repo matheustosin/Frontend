@@ -6,10 +6,13 @@ import logo from '../../assets/logo2.png';
 import Container from './StyledComponents';
 
 const RedeHeader = ({ descricao }) => (
-  <Container>
-    <Container.Logo src={logo} />
-    <Container.Title>{descricao}</Container.Title>
-  </Container>
+  <>
+    <Container>
+      <Container.Logo src={logo} />
+      <Container.Title>{descricao}</Container.Title>
+    </Container>
+    <Container.Clearfix />
+  </>
 );
 
 RedeHeader.propTypes = {
