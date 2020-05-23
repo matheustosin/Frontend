@@ -23,7 +23,7 @@ function CadastroMentor() {
   const [areas, setAreas] = useState('');
   const [imageurl, setImageurl] = useState(AccountImage);
   const [acceptTerms, setAcceptTerms] = useState('');
-  const [redirect, setRedirect] = useState('');
+  const [redirect, setRedirect] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
