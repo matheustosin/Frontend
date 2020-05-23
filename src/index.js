@@ -7,19 +7,17 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <SnackbarProvider
-      style={{ margin: '0' }}
-      maxSnack={3}
-      preventDuplicate
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-    >
-      <App />
-    </SnackbarProvider>
-  </React.StrictMode>,
+  <SnackbarProvider
+    style={{ margin: '0' }}
+    maxSnack={3}
+    preventDuplicate
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+  >
+    <App />
+  </SnackbarProvider>,
 
   document.getElementById('root'),
 );
