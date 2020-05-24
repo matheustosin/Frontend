@@ -14,10 +14,11 @@ import CardContent from './StyledComponents/card-content';
 import IconsWrapper from './StyledComponents/icons-wrapper';
 import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 
+
 const Card = ({
-  title, description, image, visibleFunction, removeFunction, editFunction, isVisible
+  title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots
 }) => (
-  <Container visible = {isVisible}>
+  <Container visible={isVisible}>
     <CardLogo src={image} />
     <CardContent>
       <CardHeader>
@@ -35,14 +36,13 @@ const Card = ({
         </CardFooter.SubTitle>
         <CardFooter.Content>
           <TimeSlotWrapper>
-            <RedeTimeSlot descricao="SEG - 18:00" selecionado={false} />
-            <RedeTimeSlot descricao="SEG - 18:00" selecionado />
+            {TimeSlots}
           </TimeSlotWrapper>
           <IconsWrapper>
             <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
             <div>
               <RedeIcon imageUrl={remove} onClick={removeFunction} />
-              <RedeIcon imageUrl={visibility} onClick={visibleFunction} />
+              {/* <RedeIcon imageUrl={visibility} onClick={visibleFunction} /> */}
               <RedeIcon imageUrl={edition} onClick={editFunction} />
             </div>
           </IconsWrapper>

@@ -10,7 +10,7 @@ import Container from './StyledComponents';
 import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
 import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 
-import { cadastrarMentoria } from '../../services/mentor';
+import { cadastrarMentoria } from '../../services/mentoria';
 
 import imgPlus from '../../assets/plus.png';
 

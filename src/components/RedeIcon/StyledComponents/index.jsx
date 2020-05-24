@@ -5,7 +5,7 @@ const Icon = styled.img`
   height:35px;
   margin-right:20px;
   :hover{
-    cursor:pointer
+    cursor:pointer;
   }
 `;
 
