@@ -35,17 +35,16 @@ function CadastroMentoria() {
     event.preventDefault();
     const token = sessionStorage.getItem('token');
 
-
     const data = new FormData();
     data.append('title', title);
     data.append('description', description);
     data.append('knowledgeArea', knowledgeArea);
     data.append('mentoringOption', mentoringOption);
-    // data.append('dateTime', dateTime);
-    // data.append('dayOfWeek', dayOfWeek);
+    data.append('time', dateTime);
+    data.append('dayOfWeek', dayOfWeek);
     data.append('image', image);
     // /*|| !data.get('dateTime') || !data.get('dayOfWeek')*/
-    if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('mentoringOption')) {
+    if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('mentoringOption') || !data.get('time') || !data.get('dayOfWeek')) {
       alert('Preencha todos os campos.');
     } else if (!data.get('image')) {
       alert('Insira uma foto para a mentoria.');
@@ -122,29 +121,29 @@ function CadastroMentoria() {
           </div>
           <div>
             <select className="select-class" id="data" name="data" value={dayOfWeek} onChange={(e) => setDayOfWeek(e.target.value)}>
-              <option value="segunda" selected>Segunda</option>
-              <option value="terca">Terça</option>
-              <option value="quarta">Quarta</option>
-              <option value="quinta">Quinta</option>
-              <option value="sexta">Sexta</option>
-              <option value="sabado">Sabado</option>
+              <option value="Segunda" selected>Segunda</option>
+              <option value="Terça">Terça</option>
+              <option value="Quarta">Quarta</option>
+              <option value="Quinta">Quinta</option>
+              <option value="Sexta">Sexta</option>
+              <option value="Sabado">Sabado</option>
             </select>
 
             <select className="select-class" id="hora" name="hora" onChange={(e) => setDateTime(e.target.value)} value={dateTime}>
-              <option value="9">09:00</option>
-              <option value="10">10:00</option>
-              <option value="11">11:00</option>
-              <option value="12">12:00</option>
-              <option value="13">13:00</option>
-              <option value="14">14:00</option>
-              <option value="15">15:00</option>
-              <option value="16">16:00</option>
-              <option value="17">17:00</option>
-              <option value="18" selected>18:00</option>
-              <option value="19">19:00</option>
-              <option value="20">20:00</option>
-              <option value="21">21:00</option>
-              <option value="21">22:00</option>
+              <option value="9:00:00">09:00</option>
+              <option value="10:00:00">10:00</option>
+              <option value="11:00:00">11:00</option>
+              <option value="12:00:00">12:00</option>
+              <option value="13:00:00">13:00</option>
+              <option value="14:00:00">14:00</option>
+              <option value="15:00:00">15:00</option>
+              <option value="16:00:00">16:00</option>
+              <option value="17:00:00">17:00</option>
+              <option value="18:00:00" selected>18:00</option>
+              <option value="19:00:00">19:00</option>
+              <option value="20:00:00">20:00</option>
+              <option value="21:00:00">21:00</option>
+              <option value="21:00:00">22:00</option>
             </select>
 
           </div>
