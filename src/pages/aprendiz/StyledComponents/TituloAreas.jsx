@@ -6,6 +6,7 @@ const TituloAreas = styled.p`
     margin: 10px auto;
     text-align: center;
     font-size: 1.5em;
+
 `;
 
 export default TituloAreas;

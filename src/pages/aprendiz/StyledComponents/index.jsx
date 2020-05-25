@@ -11,6 +11,7 @@ const Container = styled.div`
     font-family: Roboto, sans-serif;
     color: #00273F;
     
+    
     @media (min-width: 576px) {
         max-width: 540px;
     }

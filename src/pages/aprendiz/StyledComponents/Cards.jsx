@@ -10,7 +10,7 @@ import Img from './Img';
 
 const cards = ({ color, description }) => (
   <Border>
-    <Span style={{ background: `#${color}` }} />
+    <Span style={{ background: `${color}` }} />
     <ContainerCard>
       <TituloCard>
         {description}
