@@ -30,7 +30,6 @@ function CadastroMentor() {
     enqueueSnackbar(msg, { variant, autoHideDuration });
   };
 
-
   if (redirect) {
     return <Redirect push to="/" />;
   }
@@ -103,7 +102,7 @@ function CadastroMentor() {
     <Container>
       <RedeHeader descricao="Cadastro de Mentor" />
 
-      <Container.FlexContainer style={{ marginTop: '60px' }}>
+      <Container.FlexContainer style={{ marginTop: '10px' }}>
         <Container.Item style={{ textAlign: 'center' }}>
           <Container.UserImage src={imageurl} />
           <input id="fileButton" type="file" hidden />
@@ -145,7 +144,11 @@ function CadastroMentor() {
         <RedeHorizontalSeparator />
 
         <Container.Item>
-          <RedeTextField descricao="Email" valor={email} onChange={(evt) => setEmail(evt.target.value)} />
+          <RedeTextField
+            descricao="Email"
+            valor={email}
+            onChange={(evt) => setEmail(evt.target.value)}
+          />
           <RedeTextField
             descricao="Senha"
             tipo="password"
@@ -168,7 +171,9 @@ function CadastroMentor() {
               onChange={(evt) => setAcceptTerms(evt.target.checked)}
             />
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label htmlFor="termos" style={{ marginTop: '5px' }}>Aceito os termos de uso</label>
+            <label htmlFor="termos" style={{ marginTop: '5px' }}>
+              Aceito os termos de uso
+            </label>
           </Container.FlexContainer>
 
           <Container>
