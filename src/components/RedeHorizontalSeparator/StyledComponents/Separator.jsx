@@ -15,9 +15,6 @@ const Separator = styled.hr`
   @media (max-width: 767px) {
     display: none;
   }
-  @media (max-width: 1024px) {
-    display: none;
-  }
 `;
 
 export default Separator;
