@@ -1,13 +1,8 @@
 import React from 'react';
-<<<<<<< HEAD
 import { string, func, bool } from 'prop-types';
-=======
-import styled from 'styled-components';
-import { string } from 'prop-types';
->>>>>>> melhorias
 import Container from './StyledComponents';
 import edition from '../../assets/create-new-pencil-button.png';
-import linkedinIcon from '../../assets/linkedin.png';
+import linkedin from '../../assets/linkedin.png';
 import UserInformations from './StyledComponents/user-informations';
 import Logo from './StyledComponents/logo';
 import Icon from '../RedeIcon/RedeIcon';
