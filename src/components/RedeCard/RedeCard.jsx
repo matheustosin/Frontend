@@ -4,6 +4,7 @@ import Container from './StyledComponents';
 import visibility from '../../assets/visibility-button.png';
 import remove from '../../assets/rubbish-bin-delete-button.png';
 import edition from '../../assets/create-new-pencil-button.png';
+import edition from '../../assets/';
 import RedeTimeSlot from '../RedeTimeSlot/RedeTimeSlot';
 import RedeIcon from '../RedeIcon/RedeIcon';
 import CardDescription from './StyledComponents/card-description';
@@ -43,7 +44,7 @@ const Card = ({
             <div>
               <RedeIcon imageUrl={remove} onClick={removeFunction} />
               <RedeIcon imageUrl={visibility} onClick={visibleFunction} />
-              <RedeIcon imageUrl={edition} onClick={editFunction} />
+              <RedeIcon imageUrl={isVisible ? edition:notEdition} onClick={editFunction} />
             </div>
           </IconsWrapper>
         </CardFooter.Content>

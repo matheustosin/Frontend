@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link, withRouter} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
-import Header from '../../components/Header/Header';
+import Header from '../../components/RedeHeader/RedeHeader';
 import { mentoriasByMentor, desativarMentoria } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
@@ -11,7 +11,6 @@ import Subtitle from './StyledComponents/subtitle';
 import Title from './StyledComponents/title';
 import HeaderPage from './StyledComponents/header-page';
 import RedeButton from '../../components/RedeButton/RedeButton';
-import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
 
 class Mentor extends Component {
   constructor(props) {
@@ -21,7 +20,6 @@ class Mentor extends Component {
       linkedin: null,
       image: null,
       mentorias: [],
-      mentoriasVisibility: [],
     };
   }
 
@@ -65,11 +63,10 @@ class Mentor extends Component {
               title={mentoria.data.title}
               description={mentoria.data.description}
               image={`${urlFiles}/${mentoria.data.image}`}
-              removeFunction={() => this.changeAvalibility(mentoria)}
+              removeFunction={() => this.changeAvalibility(mentoria, i)}
               editFunction={() => this.editPage(mentoria)}
             />);
           }
-
           this.setState({
             mentorias,
           });
@@ -90,7 +87,26 @@ class Mentor extends Component {
       param: { id },
       headers: { Authorization: `Bearer ${token}` },
     };
-    desativarMentoria(config);
+    if (global.confirm('Você deseja realmente deletar essa mentoria ?')) {
+      desativarMentoria(config).then(
+        () => {
+          window.location.reload();
+        },
+      ).catch(() => {
+        alert('Falha ao deletar essa mentoria. Tente novamente.')
+      });
+    }
+  };
+
+  changeVisibility = (mentoria) => {
+    const { id } = mentoria;
+    const token = sessionStorage.getItem('token');
+    const config = {
+      param: { id },
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    
+    // mudarVisibilidadeMentoria(config);
   };
 
   editPage = (mentoria) => {

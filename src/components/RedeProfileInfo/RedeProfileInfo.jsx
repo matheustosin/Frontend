@@ -2,7 +2,7 @@ import React from 'react';
 import { string, func, bool } from 'prop-types';
 import Container from './StyledComponents';
 import edition from '../../assets/create-new-pencil-button.png';
-import linkedin from '../../assets/linkedin.png';
+import linkedinIcon from '../../assets/linkedin.png';
 import UserInformations from './StyledComponents/user-informations';
 import Logo from './StyledComponents/logo';
 import Icon from '../RedeIcon/RedeIcon';
@@ -10,17 +10,26 @@ import Information from './StyledComponents/information';
 import Header from './StyledComponents/header';
 import Bottom from './StyledComponents/bottom';
 
-const ProfileInfo = ({ name, linkedinProfile, image }) => (
+const ProfileUser = ({
+  name,
+  linkedin,
+  image,
+  editFunction,
+}) => (
   <Container>
     <Header>
       <Logo src={image} />
-      <Info>
-        <Name>{name}</Name>
-        <Detail>
-          <Icon src={linkedin} />
-          <DetailText>{linkedinProfile}</DetailText>
-        </Detail>
-      </Info>
+      <UserInformations>
+        <UserInformations.Name>
+          {name}
+        </UserInformations.Name>
+        <Information>
+          <Information.Icon imageUrl={linkedinIcon} />
+          <Information.Name>
+            {linkedin}
+          </Information.Name>
+        </Information>
+      </UserInformations>
     </Header>
     <Bottom>
       <Icon imageUrl={edition} onClick={editFunction} />
