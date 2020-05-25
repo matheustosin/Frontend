@@ -93,6 +93,7 @@ function CadastroMentoria() {
     setDateTime('');
     setImage('');
     history.push('/mentor');
+    sessionStorage.removeItem('oldMentoria');
   }
 
   return (
