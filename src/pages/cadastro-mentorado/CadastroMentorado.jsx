@@ -1,67 +1,66 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
-import AccountImage from '../../assets/account.png';
+import { Redirect, withRouter } from 'react-router';
 import { cadastrarUsuario } from '../../services/user';
-import { formatCPF, formatTelefone } from '../../utils/maskUtils';
-import Container from './StyledComponents';
-import RedeButton from '../../components/RedeButton/RedeButton';
+import Container from '../cadastro-mentor/StyledComponents';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
+import AccountImage from '../../assets/account.png';
+import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
+import {
+  formatCPF,
+  formatTelefone,
+  formatDataNascimento,
+  formatMatricula,
+} from '../../utils/maskUtils';
 
-class CadastroMentor extends Component {
+class CadastroMentorado extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      nome: '',
+      dataNascimento: '',
       cpf: '',
+      telefone: '',
+      matricula: '',
       email: '',
-      password: '',
-      confirmPassword: '',
-      linkedin: '',
-      image: '',
-      phone: '',
-      areas: '', // [],
+      senha: '',
+      confirmarSenha: '',
       imageurl: AccountImage,
+      imagem: '',
       acceptTerms: false,
-      redirect: false,
     };
+    this.handleImage = this.handleImage.bind(this);
   }
 
   attemptRegister = (event) => {
     event.preventDefault();
 
     const data = new FormData();
-    data.append('image', this.state.image);
-    data.append('name', this.state.name);
+    data.append('image', this.state.imagem);
+    data.append('name', this.state.nome);
     data.append('email', this.state.email);
-    data.append('phone', this.state.phone);
-    data.append('linkedin', this.state.linkedin);
+    data.append('birthDate', this.state.dataNascimento);
     data.append('cpf', this.state.cpf);
-    data.append('password', this.state.password);
-    data.append('areas', this.state.areas);
-    data.append('flag', 1);
+    data.append('phone', this.state.telefone);
+    data.append('password', this.state.senha);
+    data.append('registration', this.state.matricula);
+    data.append('flag', 2); // mentorado flag
 
     if (
       !data.get('name')
       || !data.get('email')
-      || !data.get('phone')
-      || !data.get('linkedin')
+      || !data.get('birthDate')
       || !data.get('cpf')
-      || !data.get('areas')
+      || !data.get('phone')
       || !data.get('password')
-      || !this.state.confirmPassword
+      || !data.get('registration')
+      || !this.state.confirmarSenha
     ) {
       alert('Preencha todos os campos.');
     } else if (!data.get('image')) {
       alert('Insira uma foto de perfil.');
-    } else if (
-      data.get('password')
-      && this.state.confirmPassword
-      && data.get('password') !== this.state.confirmPassword
-    ) {
-      alert('Senhas não são iguais.');
     } else if (!this.state.acceptTerms) {
       alert('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
     } else {
@@ -72,8 +71,9 @@ class CadastroMentor extends Component {
             this.setState({ redirect: true });
           }
         })
-        .catch(() => {
+        .catch((err) => {
           alert('Não foi possível realizar o cadastro. ');
+          console.log(err);
         });
     }
   };
@@ -88,7 +88,7 @@ class CadastroMentor extends Component {
         url = this.state.imageurl;
       }
       this.setState({
-        image: event.target.files[0],
+        imagem: event.target.files[0],
         imageurl: url,
       });
     };
@@ -99,21 +99,21 @@ class CadastroMentor extends Component {
       return <Redirect push to="/" />;
     }
     const {
-      name,
+      nome,
+      dataNascimento,
       cpf,
+      telefone,
+      matricula,
       email,
-      password,
-      confirmPassword,
-      linkedin,
-      phone,
-      areas,
+      senha,
+      confirmarSenha,
       imageurl,
       acceptTerms,
     } = this.state;
-    const erroSenha = Boolean(password && confirmPassword && password !== confirmPassword);
+    const erroSenha = Boolean(senha && confirmarSenha && senha !== confirmarSenha);
     return (
       <Container>
-        <RedeHeader descricao="Cadastro de Mentor" />
+        <RedeHeader descricao="Cadastro de Mentorado" />
 
         <Container.FlexContainer style={{ marginTop: '60px' }}>
           <Container.Item>
@@ -129,8 +129,15 @@ class CadastroMentor extends Component {
           <Container.Item>
             <RedeTextField
               descricao="Nome Completo"
-              valor={name}
-              onChange={(evt) => this.setState({ name: evt.target.value })}
+              valor={nome}
+              onChange={(evt) => this.setState({ nome: evt.target.value })}
+            />
+            <RedeTextField
+              descricao="Data de Nascimento"
+              valor={dataNascimento}
+              onChange={(evt) => this.setState({
+                dataNascimento: formatDataNascimento(evt.target.value),
+              })}
             />
             <RedeTextField
               descricao="CPF"
@@ -139,39 +146,39 @@ class CadastroMentor extends Component {
             />
             <RedeTextField
               descricao="Telefone"
-              valor={phone}
-              onChange={(evt) => this.setState({ phone: formatTelefone(evt.target.value) })}
+              valor={telefone}
+              onChange={(evt) => this.setState({ telefone: formatTelefone(evt.target.value) })}
             />
             <RedeTextField
-              descricao="Áreas de Conhecimento"
-              valor={areas}
-              onChange={(evt) => this.setState({ areas: evt.target.value })}
-            />
-            <RedeTextField
-              descricao="LinkedIn"
-              valor={linkedin}
-              onChange={(evt) => this.setState({ linkedin: evt.target.value })}
+              descricao="Matrícula"
+              valor={matricula}
+              onChange={(evt) => this.setState({ matricula: formatMatricula(evt.target.value) })}
             />
           </Container.Item>
 
           <RedeHorizontalSeparator />
 
           <Container.Item>
-            <RedeTextField descricao="Email" valor={email} onChange={(evt) => this.setState({ email: evt.target.value })} />
+            <RedeTextField
+              descricao="Email"
+              valor={email}
+              onChange={(evt) => this.setState({ email: evt.target.value })}
+            />
             <RedeTextField
               descricao="Senha"
+              valor={senha}
               tipo="password"
-              valor={password}
-              onChange={(evt) => this.setState({ password: evt.target.value })}
+              onChange={(evt) => this.setState({ senha: evt.target.value })}
             />
             <RedeTextField
               descricao="Confirmação de Senha"
+              valor={confirmarSenha}
               tipo="password"
-              valor={confirmPassword}
-              onChange={(evt) => this.setState({ confirmPassword: evt.target.value })}
+              onChange={(evt) => this.setState({ confirmarSenha: evt.target.value })}
               msgAjuda={erroSenha ? 'Senhas não conferem' : ''}
               erro={erroSenha}
             />
+
             {/* <Container.TermsContainer> */}
             <RedeCheckbox
               id="termos"
@@ -182,6 +189,7 @@ class CadastroMentor extends Component {
             <label htmlFor="termos">TODO: Aceito os termos de uso</label>
             {/* <Container.Label for="termos">Aceito os termos de uso</Container.Label> */}
             {/* </Container.TermsContainer> */}
+
             <Container>
               <RedeButton descricao="Cadastrar" onClick={this.attemptRegister} />
             </Container>
@@ -192,4 +200,4 @@ class CadastroMentor extends Component {
   }
 }
 
-export default CadastroMentor;
+export default withRouter(CadastroMentorado);

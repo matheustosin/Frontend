@@ -1,21 +1,23 @@
 import React from 'react';
-import Container from './StyledComponents';
-import logo_cabecalho from '../../assets/logo_cabecalho.png'
-import { string } from 'prop-types';
 
-const RedeHeader = ({title}) => (
-    <Container>
-        <Container.Logo src={logo_cabecalho}/>
-        <Container.Title>{title}</Container.Title>
-    </Container>
+import { string } from 'prop-types';
+import logo from '../../assets/logo2.png';
+
+import Container from './StyledComponents';
+
+const RedeHeader = ({ descricao }) => (
+  <Container>
+    <Container.Logo src={logo} />
+    <Container.Title>{descricao}</Container.Title>
+  </Container>
 );
 
-RedeHeader.defaultTypes = {
-    title: string
+RedeHeader.propTypes = {
+  descricao: string,
 };
 
 RedeHeader.defaultProps = {
-        title: ''
+  descricao: '',
 };
 
 export default RedeHeader;

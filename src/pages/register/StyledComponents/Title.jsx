@@ -9,7 +9,7 @@ const Title = styled.h1`
   margin-bottom: 20px;
   color: ${COLOR.AZUL};
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 767px) {
     font-size: 1rem;
     margin: 15px 20px;
   }

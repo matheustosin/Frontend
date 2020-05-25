@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Item= styled.div`
+const Item = styled.div`
 margin-left:5%;
 margin-right:5%;
 

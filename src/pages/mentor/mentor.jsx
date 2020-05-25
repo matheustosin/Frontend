@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter, useHistory } from 'react-router-dom';
+import { Link, withRouter} from 'react-router-dom';
 import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';

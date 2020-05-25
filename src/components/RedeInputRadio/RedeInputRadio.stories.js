@@ -1,6 +1,6 @@
 import React from 'react';
 import { withInfo } from '@storybook/addon-info';
-import RedeInputRadio  from './RedeInputRadio';
+import RedeInputRadio from './RedeInputRadio';
 
 export default {
   title: 'RedeInputRadio',
@@ -10,3 +10,4 @@ export default {
 
 export const Email = () => <RedeInputRadio descricao="Email" />;
 export const Senha = () => <RedeInputRadio descricao="Senha" tipo="password" />;
+export const padrao = () => <RedeInputRadio />;

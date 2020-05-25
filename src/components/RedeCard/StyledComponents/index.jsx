@@ -2,12 +2,9 @@ import styled from 'styled-components';
 import CardLogo from './card-logo';
 import CardHeader from './card-header';
 import CardDescription from './card-description';
-import CardFooter from './card-footer';
-import IconsWrapper from './icons-wrapper';
 import CardContent from './card-content';
 import SubTitle from './subtitle';
 import TimeSlotWrapper from './timeslot-wrapper';
-import RedeButton from '../../RedeButton/RedeButton';
 
 const Container = styled.div`
     border: 3px solid #00273F;

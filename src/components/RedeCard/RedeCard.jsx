@@ -42,7 +42,7 @@ const Card = ({
             <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
             <div>
               <RedeIcon imageUrl={remove} onClick={removeFunction} />
-              {/* <RedeIcon imageUrl={visibility} onClick={visibleFunction} /> */}
+              <RedeIcon imageUrl={visibility} onClick={visibleFunction} />
               <RedeIcon imageUrl={edition} onClick={editFunction} />
             </div>
           </IconsWrapper>

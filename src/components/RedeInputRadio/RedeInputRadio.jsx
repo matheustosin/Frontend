@@ -1,7 +1,6 @@
 import React from 'react';
 import { string, func } from 'prop-types';
 import TextField from './StyledComponents';
-import RedeTextField from '../RedeTextField/RedeTextField';
 
 const RedeInputRadio = ({
   descricao, tipo, nome, onChange, checked,
@@ -25,12 +24,11 @@ RedeInputRadio.propTypes = {
   onChange: func,
 };
 
-RedeTextField.defaultProps = {
+RedeInputRadio.defaultProps = {
   descricao: '',
   tipo: '',
   nome: '',
-  checked: '',
-  onChange: () => {},
+  onChange: () => { },
 };
 
 export default RedeInputRadio;
