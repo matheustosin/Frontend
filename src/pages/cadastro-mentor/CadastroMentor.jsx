@@ -97,7 +97,6 @@ function CadastroMentor() {
     };
   };
 
-<<<<<<< HEAD
   const erroSenha = Boolean(password && confirmPassword && password !== confirmPassword);
   return (
     <Container>
@@ -184,99 +183,6 @@ function CadastroMentor() {
       </Container.FlexContainer>
     </Container>
   );
-=======
-    handleName(event) {
-      this.setState({ name: event.target.value });
-    }
-
-    handleCPF(event) {
-      this.setState({ cpf: formatCPF(event.target.value) });
-    }
-
-    handlePhoneNumber(event) {
-      this.setState({ phone: formatTelefone(event.target.value) });
-    }
-
-    handleLinkedin(event) {
-      this.setState({ linkedin: event.target.value });
-    }
-
-    handleEmail(event) {
-      this.setState({ email: event.target.value });
-    }
-
-    handlePassword(event) {
-      this.setState({ password: event.target.value });
-    }
-
-    handleConfirmPassword(event) {
-      this.setState({ confirmPassword: event.target.value });
-    }
-
-    handleAreas(event) {
-      this.setState({ areas: [event.target.value] });
-    }
-
-    handlePrivacyTerms(event) {
-      this.setState({ acceptTerms: event.target.checked });
-    }
-
-    handleImage() {
-      document.getElementById('fileButton').click();
-      document.getElementById('fileButton').onchange = (event) => {
-        try {
-          var url = URL.createObjectURL(event.target.files[0]);
-        } catch (e) {
-          url = this.state.imageurl;
-        }
-        this.setState({
-          image: event.target.files[0],
-          imageurl: url,
-        });
-      };
-    }
-
-    render() {
-      if (this.state.redirect) {
-        return <Redirect push to="/" />;
-      }
-      return (
-        <Container>
-          <RedeHeader title="cadastro de mentor" />
-
-          <Container.FlexContainer>
-            <Container.Item>
-              <Container.UserImage src={this.state.imageurl} />
-              <input id="fileButton" type="file" hidden />
-              <Container><RedeButton descricao="Adicionar Foto" claro onClick={this.handleImage} /></Container>
-            </Container.Item>
-          </Container.FlexContainer>
-
-          <Container.FlexContainer>
-            <Container.Item>
-              <RedeTextField descricao="Nome Completo" valor={this.state.name} onChange={this.handleName} />
-              <RedeTextField descricao="CPF" valor={this.state.cpf} onChange={this.handleCPF} />
-              <RedeTextField descricao="Telefone" valor={this.state.phone} onChange={this.handlePhoneNumber} />
-              <RedeTextField descricao="Áreas de Conhecimento" valor={this.state.areas} onChange={this.handleAreas} />
-              <RedeTextField descricao="LinkedIn" valor={this.state.linkedin} onChange={this.handleLinkedin} />
-            </Container.Item>
-
-            <RedeHorizontalSeparator />
-
-            <Container.Item>
-              <RedeTextField descricao="Email" valor={this.state.email} onChange={this.handleEmail} />
-              <RedeTextField descricao="Senha" tipo="password" valor={this.state.password} onChange={this.handlePassword} />
-              <RedeTextField descricao="Confirmação de Senha" tipo="password" valor={this.state.confirmPassword} onChange={this.handleConfirmPassword} />
-              <RedeTextField descricao="Aceito o Termo de Privacidade" tipo="checkbox" valor={this.state.acceptTerms} onChange={this.handlePrivacyTerms} />
-
-              <Container><RedeButton descricao="Cadastrar" onClick={this.attemptRegister} /></Container>
-            </Container.Item>
-
-          </Container.FlexContainer>
-        </Container>
-      );
-    }
->>>>>>> componentizacaoMentor
 }
 
 export default CadastroMentor;
