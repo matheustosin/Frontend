@@ -12,7 +12,6 @@ import Title from './StyledComponents/title';
 import HeaderPage from './StyledComponents/header-page';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
-import MOCKDATA from '../../utils/mockData.json';
 
 class Mentor extends Component {
   constructor(props) {
