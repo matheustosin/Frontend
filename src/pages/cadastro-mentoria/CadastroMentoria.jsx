@@ -10,7 +10,7 @@ import Container from './StyledComponents';
 import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
 import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 
-import { cadastrarMentoria } from '../../services/mentoria';
+import { cadastrarMentoria, atualizarMentoria } from '../../services/mentoria';
 
 import imgPlus from '../../assets/plus.png';
 
@@ -18,37 +18,53 @@ import './style.css';
 
 
 function CadastroMentoria() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [knowledgeArea, setKnowledgeArea] = useState('');
-  const [mentoringOption, setMentoringOption] = useState(1);
-  const [dateTime, setDateTime] = useState('segunda');
-  const [dayOfWeek, setDayOfWeek] = useState('18');
-  const [image, setImage] = useState('');
+  const oldMentoria = JSON.parse(sessionStorage.getItem('oldMentoria'));
+  const PageTitle = oldMentoria ? 'Atualização de Mentoria' : 'Nova Mentoria';
+  const ActionButtonTitle = oldMentoria ? 'Atualizar Mentoria' : 'Criar Mentoria';
+  const [title, setTitle] = useState(oldMentoria ? oldMentoria.data.title : '');
+  const [description, setDescription] = useState(oldMentoria ? oldMentoria.data.description : '');
+  const [knowledgeArea, setKnowledgeArea] = useState(oldMentoria ? oldMentoria.data.knowledgeArea : '');
+  const [mentoringOption, setMentoringOption] = useState(oldMentoria ? oldMentoria.data.mentoringOption : '');
+  const [dateTime, setDateTime] = useState(oldMentoria ? new Date(oldMentoria.data.dateTime).getHours() : '12');
+  const [dayOfWeek, setDayOfWeek] = useState(oldMentoria ? String(oldMentoria.data.dayOfWeek).toLowerCase() : '');
+  const [image, setImage] = useState(oldMentoria ? oldMentoria.data.image : '');
 
   const history = useHistory();
-
 
   function attempMentoria(event) {
     event.preventDefault();
     const token = sessionStorage.getItem('token');
-    const headers = { headers: { Authorization: `Bearer ${token}` } };
+
 
     const data = new FormData();
     data.append('title', title);
     data.append('description', description);
     data.append('knowledgeArea', knowledgeArea);
     data.append('mentoringOption', mentoringOption);
-    data.append('dateTime', dateTime);
-    data.append('dayOfWeek', dayOfWeek);
+    // data.append('dateTime', dateTime);
+    // data.append('dayOfWeek', dayOfWeek);
     data.append('image', image);
-
-    if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('mentoringOption')
-        || !data.get('dateTime') || !data.get('dayOfWeek')) {
+    // /*|| !data.get('dateTime') || !data.get('dayOfWeek')*/
+    if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('mentoringOption')) {
       alert('Preencha todos os campos.');
     } else if (!data.get('image')) {
       alert('Insira uma foto para a mentoria.');
+    } else if (oldMentoria) {
+      if (
+        typeof image === 'string'
+      ) data.delete('image');
+      const headers = { headers: { param: { id: oldMentoria.id }, Authorization: `Bearer ${token}` } };
+      atualizarMentoria(headers, data).then((res) => {
+        if (res.status === 200) {
+          alert('Atualizado com sucesso');
+        }
+        history.push('/mentor');
+      }).catch((err) => {
+        alert('Problema ao atualizar mentoria');
+        console.error(err);
+      });
     } else {
+      const headers = { headers: { Authorization: `Bearer ${token}` } };
       cadastrarMentoria(headers, data).then((res) => {
         if (res.status === 200) {
           alert('Cadastrado com sucesso');
@@ -76,12 +92,12 @@ function CadastroMentoria() {
     setDayOfWeek('');
     setDateTime('');
     setImage('');
+    history.push('/mentor');
   }
 
   return (
     <Container>
-      <Header />
-      <Container.Title> Nova Mentoria </Container.Title>
+      <Header descricao={PageTitle} />
       <Container.Form>
         <Container.Options>
           <RedeTextField descricao="Título" valor={title} onChange={(e) => setTitle(e.target.value)} />
@@ -113,7 +129,7 @@ function CadastroMentoria() {
               <option value="sabado">Sabado</option>
             </select>
 
-            <select className="select-class" id="hora" name="hora" onChange={(e) => setDateTime(e.target.value)}>
+            <select className="select-class" id="hora" name="hora" onChange={(e) => setDateTime(e.target.value)} value={dateTime}>
               <option value="9">09:00</option>
               <option value="10">10:00</option>
               <option value="11">11:00</option>
@@ -136,7 +152,7 @@ function CadastroMentoria() {
 
       <Container.Submit>
         <RedeButton descricao="Cancelar" cancelar onClick={cleanForm} />
-        <RedeButton descricao="Criar Mentoria" onClick={attempMentoria} />
+        <RedeButton descricao={ActionButtonTitle} onClick={attempMentoria} />
 
       </Container.Submit>
     </Container>

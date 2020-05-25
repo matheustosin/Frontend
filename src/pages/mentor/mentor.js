@@ -42,6 +42,7 @@ class Mentor extends Component {
             linkedin,
             image: urlImage,
           });
+          console.log(res);
         }
       },
     ).catch((err) => {
@@ -49,67 +50,38 @@ class Mentor extends Component {
       console.error(err);
     });
 
-    // BELOW ONLY FOR TEST
-    const MOCK_DATA = MOCKDATA;
-    // ABOVE ONLY FOR TEST
-    const mentoriasVisibility = {};
-    const mentorias = [];
-    for (const data in MOCK_DATA) {
-      const mentoria = MOCK_DATA[data];
-      mentoriasVisibility[mentoria.id] = true;
-      mentorias.push(<Card
-        key={mentoria.id}
-        title={mentoria.data.title}
-        description={mentoria.data.description}
-        image={`${urlFiles}/${mentoria.data.image}`}
-        removeFunction={() => this.changeAvalibility(mentoria)}
-        visibleFunction={() => this.changeVisibility(mentoria)}
-        isVisible={mentoriasVisibility[mentoria.id]}
-        TimeSlots = {[<RedeTimeSlot descricao="SEG - 18:00" selecionado={false} />,<RedeTimeSlot descricao="SEG - 18:00" selecionado={false} />]}
-      />);
-    }
-    this.setState({
-      mentorias,
-      mentoriasVisibility,
+    mentoriasByMentor(headers).then(
+      (res) => {
+        if (res.data.length === 0) {
+          this.setState({
+            mentorias: <Subtitle> Nenhuma mentoria encontrada!</Subtitle>,
+          });
+        } else {
+          const mentorias = [];
+          console.table(res.data[1]);
+          for (let i = 0; i < res.data.length; i += 1) {
+            const mentoria = res.data[i];
+            mentorias.push(<Card
+              key={mentoria.id}
+              title={mentoria.data.title}
+              description={mentoria.data.description}
+              image={`${urlFiles}/${mentoria.data.image}`}
+              removeFunction={() => this.changeAvalibility(mentoria)}
+              editFunction={() => this.editPage(mentoria)}
+            />);
+          }
+
+          this.setState({
+            mentorias,
+          });
+        }
+      },
+    ).catch((err) => {
+      console.error(err);
+      this.setState({
+        mentorias: <Subtitle> Nenhuma mentoria encontrada!</Subtitle>,
+      });
     });
-
-    // mentoriasByMentor(headers).then(
-    //   (res) => {
-    //     if (res.data.length === 0) {
-    //       const mentorias = <Subtitle> Nenhuma mentoria encontrada!</Subtitle>;
-    //       this.setState({
-    //         mentorias,
-    //       });
-    //     } else {
-    //       const mentoriasVisibility = {};
-    //       const mentorias = [];
-    //       for (let i = 0; i < res.data.length; i += 1) {
-    //         const mentoria = res.data[i];
-    //         mentoriasVisibility[mentoria.id] = true;
-    //         mentorias.push(<Card
-    //           key={mentoria.id}
-    //           title={mentoria.data.title}
-    //           description={mentoria.data.description}
-    //           image={`${urlFiles}/${mentoria.data.image}`}
-    //           removeFunction={() => this.changeAvalibility(mentoria)}
-    //           visibleFunction={() => this.changeVisibility(mentoria)}
-    //           isVisible={mentoriasVisibility[mentoria.id]}
-    //         />);
-    //       }
-
-    //       this.setState({
-    //         mentorias,
-    //         mentoriasVisibility,
-    //       });
-    //     }
-    //   },
-    // ).catch((err) => {
-    //   console.error(err);
-    //   const mentorias = <Subtitle> Nenhuma mentoria encontrada!</Subtitle>;
-    //   this.setState({
-    //     mentorias,
-    //   });
-    // });
   }
 
   changeAvalibility = (mentoria) => {
@@ -122,29 +94,20 @@ class Mentor extends Component {
     desativarMentoria(config);
   };
 
-  changeVisibility = (mentoria) => {
-    const { id } = this.state.mentorias;
-    const newMentoriasVisibility = this.state.mentoriasVisibility;
-    const { mentorias } = this.state.mentorias;
-    newMentoriasVisibility[id] = !newMentoriasVisibility[id];
-    const index = (mentoria.findIndex((value) => value.key === id));
-    mentorias[index] = (
-      <Card
-        key={mentoria.id}
-        title={mentoria.data.title}
-        description={mentoria.data.description}
-        image={`${urlFiles}/${mentoria.data.image}`}
-        removeFunction={() => this.changeAvalibility(mentoria)}
-        visibleFunction={() => this.changeVisibility(mentoria)}
-        isVisible={newMentoriasVisibility[id]}
-      />
-    );
-    this.setState((prevState) => ({
-      mentoriasVisibility: newMentoriasVisibility,
-      mentorias,
-    }));
-  };
+  editPage = (mentoria) => {
+    sessionStorage.setItem('oldMentoria', JSON.stringify(mentoria));
+    this.props.history.push({
+      pathname: '/cadastro-mentoria',
+    });
+  }
 
+  editProfilePage = () => {
+    // console.log(profileInfo)
+    // // sessionStorage.setItem('oldProfile', JSON.stringify(profileInfo));
+    // this.props.history.push({
+    //   pathname: '/cadastro-mentor',
+    // });
+  }
 
   render() {
     return (
@@ -155,6 +118,7 @@ class Mentor extends Component {
             name={this.state.name}
             linkedinProfile={this.state.linkedin}
             image={this.state.image}
+            editFunction={this.editProfilePage}
           />
           <HeaderPage>
             <Title>
