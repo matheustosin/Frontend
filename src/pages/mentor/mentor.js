@@ -4,7 +4,7 @@ import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
-import { mentoriasByMentor } from '../../services/mentor';
+import { mentoriasByMentor } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
 

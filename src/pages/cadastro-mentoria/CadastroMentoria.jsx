@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Container from './StyledComponents';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
-import { cadastrarMentoria } from '../../services/mentor';
+import { cadastrarMentoria, atualizarMentoria } from '../../services/mentoria';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeTextArea from '../../components/RedeTextArea/RedeTextArea';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
@@ -92,7 +92,7 @@ function CadastroMentoria() {
 
   return (
     <Container>
-      <Header descricao={PageTitle} />
+      <RedeHeader descricao={PageTitle} />
       <Container.Form>
         <Container.Options>
           <RedeTextField
