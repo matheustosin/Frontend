@@ -19,39 +19,39 @@ import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 const Card = ({
   title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots,
 }) => (
-  <Container visible={isVisible}>
-    <CardLogo src={image} />
-    <CardContent>
-      <CardHeader>
-        <CardHeader.Title>
-          {title}
-        </CardHeader.Title>
-        <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { alert('test'); }} />
-      </CardHeader>
-      <CardDescription>
-        {description}
-      </CardDescription>
-      <CardFooter>
-        <CardFooter.SubTitle>
-          Próximos horários
+    <Container visible={isVisible}>
+      <CardLogo src={image} />
+      <CardContent>
+        <CardHeader>
+          <CardHeader.Title>
+            {title}
+          </CardHeader.Title>
+          <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { alert('test'); }} />
+        </CardHeader>
+        <CardDescription>
+          {description}
+        </CardDescription>
+        <CardFooter>
+          <CardFooter.SubTitle>
+            Próximos horários
         </CardFooter.SubTitle>
-        <CardFooter.Content>
-          <TimeSlotWrapper>
-            {TimeSlots}
-          </TimeSlotWrapper>
-          <IconsWrapper>
-            <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
-            <div>
-              <RedeIcon imageUrl={remove} onClick={removeFunction} />
-              <RedeIcon imageUrl={visibility} onClick={visibleFunction} />
-              <RedeIcon imageUrl={isVisible ? edition : notEdition} onClick={editFunction} />
-            </div>
-          </IconsWrapper>
-        </CardFooter.Content>
-      </CardFooter>
-    </CardContent>
-  </Container>
-);
+          <CardFooter.Content>
+            <TimeSlotWrapper>
+              {TimeSlots}
+            </TimeSlotWrapper>
+            <IconsWrapper>
+              <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
+              <div>
+                <RedeIcon imageUrl={remove} onClick={removeFunction} />
+                <RedeIcon imageUrl={visibility} onClick={visibleFunction} />
+                <RedeIcon imageUrl={isVisible ? edition : notEdition} onClick={editFunction} />
+              </div>
+            </IconsWrapper>
+          </CardFooter.Content>
+        </CardFooter>
+      </CardContent>
+    </Container>
+  );
 
 Card.propTypes = {
   description: string,

@@ -20,6 +20,7 @@ class Mentor extends Component {
       linkedin: null,
       image: null,
       mentorias: [],
+      mentoriaVisibility: [],
     };
   }
 
@@ -55,7 +56,8 @@ class Mentor extends Component {
           });
         } else {
           const mentorias = [];
-          console.table(res.data[1]);
+          const mentoriaVisibility = Array(res.data.length).fill(true);
+
           for (let i = 0; i < res.data.length; i += 1) {
             const mentoria = res.data[i];
             mentorias.push(<Card
@@ -64,11 +66,15 @@ class Mentor extends Component {
               description={mentoria.data.description}
               image={`${urlFiles}/${mentoria.data.image}`}
               removeFunction={() => this.changeAvalibility(mentoria, i)}
+              visibleFunction={() => this.changeVisibility(mentoria, i)}
               editFunction={() => this.editPage(mentoria)}
+              isVisible={mentoriaVisibility[i]}
             />);
           }
+
           this.setState({
             mentorias,
+            mentoriaVisibility,
           });
         }
       },
@@ -93,20 +99,25 @@ class Mentor extends Component {
           window.location.reload();
         },
       ).catch(() => {
-        alert('Falha ao deletar essa mentoria. Tente novamente.')
+        alert('Falha ao deletar essa mentoria. Tente novamente.');
       });
     }
   };
 
-  changeVisibility = (mentoria) => {
+  changeVisibility = (mentoria, index) => {
     const { id } = mentoria;
     const token = sessionStorage.getItem('token');
     const config = {
       param: { id },
       headers: { Authorization: `Bearer ${token}` },
     };
-    
-    // mudarVisibilidadeMentoria(config);
+    const { mentoriaVisibility } = this.state;
+    mentoriaVisibility[index] = !mentoriaVisibility[index];
+    this.setState({
+      mentoriaVisibility,
+    });
+
+    // mudarVisibilidadeMentoria(config); ROUTE NEED TO BE BUILT
   };
 
   editPage = (mentoria) => {
