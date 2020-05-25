@@ -4,6 +4,9 @@ import Card from '../../components/RedeCard/RedeCard';
 import Caminho from './StyledComponents/Caminho';
 import Container from './StyledComponents';
 import { urlFiles } from '../../services/http';
+import CaminhoTitle from './StyledComponents/CaminhoTitle';
+import CaminhoTitleDesabilitado from './StyledComponents/CaminhoTitleDesabilitado';
+import CaminhoAp from './StyledComponents/CaminhoAp';
 
 
 //para teste
@@ -65,9 +68,13 @@ function MentoriasDisponiveis() {
     return (
         <Container>
             <RedeHeader />
-            <Caminho />
-            <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
+            <CaminhoAp>
+                <CaminhoTitleDesabilitado>Home</CaminhoTitleDesabilitado>
+                <Caminho />
+                <CaminhoTitle>Design</CaminhoTitle>
+            </CaminhoAp>
             <Container.Search onChange={(e) => setSearch(e.target.value)}  />
+            <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
             <br/>
             {mentorias}
         </Container>

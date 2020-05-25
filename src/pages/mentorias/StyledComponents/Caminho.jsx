@@ -8,9 +8,13 @@ const StyledCaminho = styled.img`
 
 backgrund-color: ${COLOR.AZUL};
 background-repeat: no-repeat;
-width: 100px;
-height: 100px;
+width: 20px;
+height: 20px;
 text-align: inherit;
+position: relative;
+top 20px;
+margin-right: 15px;
+margin-left: 15px;
 `;
 
 const Caminho = () => {
