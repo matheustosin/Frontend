@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { element } from 'prop-types';
 import Header from '../../components/Header/Header';
 import RedeInputSearch from '../../components/RedeInputSearch/RedeInputSearch';
 
+
 import { profile } from '../../services/user';
-import { allMentorias } from '../../services/mentor';
+import { allAreas } from '../../services/areas';
 import { urlFiles } from '../../services/http';
 
 import Container from './StyledComponents/index';
@@ -20,27 +21,41 @@ function Aprendiz() {
   const [imageProfile, setImageProfile] = useState(standartPhoto);
   const [areas, setAreas] = useState([]);
   const [showCards, setShowCards] = useState([]);
+  const history = useHistory();
+
+
+  function selectedArea(element, e) {
+    e.preventDefault();
+    sessionStorage.setItem('areaSelected', element);
+    history.push('/tela-seguinte-mentor');
+  }
 
   function buildCards(values) {
     const cards = [];
     values.forEach((element, index) => {
       const color = ColorsDefault.CARDS_COLLORS[index % ColorsDefault.CARDS_COLLORS.length];
-      cards.push(<Cards key={element} color={color} description={element} />);
+      cards.push(
+        <Cards
+          key={element}
+          color={color}
+          description={element}
+          onClick={(e) => selectedArea(element, e)}
+        />,
+      );
     });
     setShowCards(cards);
   }
 
+  // eslint-disable-next-line consistent-return
   async function getAreas(headers) {
-    const results = await allMentorias(headers);
+    const results = await allAreas(headers);
     if (results.status !== 200) {
       return null;
     }
     const resultAreas = [];
     results.data.forEach((element) => {
-      if (element.knowledgeArea !== undefined) {
-        if (!resultAreas.includes(element.knowledgeArea)) {
-          resultAreas.push(element.knowledgeArea);
-        }
+      if (!resultAreas.includes(element.name)) {
+        resultAreas.push(element.name);
       }
     });
     setAreas(resultAreas);
@@ -49,7 +64,6 @@ function Aprendiz() {
 
   async function getImgProfilePhoto(headers) {
     const results = await profile(headers);
-
     if (results.status === 200) {
       setImageProfile(`${urlFiles}/${results.data.image}`);
     }
