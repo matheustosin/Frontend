@@ -5,6 +5,7 @@ import COLOR from '../../../utils/colors.constants';
 import Logo from './logo';
 import Title from './Title';
 import Clearfix from './clearfix';
+import ImgProfile from './imgProfile';
 
 const Container = styled.div`
   opacity: 1;
@@ -21,6 +22,7 @@ const Container = styled.div`
 `;
 
 Container.Logo = Logo;
+Container.ImgProfile = ImgProfile;
 Container.Title = Title;
 Container.Clearfix = Clearfix;
 
