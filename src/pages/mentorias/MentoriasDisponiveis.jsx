@@ -25,7 +25,7 @@ function MentoriasDisponiveis() {
 
     function attemptSearch(event) { 
         const searchCards = mentorias.filter(function (e) {
-            return e.title.startsWith(event);
+            return e.title.toLowerCase().indexOf(event.toLowerCase()) !== -1;
         });
         generateCards(searchCards);
     }
