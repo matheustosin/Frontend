@@ -25,7 +25,7 @@ const Card = ({
         <CardHeader.Title>
           {title}
         </CardHeader.Title>
-        <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { alert('test'); }} />
+        <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
       </CardHeader>
       <CardDescription>
         {description}
