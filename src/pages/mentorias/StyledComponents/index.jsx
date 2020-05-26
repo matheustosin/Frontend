@@ -7,6 +7,12 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
+    padding: 10px 15px;
+
+
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+    }
 `;
 
 Container.Title = Title;

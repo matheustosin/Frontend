@@ -8,7 +8,7 @@ import CaminhoTitle from './StyledComponents/CaminhoTitle';
 import CaminhoTitleDesabilitado from './StyledComponents/CaminhoTitleDesabilitado';
 import CaminhoAp from './StyledComponents/CaminhoAp';
 import { mentoriasByMentorado } from '../../services/mentorado';
-import { func } from 'prop-types';
+import RedeInputSearch from '../../components/RedeInputSearch/RedeInputSearch';
 
 function MentoriasDisponiveis() {
     
@@ -77,7 +77,7 @@ function MentoriasDisponiveis() {
                 <Caminho />
                 <CaminhoTitle>{areaConhecimento}</CaminhoTitle>
             </CaminhoAp>
-            <Container.Search onChange={(e) => attemptSearch(e.target.value)}   />
+            <RedeInputSearch placeholder="Procurar por Área" onChange={(e) => attemptSearch(e.target.value)} />
             <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
             <br/>
             {cards}
