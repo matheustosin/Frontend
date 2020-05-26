@@ -36,6 +36,9 @@ const Card = ({
         </CardFooter.SubTitle>
         <CardFooter.Content>
           <TimeSlotWrapper>
+            <RedeTimeSlot descricao="SEG - 12:00" />
+            <RedeTimeSlot descricao="TER - 12:00" />
+            <RedeTimeSlot descricao="QUA - 12:00" />
             {TimeSlots}
           </TimeSlotWrapper>
           <IconsWrapper>
