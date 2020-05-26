@@ -28,7 +28,7 @@ function Login(props) {
         .then((res) => {
           if (res.status === 200) {
             sessionStorage.setItem('token', res.data.token);
-            const page = (res.data.result.userType === 1) ? '/mentor' : '/main';
+            const page = (res.data.result.userType === 1) ? '/mentor' : '/aprendiz';
             props.history.push({
               pathname: page,
             });

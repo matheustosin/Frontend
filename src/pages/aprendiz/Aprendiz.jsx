@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Header from '../../components/Header/Header';
+import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeInputSearch from '../../components/RedeInputSearch/RedeInputSearch';
 
 
@@ -85,7 +85,7 @@ function Aprendiz() {
 
   return (
     <>
-      <Header descricao="" imgProfile={imageProfile} />
+      <RedeHeader descricao="" imgProfile={imageProfile} />
       <Container>
         <Container.TituloPage>Home</Container.TituloPage>
         <RedeInputSearch placeholder="Procurar por Área" onChange={(e) => searchCards(e.target.value)} />
