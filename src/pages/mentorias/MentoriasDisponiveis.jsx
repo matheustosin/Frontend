@@ -13,14 +13,13 @@ import { func } from 'prop-types';
 function MentoriasDisponiveis() {
     
     const [cards, setCards] = useState('');
-    //const [areaConhecimento, setAreaConhecimento] = useState(sessionStorage.getItem('areaSelected'));
-    const [areaConhecimento, setAreaConhecimento] = useState('UX');
+    const [areaConhecimento, setAreaConhecimento] = useState(sessionStorage.getItem('areaSelected'));
     const [mentorias, setMentorias] = useState([]);
 
     useEffect(()=>{
         const token = sessionStorage.getItem('token');
         const headers = { headers: { Authorization: `Bearer ${token}` } };
-
+        
         getMentorias(headers);
     }, [])
 
@@ -73,7 +72,7 @@ function MentoriasDisponiveis() {
             <RedeHeader />
             <CaminhoAp>
                 <CaminhoTitleDesabilitado>
-                <a href="../login/Login.jsx">Home</a> 
+                <a href="../aprendiz/Aprendiz.jsx">Home</a> 
                 </CaminhoTitleDesabilitado> 
                 <Caminho />
                 <CaminhoTitle>{areaConhecimento}</CaminhoTitle>

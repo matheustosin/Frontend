@@ -27,7 +27,7 @@ function Aprendiz() {
   function selectedArea(element, e) {
     e.preventDefault();
     sessionStorage.setItem('areaSelected', element);
-    history.push('/tela-seguinte-mentor');
+    history.push('/mentorias-disponiveis');
   }
 
   function buildCards(values) {
