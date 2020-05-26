@@ -7,7 +7,7 @@ const Submit = styled.div`
   align-items: center;
   justify-content: space-around;
 
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 1024px) {
     flex-direction: column;
     margin: 10px 0;
   }

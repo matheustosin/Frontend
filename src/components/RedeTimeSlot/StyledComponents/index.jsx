@@ -9,6 +9,7 @@ const TimeSlot = styled.button`
   font-size: 1em;
   border-radius: 10px;
   font-weight: 600;
+  margin-left:10px;
   :hover{
     cursor:pointer;
   }

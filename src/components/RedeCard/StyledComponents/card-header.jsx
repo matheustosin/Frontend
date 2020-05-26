@@ -7,7 +7,7 @@ const CardHeader = styled.div`
   justify-content: space-between;
   width: 100%;
   align-items:center;
-  @media screen and (max-width:1000px){
+  @media screen and (max-width:500px){
     button{
       display:none;
     }

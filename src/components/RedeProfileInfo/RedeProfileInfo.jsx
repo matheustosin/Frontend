@@ -13,38 +13,41 @@ const ProfileUser = ({
   name,
   linkedin,
   image,
+  editFunction,
 }) => (
-    <Container>
-      <Header>
-        <Logo src={image} />
-        <UserInformations>
-          <UserInformations.Name>
-            {name}
-          </UserInformations.Name>
-          <Information>
-            <Information.Icon imageUrl={linkedinIcon} />
-            <Information.Name>
-              {linkedin}
-            </Information.Name>
-          </Information>
-        </UserInformations>
-      </Header>
-      <Bottom>
-        <Icon imageUrl={edition} />
-      </Bottom>
-    </Container>
-  );
+  <Container>
+    <Header>
+      <Logo src={image} />
+      <UserInformations>
+        <UserInformations.Name>
+          {name}
+        </UserInformations.Name>
+        <Information>
+          <Information.Icon imageUrl={linkedinIcon} />
+          <Information.Name>
+            {linkedin}
+          </Information.Name>
+        </Information>
+      </UserInformations>
+    </Header>
+    <Bottom>
+      <Icon imageUrl={edition} onClick={editFunction} />
+    </Bottom>
+  </Container>
+);
 
 ProfileUser.propTypes = {
   name: string,
   linkedin: string,
-  imageUrl: string,
+  image: string,
+  editFunction: func,
 };
 
 ProfileUser.defaultProps = {
   name: '',
   linkedin: '',
-  imageUrl: '',
+  image: '',
+  editFunction: () => {},
 };
 
 export default ProfileUser;

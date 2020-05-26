@@ -1,19 +1,18 @@
 import styled from 'styled-components';
-import RedeButton from '../../RedeButton/RedeButton';
 import COLORS from '../../../utils/colors.constants';
+
 const CardContent = styled.div`
 display:flex;
 width: 60%;
-padding: 20px;
-padding-top: 10px;
-margin-bottom: 10px;
+height:210px;
 flex-direction:column;
+padding:0px 20px 0px 20px;
 font-weight: 600;
 color:${COLORS.AZUL};
-@media screen and (max-width:1000px){
+@media screen and (max-width:500px){
   width:90%;
-  padding:20px;
-  margin-bottom:20px;
+  padding:0px;
+  margin-bottom:0px;
 }
 `;
 export default CardContent;

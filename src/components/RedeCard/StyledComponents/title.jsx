@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 const Title = styled.h1`
-    font-size: 2.1em;
+    font-size: 1.65em;
+    text-transform:uppercase;
 `;
 
-export default Title;   
+export default Title;
