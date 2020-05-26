@@ -1,19 +1,23 @@
 import styled from 'styled-components';
+import COLORS from '../../../utils/colors.constants';
+import Icon from '../../RedeIcon/RedeIcon';
 
 const Container = styled.div`
+  display: flex;
   border: 3px solid #00273f;
   border-radius: 10px;
-  opacity: 1;
-  overflow: hidden;
-  display: flex;
-  width: 755px;
   max-width: 755px;
+  width: 755px;
   height: 165px;
-  align-items: space-between;
-  color: #00273f;
-  @media screen and (max-width: 1024px) {
+  color: ${COLORS.AZUL};
+  padding-left:35px;
+  img{
+    align-self:center;
+  }
+  @media screen and (max-width: 1000px) {
     width: 85vw;
   }
+
 `;
 
 export default Container;

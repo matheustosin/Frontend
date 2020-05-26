@@ -7,7 +7,7 @@ import UserInformations from './StyledComponents/user-informations';
 import Logo from './StyledComponents/logo';
 import Icon from '../RedeIcon/RedeIcon';
 import Information from './StyledComponents/information';
-import Header from './StyledComponents/header';
+import UserName from './StyledComponents/user-name';
 import Bottom from './StyledComponents/bottom';
 
 const ProfileUser = ({
@@ -17,23 +17,22 @@ const ProfileUser = ({
   editFunction,
 }) => (
   <Container>
-    <Header>
-      <Logo src={image} />
-      <UserInformations>
-        <UserInformations.Name>
-          {name}
-        </UserInformations.Name>
-        <Information>
-          <Information.Icon imageUrl={linkedinIcon} />
-          <Information.Name>
-            {linkedin}
-          </Information.Name>
-        </Information>
-      </UserInformations>
-    </Header>
-    <Bottom>
-      <Icon imageUrl={edition} onClick={editFunction} />
-    </Bottom>
+    <Logo src={image} />
+    <UserInformations>
+      <UserName>
+        {name}
+      </UserName>
+      <Information>
+        <Information.Icon imageUrl={linkedinIcon} />
+        <Information.Name>
+          {linkedin}
+          TESTANDO
+        </Information.Name>
+      </Information>
+      <Bottom>
+        <Icon imageUrl={edition} onClick={editFunction} />
+      </Bottom>
+    </UserInformations>
   </Container>
 );
 
