@@ -4,12 +4,12 @@ import Selecionado from  './Selecionado'
 import Deselecionado from './Deselecionado' 
 
 const TimeSlot = styled.button`
-  width: 110px;
-  height: 40px;
+  min-width: 110px;
+  min-height: 40px;
+  width: 30%;
   font-size: 1em;
   border-radius: 10px;
   font-weight: 600;
-  margin-left:10px;
   :hover{
     cursor:pointer;
   }

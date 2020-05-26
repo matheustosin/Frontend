@@ -9,9 +9,24 @@ const IconsWrapper = styled.div`
     display:none;
   }
   
-  @media screen and (max-width:500px){
+  @media screen and (max-width:1000px) and (min-width:500px){
     button{
       display:inline-block;
+    }
+    width:100%;
+    align-items:center;
+  }
+  @media screen and (max-width:499px){
+    flex-direction:column;
+    align-items:center;
+    button{
+      display:inline-block;
+      align-items:center;
+    }
+    div{
+      display:flex;
+      width:100%;
+      justify-content:flex-end;
     }
     width:100%;
   }
