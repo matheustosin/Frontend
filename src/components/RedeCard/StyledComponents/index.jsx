@@ -1,8 +1,13 @@
 import styled from 'styled-components';
-
-import Logo from './logo';
-import InfoHolder from './info-holder';
-
+import CardLogo from './card-logo';
+import CardHeader from './card-header';
+import CardDescription from './card-description';
+import CardFooter from './card-footer';
+import IconsWrapper from './icons-wrapper';
+import CardContent from './card-content';
+import SubTitle from './subtitle';
+import TimeSlotWrapper from './timeslot-wrapper';
+import RedeButton from '../../RedeButton/RedeButton';
 
 const Container = styled.div`
     border: 3px solid #00273F;
@@ -11,19 +16,37 @@ const Container = styled.div`
     overflow: hidden;
     display: flex;
     width: 1000px;
-    height: 210px;
+    min-height: 210px;
+    height:auto;
     margin-bottom: 50px;
     flex-direction:row;
     justify-content:center;
     align-items:center;
-    @media screen and (max-width:1000px){
+    font-family : Roboto, sans-serif;
+    @media screen and (max-width:500px){
         flex-direction:column;
         width:85vw;
-        height:80vh;
+        min-height:80vh;
+        height:auto;
+        margin-bottom: 0px;
     }
+    ${({ visible }) => !visible
+     && `
+            ${CardDescription}, ${CardHeader}, ${SubTitle}{
+                display:none;
+            }
+           ${TimeSlotWrapper},${CardLogo}{
+               visibility:hidden;
+           }
+           ${CardContent}{
+               height:unset;
+           }
+           height:50px;
+           min-height:50px;
+           max-height:50px;
+     `}
+}
+}
 `;
-
-// Container.Logo = Logo;
-//Container.InfoHolder = InfoHolder;
 
 export default Container;

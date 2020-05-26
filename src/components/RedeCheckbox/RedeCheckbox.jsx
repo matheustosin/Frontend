@@ -1,25 +1,31 @@
+import React from 'react';
 import styled from 'styled-components';
-import React from 'react'
 
-const Checkbox = props => (
-    <input type="checkbox" {...props}/>
-)
+import COLOR from '../../utils/colors.constants';
+
+const Checkbox = (props) => <input type="checkbox" {...props} />;
 
 const RedeCheckbox = styled(Checkbox)`
-  height: 25px;
   width: 25px;
-  appearance: none;
-  border: 3px solid #00273F;
-  border-radius: 4px;
+  height: 25px;
+  display: flex;
+  font-size: 1rem;
   cursor: pointer;
+  appearance: none;
+  border-radius: 4px;
+  position: relative;
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid ${COLOR.AZUL};
 
-  &:before {
-    content: '';
+  &:focus {
+    outline: none;
   }
 
   &:checked {
     &:after {
+      position: absolute;
       content: '✔';
     }
   }
