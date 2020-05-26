@@ -1,6 +1,6 @@
 import React from 'react';
 import { withInfo } from '@storybook/addon-info';
-import RedeInputRadio  from './RedeInputRadio';
+import RedeInputRadio from './RedeInputRadio';
 
 export default {
   title: 'RedeInputRadio',
