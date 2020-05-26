@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import TituloPage from './TituloPage';
 
 const Container = styled.div`
-    max-width: 980px;
+    max-width: 1280px;
     padding: 10px 15px;
     margin-right: auto;
     margin-left: auto;

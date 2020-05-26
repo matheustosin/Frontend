@@ -62,6 +62,7 @@ function MentoriasDisponiveis() {
                 title={mentoria.title}
                 description={mentoria.description}
                 image={`${urlFiles}/${mentoria.image}`}
+                mentorias={true}
             />
         ));
         setCards(cardsMentorias);
@@ -77,7 +78,7 @@ function MentoriasDisponiveis() {
                 <Caminho />
                 <CaminhoTitle>{areaConhecimento}</CaminhoTitle>
             </CaminhoAp>
-            <RedeInputSearch placeholder="Procurar por Área" onChange={(e) => attemptSearch(e.target.value)} />
+            <RedeInputSearch placeholder="Procurar por Mentoria" onChange={(e) => attemptSearch(e.target.value)} />
             <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
             <br/>
             {cards}

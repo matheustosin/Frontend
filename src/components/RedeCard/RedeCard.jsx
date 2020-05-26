@@ -16,7 +16,7 @@ import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 
 
 const Card = ({
-  title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots,
+  title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots, mentorias
 }) => (
   <Container visible={isVisible}>
     <CardLogo src={image} />
@@ -41,9 +41,8 @@ const Card = ({
           <IconsWrapper>
             <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
             <div>
-              <RedeIcon imageUrl={remove} onClick={removeFunction} />
-              {/* <RedeIcon imageUrl={visibility} onClick={visibleFunction} /> */}
-              <RedeIcon imageUrl={edition} onClick={editFunction} />
+              {showIcons(mentorias, remove, edition, removeFunction, editFunction)}
+              
             </div>
           </IconsWrapper>
         </CardFooter.Content>
@@ -59,6 +58,7 @@ Card.propTypes = {
   visibleFunction: func,
   removeFunction: func,
   editFunction: func,
+  mentorias: bool,
 
 };
 
@@ -69,7 +69,19 @@ Card.defaultProps = {
   visibleFunction: null,
   removeFunction: null,
   editFunction: null,
+  mentorias: false,
+
 };
+    
+  function showIcons(mentorias, remove, edition, removeFunction, editFunction){
+    /* <RedeIcon imageUrl={visibility} onClick={visibleFunction} /> */
+    if (mentorias)
+      return [];
+    else{
+      return [<RedeIcon imageUrl={remove} onClick={removeFunction} />,
+      <RedeIcon imageUrl={edition} onClick={editFunction} /> ];
+    }
+  }
 
 
 export default Card;
