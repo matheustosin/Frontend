@@ -7,11 +7,10 @@ import Header from '../../components/RedeHeader/RedeHeader';
 import { mentoriasByMentor, desativarMentoria } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
-import Subtitle from './StyledComponents/subtitle';
 import Title from './StyledComponents/title';
 import HeaderPage from './StyledComponents/header-page';
+import Subtitle from './StyledComponents/subtitle';
 import RedeButton from '../../components/RedeButton/RedeButton';
-import MOCK_DATA from '../../utils/mockData.json';
 
 class Mentor extends Component {
   constructor(props) {
@@ -35,6 +34,7 @@ class Mentor extends Component {
           const {
             name, linkedin, image,
           } = res.data;
+          console.log(res.data)
           const urlImage = `${urlFiles}/${image}`;
           this.setState({
             name,
@@ -48,58 +48,41 @@ class Mentor extends Component {
       alert('Problema ao buscar informações. Tente novamente.');
       console.error(err);
     });
-    const mentorias = [];
-    let i = 0;
-    for (const el in MOCK_DATA) {
-      mentorias.push(<Card
-        key={MOCK_DATA[el].id}
-        title={MOCK_DATA[el].data.title}
-        description={MOCK_DATA[el].data.description}
-        image={`${urlFiles}/${MOCK_DATA[el].data.image}`}
-        removeFunction={() => this.changeAvalibility(MOCK_DATA[el].data, 2 - i)}
-        visibleFunction={() => this.changeVisibility(MOCK_DATA[el].data, 2 - i)}
-        editFunction={() => this.editPage(MOCK_DATA[el])}
-        isVisible
-      />);
-      console.log(i);
-      i += 1;
-    }
-    this.setState({ mentorias });
-    // mentoriasByMentor(headers).then(
-    //   (res) => {
-    //     if (res.data.length === 0) {
-    //       this.setState({
-    //         mentorias: <Subtitle> Nenhuma mentoria encontrada!</Subtitle>,
-    //       });
-    //     } else {
-    //       const mentorias = [];
-    //       const mentoriaVisibility = Array(res.data.length).fill(true);
+    mentoriasByMentor(headers).then(
+      (res) => {
+        if (res.data.length === 0) {
+          this.setState({
+            mentorias: <Subtitle> Nenhuma mentoria encontrada!</Subtitle>,
+          });
+        } else {
+          const mentorias = [];
+          const mentoriaVisibility = Array(res.data.length).fill(true);
 
-    //       for (let i = 0; i < res.data.length; i += 1) {
-    //         const mentoria = res.data[i];
-    //         mentorias.push(<Card
-    //           key={mentoria.id}
-    //           title={mentoria.data.title}
-    //           description={mentoria.data.description}
-    //           image={`${urlFiles}/${mentoria.data.image}`}
-    //           removeFunction={() => this.changeAvalibility(mentoria, i)}
-    //           visibleFunction={() => this.changeVisibility(mentoria, i)}
-    //           editFunction={() => this.editPage(mentoria)}
-    //           isVisible={mentoriaVisibility[i]}
-    //         />);
-    //       }
-    //       this.setState({
-    //         mentorias,
-    //         mentoriaVisibility,
-    //       });
-    //     }
-    //   },
-    // ).catch((err) => {
-    //   console.error(err);
-    //   this.setState({
-    //     mentorias: <Subtitle> Nenhuma mentoria encontrada!</Subtitle>,
-    //   });
-    // });
+          for (let i = 0; i < res.data.length; i += 1) {
+            const mentoria = res.data[i];
+            mentorias.push(<Card
+              key={mentoria.id}
+              title={mentoria.data.title}
+              description={mentoria.data.description}
+              image={`${urlFiles}/${mentoria.data.image}`}
+              removeFunction={() => this.changeAvalibility(mentoria, i)}
+              visibleFunction={() => this.changeVisibility(mentoria, i)}
+              editFunction={() => this.editPage(mentoria)}
+              isVisible={mentoriaVisibility[i]}
+            />);
+          }
+          this.setState({
+            mentorias,
+            mentoriaVisibility,
+          });
+        }
+      },
+    ).catch((err) => {
+      console.error(err);
+      this.setState({
+        mentorias: <Subtitle> Nenhuma mentoria encontrada!</Subtitle>,
+      });
+    });
   }
 
   changeAvalibility = (mentoria, index) => {
@@ -109,17 +92,17 @@ class Mentor extends Component {
       param: { id },
       headers: { Authorization: `Bearer ${token}` },
     };
-    // if (global.confirm('Você deseja realmente deletar essa mentoria ?')) {
-    //   desativarMentoria(config).then(
-    //     () => {
-    //       window.location.reload();
-    //       this.setState((prevState) => ({
-    //       }));
-    //     },
-    //   ).catch(() => {
-    //     alert('Falha ao deletar essa mentoria. Tente novamente.');
-    //   });
-    // }
+    if (global.confirm('Você deseja realmente deletar essa mentoria ?')) {
+      desativarMentoria(config).then(
+        () => {
+          window.location.reload();
+          this.setState((prevState) => ({
+          }));
+        },
+      ).catch(() => {
+        alert('Falha ao deletar essa mentoria. Tente novamente.');
+      });
+    }
   };
 
 
