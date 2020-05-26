@@ -15,7 +15,7 @@ const Container = styled.div`
     align-self:center;
   }
   @media screen and (max-width: 1000px) {
-    width: 85vw;
+    width: 80%;
   }
 
 `;

@@ -26,7 +26,6 @@ const ProfileUser = ({
         <Information.Icon imageUrl={linkedinIcon} />
         <Information.Name>
           {linkedin}
-          TESTANDO
         </Information.Name>
       </Information>
       <Bottom>
