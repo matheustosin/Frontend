@@ -14,6 +14,7 @@ import mentoriaImage from '../../assets/mentoria.png';
 
 //conexao com back
 import { mentoriasByMentorado } from '../../services/mentorado';
+import { func } from 'prop-types';
 
 
 function MentoriasDisponiveis() {
@@ -69,7 +70,9 @@ function MentoriasDisponiveis() {
         <Container>
             <RedeHeader />
             <CaminhoAp>
-                <CaminhoTitleDesabilitado>Home</CaminhoTitleDesabilitado>
+                <CaminhoTitleDesabilitado>
+                <a href="../login/Login.jsx">Home</a> 
+                </CaminhoTitleDesabilitado> 
                 <Caminho />
                 <CaminhoTitle>Design</CaminhoTitle>
             </CaminhoAp>

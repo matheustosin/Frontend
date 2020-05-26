@@ -61,4 +61,5 @@ Card.defaultProps = {
   title: '',
 };
 
+
 export default Card;

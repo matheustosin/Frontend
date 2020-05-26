@@ -2,10 +2,24 @@ import styled from 'styled-components';
 
 import COLOR from '../../../utils/colors.constants';
 
-const Title = styled.h2`
+const Desabilitado = styled.h2`
+  margin: 15px 0;
+  text-align: center;
   margin: 15px 0;
   text-align: center;
   color: ${COLOR.CINZA};
+  
+  a:link, a:visited {
+    color: ${COLOR.CINZA};
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  a:hover {
+    color: ${COLOR.AZUL_CLARO};
+    background-color: transparent;
+    
+  }
 `;
 
-export default Title;
+export default Desabilitado;
