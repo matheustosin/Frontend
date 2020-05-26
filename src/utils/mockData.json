@@ -1,0 +1,18 @@
+{
+    "0": {
+        "id": "10",
+        "data": {
+            "title": "FAKE DATA 1",
+            "description": "FAKE DESCRIPTION 1",
+            "image": "FAKE-PATH.JPG"
+        }
+    },
+    "1": {
+        "id": "20",
+        "data": {
+            "title": "FAKE DATA 2",
+            "description": "FAKE DESCRIPTION 2",
+            "image": "FAKE-PATH.JPG"
+        }
+    }
+}

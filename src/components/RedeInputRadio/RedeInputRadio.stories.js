@@ -9,3 +9,5 @@ export default {
 };
 
 export const padrao = () => <RedeInputRadio />;
+export const Email = () => <RedeInputRadio descricao="Email" />;
+export const Senha = () => <RedeInputRadio descricao="Senha" tipo="password" />;

@@ -5,4 +5,5 @@ export default {
   BRANCO: '#FFFFFF',
   CINZA: '#D2D0D0',
   VERMELHO: '#FF0000',
+  VERDE: '#97E298'
 };
