@@ -7,53 +7,57 @@ import { urlFiles } from '../../services/http';
 import CaminhoTitle from './StyledComponents/CaminhoTitle';
 import CaminhoTitleDesabilitado from './StyledComponents/CaminhoTitleDesabilitado';
 import CaminhoAp from './StyledComponents/CaminhoAp';
-
-
-//para teste
-import mentoriaImage from '../../assets/mentoria.png';
-
-//conexao com back
 import { mentoriasByMentorado } from '../../services/mentorado';
 import { func } from 'prop-types';
 
-
 function MentoriasDisponiveis() {
     
+    const [cards, setCards] = useState('');
+    //const [areaConhecimento, setAreaConhecimento] = useState(sessionStorage.getItem('areaSelected'));
+    const [areaConhecimento, setAreaConhecimento] = useState('UX');
+    const [mentorias, setMentorias] = useState([]);
+
     useEffect(()=>{
-        getMentorias();
-    }, [])
-
-    const [search, setSearch] = useState('');
-    const [mentorias, setMentorias] = useState('');
-
-    function attemptSearch(event) { 
-        console.log(search);
-    }
-
-    function getMentorias() {
         const token = sessionStorage.getItem('token');
         const headers = { headers: { Authorization: `Bearer ${token}` } };
 
+        getMentorias(headers);
+    }, [])
+
+    function attemptSearch(event) { 
+        const searchCards = mentorias.filter(function (e) {
+            return e.title.startsWith(event);
+        });
+        generateCards(searchCards);
+    }
+
+    function getMentorias(headers) {
+        
         mentoriasByMentorado(headers) 
         .then((res) => {
             if (res.status === 200) {
-                generateCards(res.data);
-            }
-        })
-        .catch((err) => {
-            alert('Problema ao buscar informações. Tente novamente.');
-            console.error(err);
-        });
+                    filterMentorias(res.data);
+                }
+            })
+            .catch((err) => {
+                setCards('Nenhuma mentoria encontrada para a Área de Conhecimento selecionada.');
+                console.error(err);
+            });
     }
 
-    function generateCards(arrayMentorias) {
-        // vai receber area especifica da mentoria da tela anterior 
-        const areaConhecimento = 'UX';
+    function filterMentorias(arrayMentoriasAll) {
 
-        const mentoriasAreaConhecimento = arrayMentorias
+        const mentoriasAreaConhecimento = arrayMentoriasAll
         .filter(function (e) {
             return e.knowledgeArea == areaConhecimento;
-        })
+        });
+        setMentorias(mentoriasAreaConhecimento);
+        generateCards(mentoriasAreaConhecimento);
+    }
+
+    function generateCards(mentoriasAreaConhecimento) {
+
+        const cardsMentorias = mentoriasAreaConhecimento
         .map((mentoria) => (  
             <Card 
                 title={mentoria.title}
@@ -61,10 +65,8 @@ function MentoriasDisponiveis() {
                 image={`${urlFiles}/${mentoria.image}`}
             />
         ));
-        setMentorias(mentoriasAreaConhecimento);
+        setCards(cardsMentorias);
     }
-
-    attemptSearch();
     
     return (
         <Container>
@@ -74,12 +76,12 @@ function MentoriasDisponiveis() {
                 <a href="../login/Login.jsx">Home</a> 
                 </CaminhoTitleDesabilitado> 
                 <Caminho />
-                <CaminhoTitle>Design</CaminhoTitle>
+                <CaminhoTitle>{areaConhecimento}</CaminhoTitle>
             </CaminhoAp>
-            <Container.Search onChange={(e) => setSearch(e.target.value)}  />
+            <Container.Search onChange={(e) => attemptSearch(e.target.value)}   />
             <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
             <br/>
-            {mentorias}
+            {cards}
         </Container>
     );  
 }
