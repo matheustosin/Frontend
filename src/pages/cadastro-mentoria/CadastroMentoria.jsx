@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Header from '../../components/Header/Header';
-import RedeTextField from '../../components/RedeTextField/RedeTextField';
-import RedeTextArea from '../../components/RedeTextArea/RedeTextArea';
-import RedeButton from '../../components/RedeButton/RedeButton';
-import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 import Container from './StyledComponents';
-
-import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
-import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
-
+import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import { cadastrarMentoria, atualizarMentoria } from '../../services/mentoria';
-
-import imgPlus from '../../assets/plus.png';
+import RedeButton from '../../components/RedeButton/RedeButton';
+import RedeTextArea from '../../components/RedeTextArea/RedeTextArea';
+import RedeTextField from '../../components/RedeTextField/RedeTextField';
+import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
+import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
+import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 
 import './style.css';
-
 
 function CadastroMentoria() {
   const oldMentoria = JSON.parse(sessionStorage.getItem('oldMentoria'));
@@ -34,7 +29,7 @@ function CadastroMentoria() {
   function attempMentoria(event) {
     event.preventDefault();
     const token = sessionStorage.getItem('token');
-
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
     const data = new FormData();
     data.append('title', title);
     data.append('description', description);
@@ -97,27 +92,46 @@ function CadastroMentoria() {
 
   return (
     <Container>
-      <Header descricao={PageTitle} />
+      <RedeHeader descricao={PageTitle} />
       <Container.Form>
         <Container.Options>
-          <RedeTextField descricao="Título" valor={title} onChange={(e) => setTitle(e.target.value)} />
-          <RedeTextArea descricao="Descrição" valor={description} onChange={(e) => setDescription(e.target.value)} />
-          <RedeTextField descricao="Área de Conhecimento" valor={knowledgeArea} onChange={(e) => setKnowledgeArea(e.target.value)} />
+          <RedeTextField
+            descricao="Título"
+            valor={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <RedeTextArea
+            descricao="Descrição"
+            valor={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <RedeTextField
+            descricao="Área de Conhecimento"
+            valor={knowledgeArea}
+            onChange={(e) => setKnowledgeArea(e.target.value)}
+          />
           <input id="fileButton" type="file" hidden />
           <RedeButton descricao="Adicionar Foto" claro onClick={handleImage} />
         </Container.Options>
 
         <RedeHorizontalSeparator size="300" />
 
-
         <Container.Options style={{ 'margin-bottom': '12rem' }}>
-          <RedeInputRadio descricao="Opções de Mentoria" tipo="radio" nome="optmentorias" onChange={(e) => setMentoringOption(e.target.value)} />
+          <RedeInputRadio
+            descricao="Opções de Mentoria"
+            tipo="radio"
+            nome="optmentorias"
+            onChange={(e) => setMentoringOption(e.target.value)}
+          />
           <RedeFormLabel descricao="Datas e Horários Disponíveis" />
 
           <div>
-            <label className="label-class" htmlFor="data">Data</label>
-            <label className="label-class" htmlFor="hora">Hora</label>
-
+            <label className="label-class" htmlFor="data">
+              Data
+            </label>
+            <label className="label-class" htmlFor="hora">
+              Hora
+            </label>
           </div>
           <div>
             <select className="select-class" id="data" name="data" value={dayOfWeek} onChange={(e) => setDayOfWeek(e.target.value)}>
@@ -145,7 +159,6 @@ function CadastroMentoria() {
               <option value="21:00:00">21:00</option>
               <option value="21:00:00">22:00</option>
             </select>
-
           </div>
         </Container.Options>
       </Container.Form>

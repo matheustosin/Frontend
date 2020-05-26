@@ -12,7 +12,7 @@ const RedeButton = ({
 
 RedeButton.propTypes = {
   descricao: string,
-  onClick: func.isRequired,
+  onClick: func,
   desabilitado: bool,
   cancelar: bool,
   claro: bool,
@@ -23,6 +23,7 @@ RedeButton.defaultProps = {
   desabilitado: false,
   cancelar: false,
   claro: false,
+  onClick: () => {},
 };
 
 export default RedeButton;

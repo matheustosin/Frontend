@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
+import Register from './Register';
+
 import Separator from './Separator';
 
-const Container = styled.div``;
+const Container = styled.div`
+  ${({ isRegister }) => isRegister && Register}
+`;
 
 Container.displayName = 'Container';
 

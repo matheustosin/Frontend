@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-const Logo = styled.img`
-  padding-left: 10px;
-`;
+const Logo = styled.img``;
 
 export default Logo;

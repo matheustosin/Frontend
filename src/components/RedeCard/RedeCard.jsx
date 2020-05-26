@@ -16,7 +16,7 @@ import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 
 
 const Card = ({
-  title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots
+  title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots,
 }) => (
   <Container visible={isVisible}>
     <CardLogo src={image} />

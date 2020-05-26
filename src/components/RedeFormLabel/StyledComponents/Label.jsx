@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import COLOR from '../../../utils/colors.constants';
 
 const Label = styled.label`

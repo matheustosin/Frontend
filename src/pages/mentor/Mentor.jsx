@@ -3,7 +3,7 @@ import { Link, withRouter, useHistory } from 'react-router-dom';
 import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
-import Header from '../../components/Header/Header';
+import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import { mentoriasByMentor, desativarMentoria } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
@@ -111,7 +111,7 @@ class Mentor extends Component {
   render() {
     return (
       <>
-        <Header descricao="Página do mentor" />
+        <RedeHeader descricao="Página do mentor" />
         <Container>
           <ProfileInfo
             name={this.state.name}

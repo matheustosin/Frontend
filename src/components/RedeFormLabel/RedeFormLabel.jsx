@@ -1,10 +1,8 @@
 import React from 'react';
-import { string, func } from 'prop-types';
+import { string } from 'prop-types';
 import TextField from './StyledComponents';
 
-const RedeFormLabel = ({
-  descricao,
-}) => (
+const RedeFormLabel = ({ descricao }) => (
   <TextField>
     <TextField.Label>{descricao}</TextField.Label>
   </TextField>

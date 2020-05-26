@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router';
+import { Redirect, withRouter } from 'react-router';
 import { useSnackbar } from 'notistack';
-import AccountImage from '../../assets/account.png';
 import { cadastrarUsuario } from '../../services/user';
-import { formatCPF, formatTelefone } from '../../utils/maskUtils';
-import Container from './StyledComponents';
-import RedeButton from '../../components/RedeButton/RedeButton';
+import Container from '../cadastro-mentor/StyledComponents';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
+import AccountImage from '../../assets/account.png';
+import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
+import {
+  formatCPF,
+  formatTelefone,
+  formatDataNascimento,
+  formatMatricula,
+} from '../../utils/maskUtils';
 
-function CadastroMentor() {
-  const [name, setName] = useState('');
+function CadastroMentorado() {
+  const [nome, setNome] = useState('');
+  const [dataNascimento, setDataNascimento] = useState('');
   const [cpf, setCpf] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [matricula, setMatricula] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [linkedin, setLinkedin] = useState('');
-  const [image, setImage] = useState('');
-  const [phone, setPhone] = useState('');
-  const [areas, setAreas] = useState('');
+  const [senha, setSenha] = useState('');
+  const [confirmarSenha, setConfirmarSenha] = useState('');
   const [imageurl, setImageurl] = useState(AccountImage);
-  const [acceptTerms, setAcceptTerms] = useState('');
+  const [imagem, setImagem] = useState('');
+  const [acceptTerms, setAcceptTerms] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -30,43 +35,33 @@ function CadastroMentor() {
     enqueueSnackbar(msg, { variant, autoHideDuration });
   };
 
-  if (redirect) {
-    return <Redirect push to="/" />;
-  }
-
   const attemptRegister = (event) => {
     event.preventDefault();
 
     const data = new FormData();
-    data.append('image', image);
-    data.append('name', name);
+    data.append('image', imagem);
+    data.append('name', nome);
     data.append('email', email);
-    data.append('phone', phone);
-    data.append('linkedin', linkedin);
+    data.append('birthDate', dataNascimento);
     data.append('cpf', cpf);
-    data.append('password', password);
-    data.append('areas', areas);
-    data.append('flag', 1);
+    data.append('phone', telefone);
+    data.append('password', senha);
+    data.append('registration', matricula);
+    data.append('flag', 2); // mentorado flag
 
     if (
       !data.get('name')
       || !data.get('email')
-      || !data.get('phone')
-      || !data.get('linkedin')
+      || !data.get('birthDate')
       || !data.get('cpf')
-      || !data.get('areas')
+      || !data.get('phone')
       || !data.get('password')
-      || !confirmPassword
+      || !data.get('registration')
+      || !confirmarSenha
     ) {
       enqueue('Preencha todos os campos.');
     } else if (!data.get('image')) {
       enqueue('Insira uma foto de perfil.');
-    } else if (
-      data.get('password')
-      && confirmPassword
-      && data.get('password') !== confirmPassword
-    ) {
-      enqueue('Senhas não são iguais.');
     } else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
     } else {
@@ -77,8 +72,9 @@ function CadastroMentor() {
             setRedirect(true);
           }
         })
-        .catch(() => {
+        .catch((err) => {
           enqueue('Não foi possível realizar o cadastro. ');
+          console.log(err);
         });
     }
   };
@@ -92,15 +88,19 @@ function CadastroMentor() {
       } catch (e) {
         url = imageurl;
       }
-      setImage(event.target.files[0]);
+      setImagem(event.target.files[0]);
       setImageurl(url);
     };
   };
 
-  const erroSenha = Boolean(password && confirmPassword && password !== confirmPassword);
+  if (redirect) {
+    return <Redirect push to="/" />;
+  }
+
+  const erroSenha = Boolean(senha && confirmarSenha && senha !== confirmarSenha);
   return (
     <Container>
-      <RedeHeader descricao="Cadastro de Mentor" />
+      <RedeHeader descricao="Cadastro de Mentorado" />
 
       <Container.FlexContainer style={{ marginTop: '10px' }}>
         <Container.Item style={{ textAlign: 'center' }}>
@@ -116,8 +116,13 @@ function CadastroMentor() {
         <Container.Item>
           <RedeTextField
             descricao="Nome Completo"
-            valor={name}
-            onChange={(evt) => setName(evt.target.value)}
+            valor={nome}
+            onChange={(evt) => setNome(evt.target.value)}
+          />
+          <RedeTextField
+            descricao="Data de Nascimento"
+            valor={dataNascimento}
+            onChange={(evt) => setDataNascimento(formatDataNascimento(evt.target.value))}
           />
           <RedeTextField
             descricao="CPF"
@@ -126,18 +131,13 @@ function CadastroMentor() {
           />
           <RedeTextField
             descricao="Telefone"
-            valor={phone}
-            onChange={(evt) => setPhone(formatTelefone(evt.target.value))}
+            valor={telefone}
+            onChange={(evt) => setTelefone(formatTelefone(evt.target.value))}
           />
           <RedeTextField
-            descricao="Áreas de Conhecimento"
-            valor={areas}
-            onChange={(evt) => setAreas(evt.target.value)}
-          />
-          <RedeTextField
-            descricao="LinkedIn"
-            valor={linkedin}
-            onChange={(evt) => setLinkedin(evt.target.value)}
+            descricao="Matrícula"
+            valor={matricula}
+            onChange={(evt) => setMatricula(formatMatricula(evt.target.value))}
           />
         </Container.Item>
 
@@ -151,15 +151,15 @@ function CadastroMentor() {
           />
           <RedeTextField
             descricao="Senha"
+            valor={senha}
             tipo="password"
-            valor={password}
-            onChange={(evt) => setPassword(evt.target.value)}
+            onChange={(evt) => setSenha(evt.target.value)}
           />
           <RedeTextField
             descricao="Confirmação de Senha"
+            valor={confirmarSenha}
             tipo="password"
-            valor={confirmPassword}
-            onChange={(evt) => setConfirmPassword(evt.target.value)}
+            onChange={(evt) => setConfirmarSenha(evt.target.value)}
             msgAjuda={erroSenha ? 'Senhas não conferem' : ''}
             erro={erroSenha}
           />
@@ -185,4 +185,4 @@ function CadastroMentor() {
   );
 }
 
-export default CadastroMentor;
+export default withRouter(CadastroMentorado);

@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import logo from '../../assets/logo.png';
 import Container from './StyledComponents';
 import { login } from '../../services/user';
@@ -7,78 +8,62 @@ import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeSeparator from '../../components/RedeSeparator/RedeSeparator';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-    };
+function Login(props) {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const { enqueueSnackbar } = useSnackbar();
 
-    this.handleEmail = this.handleEmail.bind(this);
-    this.handlePassword = this.handlePassword.bind(this);
-  }
 
-  attemptLogin = (event) => {
+  const attemptLogin = (event) => {
     event.preventDefault();
     const data = {
-      email: this.state.email,
-      password: this.state.password,
+      email,
+      password,
     };
 
     if (!data.email || !data.password) {
-      alert('Preencha os campos de email e senha.');
+      enqueueSnackbar('Preencha os campos de email e senha.', { variant: 'error', autoHideDuration: 2500 });
     } else {
       login(data)
         .then((res) => {
           if (res.status === 200) {
             sessionStorage.setItem('token', res.data.token);
             const page = (res.data.result.userType === 1) ? '/mentor' : '/main';
-            this.props.history.push({
+            props.history.push({
               pathname: page,
             });
           }
         })
         .catch((err) => {
-          alert('Acesso não autorizado. Verifique seu email e sua senha.');
+          enqueueSnackbar('Acesso não autorizado. Verifique seu email e sua senha.', { variant: 'error', autoHideDuration: 2500 });
           console.error(err);
         });
     }
   };
 
-  handleEmail(event) {
-    this.setState({ email: event.target.value });
-  }
-
-  handlePassword(event) {
-    this.setState({ password: event.target.value });
-  }
-
-  render() {
-    return (
-      <Container>
-        <Container.SideImage />
-        <Container.SideLogin>
-          <Container.Logo src={logo} />
-          <Container.Form>
-            <RedeTextField descricao="Email" valor={this.state.email} onChange={this.handleEmail} />
-            <RedeTextField
-              descricao="Senha"
-              tipo="password"
-              valor={this.state.password}
-              onChange={this.handlePassword}
-            />
-            <Container.ForgotPassword> Esqueci minha senha </Container.ForgotPassword>
-            <RedeButton descricao="Entrar" onClick={this.attemptLogin} />
-            <RedeSeparator descricao="Novo na Rede ?"> </RedeSeparator>
-            <Link to="/register">
-              <RedeButton descricao="Cadastrar" />
-            </Link>
-          </Container.Form>
-        </Container.SideLogin>
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <Container.SideImage />
+      <Container.SideLogin>
+        <Container.Logo src={logo} />
+        <Container.Form>
+          <RedeTextField descricao="Email" valor={email} onChange={(evt) => setEmail(evt.target.value)} />
+          <RedeTextField
+            descricao="Senha"
+            tipo="password"
+            valor={password}
+            onChange={(evt) => setPassword(evt.target.value)}
+          />
+          <Container.ForgotPassword> Esqueci minha senha </Container.ForgotPassword>
+          <RedeButton descricao="Entrar" onClick={attemptLogin} />
+          <RedeSeparator descricao="Novo na Rede ?"> </RedeSeparator>
+          <Link to="/register">
+            <RedeButton descricao="Cadastrar" />
+          </Link>
+        </Container.Form>
+      </Container.SideLogin>
+    </Container>
+  );
 }
 
 export default withRouter(Login);
