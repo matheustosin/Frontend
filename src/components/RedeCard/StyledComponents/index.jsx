@@ -27,21 +27,6 @@ const Container = styled.div`
         height:auto;
         margin-bottom: 0px;
     }
-    ${({ visible }) => !visible
-     && `
-            ${CardDescription}, ${CardHeader}, ${SubTitle}{
-                display:none;
-            }
-           ${TimeSlotWrapper},${CardLogo}{
-               visibility:hidden;
-           }
-           ${CardContent}{
-               height:unset;
-           }
-           height:50px;
-           min-height:50px;
-           max-height:50px;
-     `}
 }
 }
 `;
