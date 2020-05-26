@@ -5,6 +5,7 @@ import COLOR from '../../../utils/colors.constants';
 const Desabilitado = styled.h2`
   text-align: center;
   color: ${COLOR.CINZA};
+  font-weight: bold;
   
   a:link, a:visited {
     color: ${COLOR.CINZA};

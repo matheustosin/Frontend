@@ -8,7 +8,6 @@ const Input = styled.input`
     border-radius: 10px;
     opacity: 1;
     margin: 10px auto;
-    font-size: 15px;
     background-image: url(${searchImage});
     background-position: 99% 50%;   
     background-repeat: no-repeat;
