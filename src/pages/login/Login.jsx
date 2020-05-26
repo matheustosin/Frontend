@@ -33,9 +33,9 @@ class Login extends Component {
         .then((res) => {
           if (res.status === 200) {
             sessionStorage.setItem('token', res.data.token);
-            //const page = (res.data.result.userType === 1) ? '/mentor' : '/main';
+            const page = (res.data.result.userType === 1) ? '/mentor' : '/main';
             this.props.history.push({
-              pathname: '/mentorias-disponiveis',
+              pathname: page,
             });
           }
         })
