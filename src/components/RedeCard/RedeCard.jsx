@@ -14,10 +14,12 @@ import CardFooter from './StyledComponents/card-footer';
 import CardContent from './StyledComponents/card-content';
 import IconsWrapper from './StyledComponents/icons-wrapper';
 import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
+import MentorImage from './StyledComponents/mentor-image';
+import MentorName from './StyledComponents/mentor-name';
 
 
 const Card = ({
-  title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots, mentorias
+  title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots, mentorias, mentorImage, mentorName
 }) => (
     <Container>
       <CardLogo src={image} />
@@ -43,11 +45,8 @@ const Card = ({
             </TimeSlotWrapper>
             <IconsWrapper>
               <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
-              <div>
-                <RedeIcon imageUrl={remove} onClick={removeFunction} />
-                <RedeIcon imageUrl={isVisible ? visible : notVisible} onClick={visibleFunction} />
-                <RedeIcon imageUrl={edition} onClick={editFunction} />
-              </div>
+              {showIcons(mentorias, remove, edition, removeFunction, editFunction, mentorImage, mentorName, isVisible, visibleFunction)}
+              
             </IconsWrapper>
           </CardFooter.Content>
         </CardFooter>
@@ -77,13 +76,15 @@ Card.defaultProps = {
 
 };
     
-  function showIcons(mentorias, remove, edition, removeFunction, editFunction){
-    /* <RedeIcon imageUrl={visibility} onClick={visibleFunction} /> */
+  function showIcons(mentorias, remove, edition, removeFunction, editFunction, isVisible, visibleFunction){
     if (mentorias)
       return [];
     else{
-      return [<RedeIcon imageUrl={remove} onClick={removeFunction} />,
-      <RedeIcon imageUrl={edition} onClick={editFunction} /> ];
+      return [<div>
+        <RedeIcon imageUrl={remove} onClick={removeFunction} />
+        <RedeIcon imageUrl={isVisible ? visible : notVisible} onClick={visibleFunction} />
+        <RedeIcon imageUrl={edition} onClick={editFunction} />
+      </div> ];
     }
   }
 
