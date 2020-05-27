@@ -7,12 +7,15 @@ import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeTextArea from '../../components/RedeTextArea/RedeTextArea';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
+import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 
 import './style.css';
 
 function CadastroMentoria() {
+
   const oldMentoria = JSON.parse(sessionStorage.getItem('oldMentoria'));
+  
   const PageTitle = oldMentoria ? 'Atualização de Mentoria' : 'Nova Mentoria';
   const ActionButtonTitle = oldMentoria ? 'Atualizar Mentoria' : 'Criar Mentoria';
   const [title, setTitle] = useState(oldMentoria ? oldMentoria.data.title : '');
@@ -23,6 +26,7 @@ function CadastroMentoria() {
   const [dayOfWeek, setDayOfWeek] = useState(oldMentoria ? String(oldMentoria.data.dayOfWeek).toLowerCase() : '');
   const [image, setImage] = useState(oldMentoria ? oldMentoria.data.image : '');
 
+  
   const history = useHistory();
 
   function attempMentoria(event) {
