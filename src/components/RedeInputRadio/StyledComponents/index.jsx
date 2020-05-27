@@ -7,8 +7,6 @@ import Radio from './Radio';
 const TextField = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: left;
-  width: 100%;
 `;
 
 TextField.displayName = 'TextField';

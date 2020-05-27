@@ -2,10 +2,9 @@ import styled from 'styled-components';
 
 const Submit = styled.div`
   display: flex;
-  width: 40%;
-  margin: 0 32%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  margin-left: 15px;
 
   @media only screen and (max-width: 1024px) {
     flex-direction: column;
