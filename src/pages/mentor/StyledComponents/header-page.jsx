@@ -8,6 +8,7 @@ const HeaderPage = styled.div`
     width:90%;
     margin-top:30px;
     @media screen and (max-width: 1000px){    
+            width:100%;
             flex-direction: column;   
             justify-content:center;
             align-items: center;

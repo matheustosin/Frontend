@@ -12,6 +12,16 @@ const CardDescription = styled.p`
     flex-direction: row;
     padding: 5px 0px 5px 0px;
     text-overflow: ellipsis;
+    @media screen and (min-width:499px) and (max-width:1000px){
+        height:auto;
+        max-height:120px;
+        overflow:initial;
+    }
+    @media screen and (max-width:499px){
+        height:auto;
+        max-height:120px;
+        overflow:initial;
+    }
 `;
 
 export default CardDescription;

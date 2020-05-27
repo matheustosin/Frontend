@@ -8,6 +8,10 @@ const UserInformations = styled.div`
   justify-content:Center;
   self-align:center;
   margin-left: 15px;
+  @media screen and (max-width: 1000px) {
+    align-items:Center;
+    margin:0;
+  }
 `;
 
 UserInformations.Name = UserName;

@@ -5,6 +5,9 @@ const Title = styled.h1`
     font-size : 40px;
     font-weight: 600;
     font-family: Roboto, sans-serif;
+    @media screen and (max-width: 1000px){    
+        text-align:Center;
+}
 `;
 
 export default Title;

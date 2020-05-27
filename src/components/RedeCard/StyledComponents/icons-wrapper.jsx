@@ -8,7 +8,6 @@ const IconsWrapper = styled.div`
   button{
     display:none;
   }
-  
   @media screen and (max-width:1000px) and (min-width:500px){
     button{
       display:inline-block;
@@ -26,9 +25,10 @@ const IconsWrapper = styled.div`
     div{
       display:flex;
       width:100%;
-      justify-content:flex-end;
+      justify-content:center;
     }
     width:100%;
+
   }
 `;
 
