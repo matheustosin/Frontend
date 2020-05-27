@@ -14,12 +14,11 @@ import CardFooter from './StyledComponents/card-footer';
 import CardContent from './StyledComponents/card-content';
 import IconsWrapper from './StyledComponents/icons-wrapper';
 import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
-import MentorImage from './StyledComponents/mentor-image';
-import MentorName from './StyledComponents/mentor-name';
+
 
 
 const Card = ({
-  title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots, mentorias, mentorImage, mentorName
+  title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots, mentorias
 }) => (
     <Container>
       <CardLogo src={image} />
