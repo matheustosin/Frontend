@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
-const TituloAreas = styled.p`
+const TituloAreas = styled.h1`
     text-transform: uppercase;
     font-weight: bold;
-    margin: 10px auto;
+    margin: 15px auto;
     text-align: center;
-    font-size: 1.5em;
-
+    margin: 15px 0;
 `;
 
 export default TituloAreas;

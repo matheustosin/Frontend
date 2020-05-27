@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 const Bottom = styled.div`
     display:flex;
-    align-items:flex-end;
-    padding-bottom: 15px;
+    align-self:flex-end;
 `;
 
 export default Bottom;

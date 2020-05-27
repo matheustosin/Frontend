@@ -7,8 +7,8 @@ const RedeInputRadio = ({
 }) => (
   <TextField>
     <TextField.Label>{descricao}</TextField.Label>
-    <div>
-      <TextField.Radio type={tipo} id="online" name={nome} value="1" onChange={onChange}  />
+    <div style={{ padding: '10px 0px' }}>
+      <TextField.Radio type={tipo} id="online" name={nome} value="1" onChange={onChange} />
       <TextField.LabelRadio htmlFor="online">Online</TextField.LabelRadio>
       <TextField.Radio type={tipo} id="presencial" name={nome} value="2" onChange={onChange} />
       <TextField.LabelRadio htmlFor="presencial">Presencial</TextField.LabelRadio>

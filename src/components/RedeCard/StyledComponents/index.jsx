@@ -12,7 +12,7 @@ const Container = styled.div`
     opacity: 1;
     overflow: hidden;
     display: flex;
-    width: 1000px;
+    width: 90%;
     min-height: 210px;
     height:auto;
     margin-bottom: 50px;
@@ -20,12 +20,15 @@ const Container = styled.div`
     justify-content:center;
     align-items:center;
     font-family : Roboto, sans-serif;
-    @media screen and (max-width:500px){
+    @media screen and (max-width:1000px){
         flex-direction:column;
         width:85vw;
-        min-height:80vh;
+        min-height:105vh;
         height:auto;
-        margin-bottom: 0px;
+        margin-bottom: 50px;
+    }
+    @media screen and (min-width:499px) and (max-width:1000px){
+        min-height:105vh;
     }
 }
 }
