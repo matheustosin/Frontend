@@ -25,7 +25,7 @@ const Card = ({
         <CardHeader.Title>
           {title}
         </CardHeader.Title>
-        <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { alert('test'); }} />
+        <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
       </CardHeader>
       <CardDescription>
         {description}
@@ -42,7 +42,7 @@ const Card = ({
             {TimeSlots}
           </TimeSlotWrapper>
           <IconsWrapper>
-            <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
+            <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { alert('test'); }} />
             <div>
               {showIcons(mentorias, remove, edition, removeFunction, editFunction)}
               

@@ -5,9 +5,9 @@ const HeaderPage = styled.div`
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 21px;
-    width:1000px;
+    width:90%;
     margin-top:30px;
-    @media screen and (max-width: 500px){    
+    @media screen and (max-width: 1000px){    
             flex-direction: column;   
             justify-content:center;
             align-items: center;
