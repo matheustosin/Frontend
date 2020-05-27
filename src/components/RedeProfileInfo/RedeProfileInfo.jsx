@@ -9,7 +9,6 @@ import Icon from '../RedeIcon/RedeIcon';
 import Information from './StyledComponents/information';
 import Header from './StyledComponents/header';
 import Bottom from './StyledComponents/bottom';
-
 const ProfileUser = ({
   name,
   linkedin,

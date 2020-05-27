@@ -27,7 +27,7 @@ function Aprendiz() {
   function selectedArea(element, e) {
     e.preventDefault();
     sessionStorage.setItem('areaSelected', element);
-    history.push('/tela-seguinte-mentor');
+    history.push('/mentorias-disponiveis');
   }
 
   function buildCards(values) {
@@ -86,9 +86,9 @@ function Aprendiz() {
   return (
     <>
       <RedeHeader descricao="" imgProfile={imageProfile} />
+      <Container.TituloPage>Home</Container.TituloPage>
+      <RedeInputSearch placeholder="Procurar por Área" onChange={(e) => searchCards(e.target.value)} />
       <Container>
-        <Container.TituloPage>Home</Container.TituloPage>
-        <RedeInputSearch placeholder="Procurar por Área" onChange={(e) => searchCards(e.target.value)} />
         <ContainersGeralCards>
           <ContainersGeralCards.TituloAreas>Áreas de conhecimento</ContainersGeralCards.TituloAreas>
           {showCards}
