@@ -27,7 +27,7 @@ const Card = ({
           <CardHeader.Title>
             {title}
           </CardHeader.Title>
-          <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { alert('test'); }} />
+          <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => {  }} />
         </CardHeader>
         <CardDescription>
           {description}
@@ -43,9 +43,8 @@ const Card = ({
             <RedeTimeSlot descricao="QUA - 12:00" />
             </TimeSlotWrapper>
             <IconsWrapper>
-              <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
+              <CardHeader.Button descricao="TODOS HORÁRIOS"  onClick={() => {  }} />
               {showIcons(mentorias, remove, edition, removeFunction, editFunction, isVisible, visibleFunction)}
-              
             </IconsWrapper>
           </CardFooter.Content>
         </CardFooter>
@@ -74,7 +73,6 @@ Card.defaultProps = {
   mentorias: false,
 
 };
-    
   function showIcons(mentorias, remove, edition, removeFunction, editFunction, isVisible, visibleFunction){
     if (mentorias)
       return [];

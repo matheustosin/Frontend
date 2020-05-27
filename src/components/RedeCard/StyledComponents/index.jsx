@@ -5,9 +5,9 @@ import CardDescription from './card-description';
 import CardContent from './card-content';
 import SubTitle from './subtitle';
 import TimeSlotWrapper from './timeslot-wrapper';
-
+import Color from '../../../utils/colors.constants'
 const Container = styled.div`
-    border: 3px solid #00273F;
+    border: 3px solid ${Color.AZUL};
     border-radius: 10px;
     opacity: 1;
     overflow: hidden;
@@ -23,12 +23,13 @@ const Container = styled.div`
     @media screen and (max-width:1000px){
         flex-direction:column;
         width:85vw;
-        min-height:105vh;
         height:auto;
-        margin-bottom: 50px;
+
     }
     @media screen and (min-width:499px) and (max-width:1000px){
-        min-height:105vh;
+        height:auto;
+        padding-bottom:10px;
+
     }
 }
 }
