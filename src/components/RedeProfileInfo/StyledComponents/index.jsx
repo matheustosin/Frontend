@@ -8,7 +8,8 @@ const Container = styled.div`
   border-radius: 10px;
   max-width: 755px;
   width: 755px;
-  height: 165px;
+  min-height: 165px;
+  height:auto;
   color: ${COLORS.AZUL};
   padding-left:35px;
   img{
@@ -16,6 +17,11 @@ const Container = styled.div`
   }
   @media screen and (max-width: 1000px) {
     width: 80%;
+    flex-direction:column;
+    height: 220px;
+    padding-left:0px;
+    height:auto;
+    padding-top:20px;
   }
 
 `;
