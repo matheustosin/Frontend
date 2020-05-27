@@ -44,7 +44,7 @@ const Card = ({
             </TimeSlotWrapper>
             <IconsWrapper>
               <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
-              {showIcons(mentorias, remove, edition, removeFunction, editFunction, mentorImage, mentorName, isVisible, visibleFunction)}
+              {showIcons(mentorias, remove, edition, removeFunction, editFunction, isVisible, visibleFunction)}
               
             </IconsWrapper>
           </CardFooter.Content>
