@@ -16,6 +16,7 @@ import IconsWrapper from './StyledComponents/icons-wrapper';
 import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 
 
+
 const Card = ({
   title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots, mentorias
 }) => (
@@ -43,11 +44,8 @@ const Card = ({
             </TimeSlotWrapper>
             <IconsWrapper>
               <CardHeader.Button descricao="TODOS HORÁRIOS" claro="true" onClick={() => { alert('test'); }} />
-              <div>
-                <RedeIcon imageUrl={remove} onClick={removeFunction} />
-                <RedeIcon imageUrl={isVisible ? visible : notVisible} onClick={visibleFunction} />
-                <RedeIcon imageUrl={edition} onClick={editFunction} />
-              </div>
+              {showIcons(mentorias, remove, edition, removeFunction, editFunction, mentorImage, mentorName, isVisible, visibleFunction)}
+              
             </IconsWrapper>
           </CardFooter.Content>
         </CardFooter>
@@ -77,13 +75,15 @@ Card.defaultProps = {
 
 };
     
-  function showIcons(mentorias, remove, edition, removeFunction, editFunction){
-    /* <RedeIcon imageUrl={visibility} onClick={visibleFunction} /> */
+  function showIcons(mentorias, remove, edition, removeFunction, editFunction, isVisible, visibleFunction){
     if (mentorias)
       return [];
     else{
-      return [<RedeIcon imageUrl={remove} onClick={removeFunction} />,
-      <RedeIcon imageUrl={edition} onClick={editFunction} /> ];
+      return [<div>
+        <RedeIcon imageUrl={remove} onClick={removeFunction} />
+        <RedeIcon imageUrl={isVisible ? visible : notVisible} onClick={visibleFunction} />
+        <RedeIcon imageUrl={edition} onClick={editFunction} />
+      </div> ];
     }
   }
 
