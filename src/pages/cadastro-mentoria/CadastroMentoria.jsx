@@ -6,8 +6,8 @@ import { cadastrarMentoria, atualizarMentoria } from '../../services/mentoria';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeTextArea from '../../components/RedeTextArea/RedeTextArea';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
-import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
+import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 
 import plusButton from '../../assets/plus-circle.png';
@@ -16,7 +16,9 @@ import './style.css';
 
 
 function CadastroMentoria() {
+
   const oldMentoria = JSON.parse(sessionStorage.getItem('oldMentoria'));
+  
   const PageTitle = oldMentoria ? 'Atualização de Mentoria' : 'Nova Mentoria';
   const ActionButtonTitle = oldMentoria ? 'Atualizar Mentoria' : 'Criar Mentoria';
   const [title, setTitle] = useState(oldMentoria ? oldMentoria.data.title : '');
@@ -28,6 +30,7 @@ function CadastroMentoria() {
   const [image, setImage] = useState(oldMentoria ? oldMentoria.data.image : '');
   const [maxAddHour, setMaxAddHour] = useState(5);
 
+  
   const history = useHistory();
 
   function getSelectsValues() {
@@ -218,5 +221,6 @@ function CadastroMentoria() {
     </Container>
   );
 }
+
 
 export default CadastroMentoria;

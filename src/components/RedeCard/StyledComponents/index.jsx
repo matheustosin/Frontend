@@ -2,12 +2,9 @@ import styled from 'styled-components';
 import CardLogo from './card-logo';
 import CardHeader from './card-header';
 import CardDescription from './card-description';
-import CardFooter from './card-footer';
-import IconsWrapper from './icons-wrapper';
 import CardContent from './card-content';
 import SubTitle from './subtitle';
 import TimeSlotWrapper from './timeslot-wrapper';
-import RedeButton from '../../RedeButton/RedeButton';
 
 const Container = styled.div`
     border: 3px solid #00273F;
@@ -33,21 +30,6 @@ const Container = styled.div`
     @media screen and (min-width:499px) and (max-width:1000px){
         min-height:105vh;
     }
-    ${({ visible }) => !visible
-     && `
-            ${CardDescription}, ${CardHeader}, ${SubTitle}{
-                display:none;
-            }
-           ${TimeSlotWrapper},${CardLogo}{
-               visibility:hidden;
-           }
-           ${CardContent}{
-               height:unset;
-           }
-           height:50px;
-           min-height:50px;
-           max-height:50px;
-     `}
 }
 }
 `;
