@@ -5,9 +5,10 @@ import Logon from './pages/login/Login';
 import CadastroMentor from './pages/cadastro-mentor/CadastroMentor';
 import Main from './pages/main';
 import Register from './pages/register/Register';
-import Mentor from './pages/mentor/mentor';
+import Mentor from './pages/mentor/Mentor';
 import CadastroMentorado from './pages/cadastro-mentorado/CadastroMentorado';
 import CadastroMentoria from './pages/cadastro-mentoria/CadastroMentoria';
+import Aprendiz from './pages/aprendiz/Aprendiz';
 
 
 export default function Routes() {
@@ -21,6 +22,7 @@ export default function Routes() {
         <Route path="/main" component={Main} />
         <Route path="/register" component={Register} />
         <Route path="/mentor" component={Mentor} />
+        <Route path="/aprendiz" component={Aprendiz} />
       </Switch>
     </BrowserRouter>
   );

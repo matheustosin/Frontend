@@ -28,7 +28,8 @@ RedeInputRadio.defaultProps = {
   descricao: '',
   tipo: '',
   nome: '',
-  onChange: () => { },
+  checked: '',
+  onChange: () => {},
 };
 
 export default RedeInputRadio;

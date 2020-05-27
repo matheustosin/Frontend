@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Container from './StyledComponents';
-import Header from '../../components/RedeHeader/RedeHeader';
-// import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
-import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
-
+import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import { cadastrarMentoria, atualizarMentoria } from '../../services/mentoria';
-
-// import imgPlus from '../../assets/plus.png';
-// import { cadastrarMentoria } from '../../services/mentor';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeTextArea from '../../components/RedeTextArea/RedeTextArea';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
@@ -34,7 +28,7 @@ function CadastroMentoria() {
   function attempMentoria(event) {
     event.preventDefault();
     const token = sessionStorage.getItem('token');
-
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
     const data = new FormData();
     data.append('title', title);
     data.append('description', description);
@@ -69,11 +63,10 @@ function CadastroMentoria() {
           alert('Cadastrado com sucesso');
         }
         history.push('/mentor');
-      })
-        .catch((err) => {
-          alert('Problema ao cadastrar mentoria');
-          console.error(err);
-        });
+      }).catch((err) => {
+        alert('Problema ao cadastrar mentoria');
+        console.error(err);
+      });
     }
   }
   function handleImage() {
@@ -98,7 +91,7 @@ function CadastroMentoria() {
 
   return (
     <Container>
-      <Header descricao={PageTitle} />
+      <RedeHeader descricao={PageTitle} />
       <Container.Form>
         <Container.Options>
           <RedeTextField

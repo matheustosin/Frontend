@@ -24,7 +24,7 @@ class Register extends PureComponent {
             </Link>
           </Container.Option>
 
-          <RedeHorizontalSeparator />
+          <RedeHorizontalSeparator isRegister />
 
           <Container.Option>
             <Container.Circle>

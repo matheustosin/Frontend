@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
-import Header from '../../components/RedeHeader/RedeHeader';
+import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import { mentoriasByMentor, desativarMentoria } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
