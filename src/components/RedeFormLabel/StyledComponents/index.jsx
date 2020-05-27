@@ -5,8 +5,6 @@ import Label from './Label';
 const TextField = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: left;
-  width: 100%;
   margin-top: 10px;
 `;
 

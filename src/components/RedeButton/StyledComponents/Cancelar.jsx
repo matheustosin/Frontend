@@ -6,6 +6,7 @@ const Cancelar = css`
   color: ${COLOR.AZUL};
   background-color: ${COLOR.BRANCO};
   border: solid 1px ${COLOR.AZUL};
+  margin: 10px 40px;
 
   :hover {
     color: ${COLOR.BRANCO};

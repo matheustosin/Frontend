@@ -1,15 +1,11 @@
 .select-class{
-  padding: 4px 10px;
+  padding: 5px 20px;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   border: 1px solid #707070;
   border-radius: 18px;
   opacity: 1;
 }
 
-.label-class{
-  font-size: 1rem;
-  font-weight: bold;
-}
 
 .select-class:nth-child(2){
   margin-left: 20px;
@@ -22,5 +18,44 @@
 
 .button-plus{
   margin-left: 15px;
+  cursor: pointer;
+}
+
+
+.select-data-horarios{
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  align-content: center;
+}
+
+.select-data-horarios .labels{
+  margin-left: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.select-data-horarios .labels p{
+  font-size: 1rem;
+  color: #00273F;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.select-data-horarios .labels p:not(:first-child){
+ margin-left: 70px;
+}
+
+.select-data-horarios .data-hora{
+  display: flex;
+  align-items: center;
+  align-content: center;
+  margin-bottom: 10px;
+}
+
+.select-data-horarios .data-hora img{
+  margin-left:15px;
   cursor: pointer;
 }
