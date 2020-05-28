@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import { Container } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import StyledContainer from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
@@ -10,7 +10,8 @@ import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
 import RedeButton from '../../components/RedeButton/RedeButton';
 
-function Mentor(props) {
+function Mentor() {
+  const history = useHistory();
   const [name, setName] = useState();
   const [image, setImage] = useState();
   const [mentorias, setMentorias] = useState([]);
@@ -52,23 +53,17 @@ function Mentor(props) {
 
   const editPage = (mentoria) => {
     sessionStorage.setItem('oldMentoria', JSON.stringify(mentoria));
-    props.history.push({
-      pathname: '/cadastro-mentoria',
-    });
+    history.push('/cadastro-mentoria');
   };
 
   const routeCadastro = () => {
     sessionStorage.removeItem('oldMentoria');
-    props.history.push({
-      pathname: '/cadastro-mentoria',
-    });
+    history.push('/cadastro-mentoria');
   };
   const editProfilePage = () => {
     sessionStorage.setItem('oldProfile', JSON.stringify(profileInfos));
     console.log(profileInfos);
-    props.history.push({
-      pathname: '/cadastro-mentor',
-    });
+    history.push('/cadastro-mentor');
   };
 
   useEffect(() => {
@@ -149,4 +144,4 @@ function Mentor(props) {
   );
 }
 
-export default withRouter(Mentor);
+export default Mentor;

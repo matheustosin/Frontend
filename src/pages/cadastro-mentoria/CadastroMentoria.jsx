@@ -5,7 +5,7 @@ import { cadastrarMentoria, atualizarMentoria } from '../../services/mentoria';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeTextArea from '../../components/RedeTextArea/RedeTextArea';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
-import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
+// import RedeInputRadio from '../../components/RedeInputRadio';
 import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 
@@ -161,13 +161,13 @@ function CadastroMentoria() {
         </Container.Options>
         <RedeHorizontalSeparator />
         <Container.SecondOption>
-          <RedeInputRadio
+          {/* <RedeInputRadio
             descricao="Opções de Mentoria"
             tipo="radio"
             nome="optmentorias"
             checked="1"
             onChange={(e) => setMentoringOption(e.target.value)}
-          />
+          /> */}
           <RedeFormLabel descricao="Datas e Horários Disponíveis" />
 
           <div className="select-data-horarios">
