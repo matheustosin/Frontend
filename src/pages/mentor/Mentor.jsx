@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Container } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import Container from './StyledComponents';
+import StyledContainer from './StyledComponents';
+import Card from '../../components/RedeCard/RedeCard';
+import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
 import { mentoriasByMentor, desativarMentoria } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
-import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
-import Card from '../../components/RedeCard/RedeCard';
 import RedeButton from '../../components/RedeButton/RedeButton';
 
 function Mentor(props) {
@@ -42,12 +43,9 @@ function Mentor(props) {
     }
   };
 
-  const changeVisibility = (index) => {
-    const allMentorias = [];
-    for (let i = 0; i < mentorias.length; i++) {
-      allMentorias[i] = mentorias[i];
-      if (i === index) allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
-    }
+  const changeVisibility = (i) => {
+    const allMentorias = mentorias;
+    allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
     setMentorias(allMentorias);
     // mudarVisibilidadeMentoria(config); ROUTE NEED TO BE BUILT
   };
@@ -81,12 +79,10 @@ function Mentor(props) {
       await profile(headers)
         .then((res) => {
           if (res.status === 200) {
-            const { name, linkedin, image } = res.data;
-            const urlImage = `${urlFiles}/${image}`;
             setProfileInfos(res.data);
-            setName(name);
-            setLinkedin(linkedin);
-            setImage(urlImage);
+            setName(res.data.name);
+            setLinkedin(res.data.linkedin);
+            setImage(`${urlFiles}/${res.data.image}`);
           }
         })
         .catch(() => {
@@ -122,27 +118,32 @@ function Mentor(props) {
   return (
     <>
       <Container>
-        <ProfileInfo name={name} linkedin={linkedin} image={image} editFunction={editProfilePage} />
-        <Container.HeaderPage>
-          <Container.Title> MINHAS MENTORIAS </Container.Title>
-          <RedeButton onClick={routeCadastro} descricao="+ NOVA MENTORIA" />
-        </Container.HeaderPage>
-        {mentorias.length > 0 ? (
-          mentorias.map((mentoria, i) => (
-            <Card
-              key={mentoria.id}
-              title={mentoria.data.title}
-              description={mentoria.data.description}
-              image={`${urlFiles}/${mentoria.data.image}`}
-              removeFunction={() => changeAvalibility(i)}
-              visibleFunction={() => changeVisibility(i)}
-              editFunction={() => editPage(mentoria)}
-              isVisible={mentoria.data.isVisible}
-            />
-          ))
-        ) : (
-          <Container.Subtitle> Nenhuma mentoria encontrada!</Container.Subtitle>
-        )}
+        <StyledContainer>
+          <ProfileInfo
+            name={name}
+            linkedin={linkedin}
+            image={image}
+            editFunction={editProfilePage}
+          />
+          <Container.HeaderPage>
+            <Container.Title> MINHAS MENTORIAS </Container.Title>
+            <RedeButton onClick={routeCadastro} descricao="+ NOVA MENTORIA" />
+          </Container.HeaderPage>
+          {mentorias.length > 0 ? (
+            mentorias.map((mentoria, i) => (
+              <Card
+                key={mentoria.id}
+                title={mentoria.data.title}
+                description={mentoria.data.description}
+                image={`${urlFiles}/${mentoria.data.image}`}
+                removeFunction={() => changeAvalibility(i)}
+                visibleFunction={() => changeVisibility(i)}
+                editFunction={() => editPage(mentoria)}
+                isVisible={mentoria.data.isVisible}
+              />
+            ))
+          ) : (<Container.Subtitle> Nenhuma mentoria encontrada!</Container.Subtitle>)}
+        </StyledContainer>
       </Container>
     </>
   );

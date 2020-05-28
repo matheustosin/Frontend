@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import logo from '../../assets/logo.png';
 import Container from './StyledComponents';
-import { login } from '../../services/user';
+import { login, profile } from '../../services/user';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeSeparator from '../../components/RedeSeparator/RedeSeparator';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 
-function Login(props) {
+function Login() {
+  const history = useHistory();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const { enqueueSnackbar } = useSnackbar();
 
+  useEffect(() => { // componentDidMount
+    const tkn = sessionStorage.getItem('token');
+    if (tkn) {
+      profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
+        history.push((resp.data.userType === 1) ? '/mentor' : '/mentorado');
+      });
+    }
+  });
 
   const attemptLogin = (event) => {
     event.preventDefault();
@@ -28,10 +37,7 @@ function Login(props) {
         .then((res) => {
           if (res.status === 200) {
             sessionStorage.setItem('token', res.data.token);
-            const page = (res.data.result.userType === 1) ? '/mentor' : '/mentorado';
-            props.history.push({
-              pathname: page,
-            });
+            history.push((res.data.result.userType === 1) ? '/mentor' : '/mentorado');
           }
         })
         .catch((err) => {
@@ -66,4 +72,4 @@ function Login(props) {
   );
 }
 
-export default withRouter(Login);
+export default Login;

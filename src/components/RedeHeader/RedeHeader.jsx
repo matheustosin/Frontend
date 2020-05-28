@@ -12,6 +12,7 @@ const RedeHeader = () => {
   const [profile, setProfile] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
+
   const logOut = () => {
     sessionStorage.removeItem('token');
     setProfile(null);
