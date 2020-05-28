@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
 import Card from '../../components/RedeCard/RedeCard';
 import Caminho from './StyledComponents/Caminho';
 import Container from './StyledComponents';
@@ -13,6 +14,7 @@ function MentoriasDisponiveis() {
   const [cards, setCards] = useState('');
   const areaConhecimento = sessionStorage.getItem('areaSelected');
   const [mentorias, setMentorias] = useState([]);
+  const [redirectTo, setRedirectTo] = useState('');
 
   function generateCards(mentoriasAreaConhecimento) {
     const cardsMentorias = mentoriasAreaConhecimento
@@ -47,7 +49,6 @@ function MentoriasDisponiveis() {
       });
   }
 
-
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
@@ -61,12 +62,10 @@ function MentoriasDisponiveis() {
     generateCards(searchCards);
   }
 
-  return (
+  return (redirectTo) ? <Redirect to={redirectTo} /> : (
     <Container>
       <CaminhoAp>
-        <CaminhoTitleDesabilitado>
-          <a href="../mentorado/Mentorado.jsx">Home</a>
-        </CaminhoTitleDesabilitado>
+        <CaminhoTitleDesabilitado onClick={() => setRedirectTo('/mentorado')}>Home</CaminhoTitleDesabilitado>
         <Caminho />
         <CaminhoTitle>{areaConhecimento}</CaminhoTitle>
       </CaminhoAp>

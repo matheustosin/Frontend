@@ -13,6 +13,7 @@ const RedeHeader = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
   const logOut = () => {
+    sessionStorage.removeItem('token');
     setProfile(null);
     history.push('/');
   };
@@ -34,9 +35,6 @@ const RedeHeader = () => {
       logOut();
     });
   }, [tkn]);
-
-  useEffect(() => {
-  }, [profile]);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
