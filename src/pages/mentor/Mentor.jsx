@@ -95,7 +95,7 @@ function Mentor() {
       await mentoriasByMentor(headers)
         .then((res) => {
           if (res.data.length === 0) {
-            setMentorias(<Container.Subtitle> Nenhuma mentoria encontrada!</Container.Subtitle>);
+            setMentorias(<StyledContainer.Subtitle> Nenhuma mentoria encontrada!</StyledContainer.Subtitle>);
           } else {
             setMentorias(res.data);
           }
@@ -103,7 +103,7 @@ function Mentor() {
         .catch(() => {
           // enqueueSnackbar('Erro ao buscar as mentorias. Verifique sua conexão e tente novamente',
           // { variant: 'error', autoHideDuration: 2500 });
-          setMentorias(<Container.Subtitle> Nenhuma mentoria encontrada!</Container.Subtitle>);
+          setMentorias(<StyledContainer.Subtitle> Nenhuma mentoria encontrada!</StyledContainer.Subtitle>);
         });
     }
     fetchData();
@@ -120,10 +120,10 @@ function Mentor() {
             image={image}
             editFunction={editProfilePage}
           />
-          <Container.HeaderPage>
-            <Container.Title> MINHAS MENTORIAS </Container.Title>
+          <StyledContainer.HeaderPage>
+            <StyledContainer.Title> MINHAS MENTORIAS </StyledContainer.Title>
             <RedeButton onClick={routeCadastro} descricao="+ NOVA MENTORIA" />
-          </Container.HeaderPage>
+          </StyledContainer.HeaderPage>
           {mentorias.length > 0 ? (
             mentorias.map((mentoria, i) => (
               <Card
@@ -137,7 +137,7 @@ function Mentor() {
                 isVisible={mentoria.data.isVisible}
               />
             ))
-          ) : (<Container.Subtitle> Nenhuma mentoria encontrada!</Container.Subtitle>)}
+          ) : (<StyledContainer.Subtitle> Nenhuma mentoria encontrada!</StyledContainer.Subtitle>)}
         </StyledContainer>
       </Container>
     </>
