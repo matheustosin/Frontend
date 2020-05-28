@@ -6,7 +6,6 @@ import { cadastrarUsuario } from '../../services/user';
 import { formatCPF, formatTelefone } from '../../utils/maskUtils';
 import Container from './StyledComponents';
 import RedeButton from '../../components/RedeButton/RedeButton';
-import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
@@ -100,8 +99,6 @@ function CadastroMentor() {
   const erroSenha = Boolean(password && confirmPassword && password !== confirmPassword);
   return (
     <Container>
-      <RedeHeader descricao="Cadastro de Mentor" />
-
       <Container.FlexContainer style={{ marginTop: '10px' }}>
         <Container.Item style={{ textAlign: 'center' }}>
           <Container.UserImage src={imageurl} />

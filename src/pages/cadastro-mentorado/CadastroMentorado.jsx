@@ -3,7 +3,6 @@ import { Redirect, withRouter } from 'react-router';
 import { useSnackbar } from 'notistack';
 import { cadastrarUsuario } from '../../services/user';
 import Container from '../cadastro-mentor/StyledComponents';
-import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 import AccountImage from '../../assets/account.png';
@@ -100,8 +99,6 @@ function CadastroMentorado() {
   const erroSenha = Boolean(senha && confirmarSenha && senha !== confirmarSenha);
   return (
     <Container>
-      <RedeHeader descricao="Cadastro de Mentorado" />
-
       <Container.FlexContainer style={{ marginTop: '10px' }}>
         <Container.Item style={{ textAlign: 'center' }}>
           <Container.UserImage src={imageurl} />
