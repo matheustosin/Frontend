@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Redirect, withRouter } from 'react-router';
+import React, { useState, useEffect } from 'react';
+import { withRouter, useHistory } from 'react-router';
 import { useSnackbar } from 'notistack';
-import { cadastrarUsuario } from '../../services/user';
+import { cadastrarUsuario, profile } from '../../services/user';
 import Container from '../cadastro-mentor/StyledComponents';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
@@ -14,8 +14,11 @@ import {
   formatDataNascimento,
   formatMatricula,
 } from '../../utils/maskUtils';
+import { urlFiles } from '../../services/http';
 
 function CadastroMentorado() {
+  const history = useHistory();
+  const [isEditing, setIsEditing] = useState(false);
   const [nome, setNome] = useState('');
   const [dataNascimento, setDataNascimento] = useState('');
   const [cpf, setCpf] = useState('');
@@ -27,12 +30,39 @@ function CadastroMentorado() {
   const [imageurl, setImageurl] = useState(AccountImage);
   const [imagem, setImagem] = useState('');
   const [acceptTerms, setAcceptTerms] = useState(false);
-  const [redirect, setRedirect] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
     enqueueSnackbar(msg, { variant, autoHideDuration });
   };
+
+  useEffect(() => { // ComponentDidMount
+    const old = sessionStorage.getItem('oldProfile');
+    const tkn = sessionStorage.getItem('token');
+    // sessionStorage.setItem('headerTitle', `${old ? 'Edição' : 'Cadastro'} Mentorado`);
+    if (!old && tkn) {
+      profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
+        history.push((resp.data.userType === 1) ? '/mentor' : '/mentorado');
+      });
+    }
+    if (old) {
+      setIsEditing(true);
+      const oldProfile = JSON.parse(old);
+      console.log(oldProfile);
+      setNome(oldProfile.name);
+      setDataNascimento(oldProfile.birthDate);
+      setCpf(oldProfile.cpf);
+      setTelefone(oldProfile.phone);
+      setMatricula(oldProfile.registration);
+      setEmail(oldProfile.email);
+      setImageurl(`${urlFiles}/${oldProfile.image}`);
+    }
+    return () => {
+      sessionStorage.removeItem('oldProfile');
+      sessionStorage.removeItem('headerTitle');
+    };
+    // eslint-disable-next-line
+  }, []);
 
   const attemptRegister = (event) => {
     event.preventDefault();
@@ -68,7 +98,7 @@ function CadastroMentorado() {
         .then((res) => {
           if (res.status === 200) {
             enqueue('Usuário cadastrado com sucesso!', 'success');
-            setRedirect(true);
+            history.push('/');
           }
         })
         .catch((err) => {
@@ -76,6 +106,11 @@ function CadastroMentorado() {
           console.log(err);
         });
     }
+  };
+
+  const handleEdit = () => {
+    enqueue('TODO: EDIT MENTORADO', 'info');
+    // THEN => PUSH TO /MENTORADO
   };
 
   const handleImage = () => {
@@ -92,11 +127,88 @@ function CadastroMentorado() {
     };
   };
 
-  if (redirect) {
-    return <Redirect push to="/" />;
-  }
-
   const erroSenha = Boolean(senha && confirmarSenha && senha !== confirmarSenha);
+  const leftSide = (
+    <>
+      <RedeTextField
+        descricao="Nome Completo"
+        valor={nome}
+        onChange={(evt) => setNome(evt.target.value)}
+      />
+      <RedeTextField
+        descricao="Data de Nascimento"
+        valor={dataNascimento}
+        onChange={(evt) => setDataNascimento(formatDataNascimento(evt.target.value))}
+      />
+      <RedeTextField
+        descricao="CPF"
+        valor={cpf}
+        onChange={(evt) => setCpf(formatCPF(evt.target.value))}
+      />
+      <RedeTextField
+        descricao="Telefone"
+        valor={telefone}
+        onChange={(evt) => setTelefone(formatTelefone(evt.target.value))}
+      />
+      <RedeTextField
+        descricao="Matrícula"
+        valor={matricula}
+        onChange={(evt) => setMatricula(formatMatricula(evt.target.value))}
+      />
+    </>
+  );
+
+  const rightSide = (
+    <>
+      <RedeTextField
+        descricao="Email"
+        valor={email}
+        onChange={(evt) => setEmail(evt.target.value)}
+      />
+      {isEditing ? (
+        <>
+          <Container>
+            <RedeButton descricao="Salvar alterações" onClick={handleEdit} />
+          </Container>
+        </>
+      )
+        : (
+          <>
+            <RedeTextField
+              descricao="Senha"
+              valor={senha}
+              tipo="password"
+              onChange={(evt) => setSenha(evt.target.value)}
+            />
+            <RedeTextField
+              descricao="Confirmação de Senha"
+              valor={confirmarSenha}
+              tipo="password"
+              onChange={(evt) => setConfirmarSenha(evt.target.value)}
+              msgAjuda={erroSenha ? 'Senhas não conferem' : ''}
+              erro={erroSenha}
+            />
+
+            <Container.FlexContainer style={{ flexDirection: 'row' }}>
+              <RedeCheckbox
+                id="termos"
+                value={acceptTerms}
+                onChange={(evt) => setAcceptTerms(evt.target.checked)}
+              />
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label htmlFor="termos" style={{ marginTop: '5px' }}>
+                Aceito os termos de uso
+              </label>
+            </Container.FlexContainer>
+
+            <Container>
+              <RedeButton descricao="Cadastrar" onClick={attemptRegister} />
+            </Container>
+          </>
+        )}
+    </>
+  );
+
   return (
     <Container>
       <Container.FlexContainer style={{ marginTop: '10px' }}>
@@ -110,73 +222,23 @@ function CadastroMentorado() {
       </Container.FlexContainer>
 
       <Container.FlexContainer>
-        <Container.Item>
-          <RedeTextField
-            descricao="Nome Completo"
-            valor={nome}
-            onChange={(evt) => setNome(evt.target.value)}
-          />
-          <RedeTextField
-            descricao="Data de Nascimento"
-            valor={dataNascimento}
-            onChange={(evt) => setDataNascimento(formatDataNascimento(evt.target.value))}
-          />
-          <RedeTextField
-            descricao="CPF"
-            valor={cpf}
-            onChange={(evt) => setCpf(formatCPF(evt.target.value))}
-          />
-          <RedeTextField
-            descricao="Telefone"
-            valor={telefone}
-            onChange={(evt) => setTelefone(formatTelefone(evt.target.value))}
-          />
-          <RedeTextField
-            descricao="Matrícula"
-            valor={matricula}
-            onChange={(evt) => setMatricula(formatMatricula(evt.target.value))}
-          />
-        </Container.Item>
-
-        <RedeHorizontalSeparator />
-
-        <Container.Item>
-          <RedeTextField
-            descricao="Email"
-            valor={email}
-            onChange={(evt) => setEmail(evt.target.value)}
-          />
-          <RedeTextField
-            descricao="Senha"
-            valor={senha}
-            tipo="password"
-            onChange={(evt) => setSenha(evt.target.value)}
-          />
-          <RedeTextField
-            descricao="Confirmação de Senha"
-            valor={confirmarSenha}
-            tipo="password"
-            onChange={(evt) => setConfirmarSenha(evt.target.value)}
-            msgAjuda={erroSenha ? 'Senhas não conferem' : ''}
-            erro={erroSenha}
-          />
-
-          <Container.FlexContainer style={{ flexDirection: 'row' }}>
-            <RedeCheckbox
-              id="termos"
-              value={acceptTerms}
-              onChange={(evt) => setAcceptTerms(evt.target.checked)}
-            />
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label htmlFor="termos" style={{ marginTop: '5px' }}>
-              Aceito os termos de uso
-            </label>
-          </Container.FlexContainer>
-
-          <Container>
-            <RedeButton descricao="Cadastrar" onClick={attemptRegister} />
-          </Container>
-        </Container.Item>
+        {isEditing ? (
+          <Container.Item>
+            {leftSide}
+            {rightSide}
+          </Container.Item>
+        )
+          : (
+            <>
+              <Container.Item>
+                {leftSide}
+              </Container.Item>
+              <RedeHorizontalSeparator />
+              <Container.Item>
+                {rightSide}
+              </Container.Item>
+            </>
+          )}
       </Container.FlexContainer>
     </Container>
   );

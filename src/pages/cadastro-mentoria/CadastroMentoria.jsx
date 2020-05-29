@@ -178,11 +178,11 @@ function CadastroMentoria() {
             <div className="data-hora">
               <select className="select-class" onChange={getSelectsValues}>
                 <option value="" selected />
-                <option value="Segunda">Segunda</option>
-                <option value="Terça">Terça</option>
-                <option value="Quarta">Quarta</option>
-                <option value="Quinta">Quinta</option>
-                <option value="Sexta">Sexta</option>
+                <option value="Segunda">Segunda-feira</option>
+                <option value="Terça">Terça-feira</option>
+                <option value="Quarta">Quarta-feira</option>
+                <option value="Quinta">Quinta-feira</option>
+                <option value="Sexta">Sexta-feira</option>
                 <option value="Sabado">Sabado</option>
               </select>
 

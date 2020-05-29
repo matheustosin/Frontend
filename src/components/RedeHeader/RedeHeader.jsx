@@ -7,10 +7,13 @@ import Container from './StyledComponents';
 import { urlFiles } from '../../services/http';
 import standartPhoto from '../../assets/account.png';
 
+const getTitle = () => sessionStorage.getItem('headerTitle');
+
 const RedeHeader = () => {
   const [tkn, setTkn] = useState(null);
   const [profile, setProfile] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [title, setTitle] = useState('');
   const history = useHistory();
 
   const logOut = () => {
@@ -18,6 +21,14 @@ const RedeHeader = () => {
     setProfile(null);
     history.push('/');
   };
+
+  useEffect(() => { // ComponentDidMount
+    setInterval(() => {
+      if (getTitle() !== title) {
+        setTitle(getTitle() || '');
+      }
+    }, 100);
+  }, []);
 
   useEffect(() => { // ComponentDidUpdate
     const tknValue = sessionStorage.getItem('token');
@@ -51,10 +62,25 @@ const RedeHeader = () => {
     handleMenuClose();
   };
 
+  const handleEditProfile = () => {
+    sessionStorage.setItem('oldProfile', JSON.stringify(profile));
+    history.push((profile.userType === 1) ? '/cadastro-mentor' : '/cadastro-mentorado');
+    handleMenuClose();
+  };
+
+  const handleLogoClick = () => {
+    let to = '/';
+    if (profile) {
+      to = (profile.userType === 1) ? '/Mentor' : 'Mentorado';
+    }
+    history.push(to);
+  };
+
   return (
     <>
       <Container>
-        <Container.Logo src={logo} />
+        <Container.Logo src={logo} onClick={handleLogoClick} />
+        <Container.Title>{title}</Container.Title>
         {
           profile ? (
             <Container.ImgProfile
@@ -74,7 +100,8 @@ const RedeHeader = () => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleMenuClose} disabled>{profile ? profile.name : ''}</MenuItem>
+        <MenuItem onClick={() => { }} disabled>{profile ? profile.name : ''}</MenuItem>
+        <MenuItem onClick={handleEditProfile}>Editar perfil</MenuItem>
         <MenuItem onClick={handleLogOut}>Sair</MenuItem>
       </Menu>
     </>

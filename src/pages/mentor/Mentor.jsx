@@ -60,9 +60,9 @@ function Mentor() {
     sessionStorage.removeItem('oldMentoria');
     history.push('/cadastro-mentoria');
   };
+
   const editProfilePage = () => {
     sessionStorage.setItem('oldProfile', JSON.stringify(profileInfos));
-    console.log(profileInfos);
     history.push('/cadastro-mentor');
   };
 
@@ -95,15 +95,18 @@ function Mentor() {
       await mentoriasByMentor(headers)
         .then((res) => {
           if (res.data.length === 0) {
-            setMentorias(<StyledContainer.Subtitle> Nenhuma mentoria encontrada!</StyledContainer.Subtitle>);
+            setMentorias(
+              <StyledContainer.Subtitle>Nenhuma mentoria encontrada!</StyledContainer.Subtitle>,
+            );
           } else {
             setMentorias(res.data);
           }
         })
-        .catch(() => {
-          // enqueueSnackbar('Erro ao buscar as mentorias. Verifique sua conexão e tente novamente',
-          // { variant: 'error', autoHideDuration: 2500 });
-          setMentorias(<StyledContainer.Subtitle> Nenhuma mentoria encontrada!</StyledContainer.Subtitle>);
+        .catch((erro) => {
+          enqueueSnackbar(erro.response.data.error, { variant: 'error', autoHideDuration: 3000 });
+          setMentorias(
+            <StyledContainer.Subtitle>Nenhuma mentoria encontrada!</StyledContainer.Subtitle>,
+          );
         });
     }
     fetchData();

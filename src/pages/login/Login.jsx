@@ -15,13 +15,15 @@ function Login() {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => { // componentDidMount
+    sessionStorage.removeItem('headerTitle');
     const tkn = sessionStorage.getItem('token');
     if (tkn) {
       profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
         history.push((resp.data.userType === 1) ? '/mentor' : '/mentorado');
       });
     }
-  });
+    // eslint-disable-next-line
+  }, []);
 
   const attemptLogin = (event) => {
     event.preventDefault();

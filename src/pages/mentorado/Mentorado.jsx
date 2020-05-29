@@ -63,8 +63,8 @@ function Mentorado() {
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
-
     getAreas(headers);
+    // eslint-disable-next-line
   }, []);
 
   return (
