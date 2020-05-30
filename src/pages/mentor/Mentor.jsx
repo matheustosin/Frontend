@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 import StyledContainer from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 // import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
-import { mentoriasByMentor, desativarMentoria } from '../../services/mentoria';
+import { mentoriasByMentor, desativarMentoria, mudarVisibilidade } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
 import RedeButton from '../../components/RedeButton/RedeButton';
@@ -50,7 +50,6 @@ function Mentor() {
       params: { id },
       headers: { Authorization: `Bearer ${token}` },
     };
-
     mudarVisibilidade(config);
   };
 

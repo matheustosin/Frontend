@@ -173,17 +173,17 @@ function CadastroMentoria() {
             </div>
             <div className="data-hora">
               <select className="select-class" onChange={getSelectsValues}>
-                <option value="" selected />
-                <option value="Segunda">Segunda-feira</option>
-                <option value="Terça">Terça-feira</option>
-                <option value="Quarta">Quarta-feira</option>
-                <option value="Quinta">Quinta-feira</option>
-                <option value="Sexta">Sexta-feira</option>
+                <option value="" disabled selected>Dia</option>
+                <option value="Segunda">Segunda</option>
+                <option value="Terça">Terça</option>
+                <option value="Quarta">Quarta</option>
+                <option value="Quinta">Quinta</option>
+                <option value="Sexta">Sexta</option>
                 <option value="Sabado">Sabado</option>
               </select>
 
               <select className="select-class" onChange={getSelectsValues}>
-                <option value="" selected />
+                <option value="" disabled selected>Hoário...</option>
                 <option value="9:00:00">09:00</option>
                 <option value="10:00:00">10:00</option>
                 <option value="11:00:00">11:00</option>
@@ -200,7 +200,9 @@ function CadastroMentoria() {
                 <option value="21:00:00">22:00</option>
               </select>
 
-              <img src={plusButton} onClick={addHour} />
+              <div onClick={addHour}>
+                <img src={plusButton} alt="Adicionar" />
+              </div>
             </div>
           </div>
         </Container.SecondOption>
@@ -211,7 +213,7 @@ function CadastroMentoria() {
         <RedeButton descricao={ActionButtonTitle} onClick={handleAddMentoria} />
 
       </Container.Submit>
-    </Container>
+    </Container >
   );
 }
 

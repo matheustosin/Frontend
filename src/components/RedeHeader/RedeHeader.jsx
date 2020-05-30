@@ -7,9 +7,10 @@ import Container from './StyledComponents';
 import { urlFiles } from '../../services/http';
 import standartPhoto from '../../assets/account.png';
 
-const getTitle = () => sessionStorage.getItem('headerTitle');
+// const getTitle = () => sessionStorage.getItem('headerTitle');
+const excludedPaths = ['/', '/register', '/cadastro-mentor', '/cadastro-mentorado'];
 
-const RedeHeader = () => {
+const RedeHeader = (props) => {
   const [tkn, setTkn] = useState(null);
   const [profile, setProfile] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -23,11 +24,11 @@ const RedeHeader = () => {
   };
 
   useEffect(() => { // ComponentDidMount
-    setInterval(() => {
-      if (getTitle() !== title) {
-        setTitle(getTitle() || '');
-      }
-    }, 100);
+    setTitle(''); // TODO: Tirar esse setTitle();
+    const tknValue = sessionStorage.getItem('token');
+    if (!tknValue && excludedPaths.indexOf(props.location.pathname) === -1) {
+      history.push('/');
+    }
   }, []);
 
   useEffect(() => { // ComponentDidUpdate

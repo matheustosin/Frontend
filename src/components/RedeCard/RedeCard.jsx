@@ -15,11 +15,20 @@ import CardContent from './StyledComponents/card-content';
 import IconsWrapper from './StyledComponents/icons-wrapper';
 import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 
-
-
 const Card = ({
-  title, description, image, visibleFunction, removeFunction, editFunction, isVisible, TimeSlots, mentorias
-}) => (
+  title,
+  description,
+  image,
+  visibleFunction,
+  removeFunction,
+  editFunction,
+  isVisible,
+  timeSlots,
+  mentorias,
+}) => {
+  console.log('TODO: TimeSlots: ', timeSlots);
+
+  return (
     <Container>
       <CardLogo src={image} />
       <CardContent>
@@ -27,7 +36,7 @@ const Card = ({
           <CardHeader.Title>
             {title}
           </CardHeader.Title>
-          <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => {  }} />
+          <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
         </CardHeader>
         <CardDescription>
           {description}
@@ -35,22 +44,34 @@ const Card = ({
         <CardFooter>
           <CardFooter.SubTitle>
             Próximos horários
-        </CardFooter.SubTitle>
+          </CardFooter.SubTitle>
           <CardFooter.Content>
             <TimeSlotWrapper>
-            <RedeTimeSlot descricao="SEG - 12:00" />
-            <RedeTimeSlot descricao="TER - 12:00" />
-            <RedeTimeSlot descricao="QUA - 12:00" />
+              <RedeTimeSlot descricao="SEG - 12:00" />
+              <RedeTimeSlot descricao="TER - 12:00" />
+              <RedeTimeSlot descricao="QUA - 12:00" />
             </TimeSlotWrapper>
             <IconsWrapper>
-              <CardHeader.Button descricao="TODOS HORÁRIOS"  onClick={() => {  }} />
-              {showIcons(mentorias, remove, edition, removeFunction, editFunction, isVisible, visibleFunction)}
+              <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
+              {
+                mentorias && (
+                  <>
+                    <RedeIcon imageUrl={remove} onClick={removeFunction} />
+                    <RedeIcon
+                      imageUrl={isVisible ? visible : notVisible}
+                      onClick={visibleFunction}
+                    />
+                    <RedeIcon imageUrl={edition} onClick={editFunction} />
+                  </>
+                )
+              }
             </IconsWrapper>
           </CardFooter.Content>
         </CardFooter>
       </CardContent>
     </Container>
   );
+};
 
 Card.propTypes = {
   description: string,
@@ -73,17 +94,5 @@ Card.defaultProps = {
   mentorias: false,
 
 };
-  function showIcons(mentorias, remove, edition, removeFunction, editFunction, isVisible, visibleFunction){
-    if (mentorias)
-      return [];
-    else{
-      return [<div>
-        <RedeIcon imageUrl={remove} onClick={removeFunction} />
-        <RedeIcon imageUrl={isVisible ? visible : notVisible} onClick={visibleFunction} />
-        <RedeIcon imageUrl={edition} onClick={editFunction} />
-      </div> ];
-    }
-  }
-
 
 export default Card;
