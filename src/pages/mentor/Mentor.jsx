@@ -4,7 +4,7 @@ import { Container } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import StyledContainer from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
-import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
+// import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
 import { mentoriasByMentor, desativarMentoria } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
@@ -12,11 +12,7 @@ import RedeButton from '../../components/RedeButton/RedeButton';
 
 function Mentor() {
   const history = useHistory();
-  const [name, setName] = useState();
-  const [image, setImage] = useState();
   const [mentorias, setMentorias] = useState([]);
-  const [linkedin, setLinkedin] = useState();
-  const [profileInfos, setProfileInfos] = useState();
   const { enqueueSnackbar } = useSnackbar();
 
   const changeAvalibility = (index) => {
@@ -61,25 +57,12 @@ function Mentor() {
     history.push('/cadastro-mentoria');
   };
 
-  const editProfilePage = () => {
-    sessionStorage.setItem('oldProfile', JSON.stringify(profileInfos));
-    history.push('/cadastro-mentor');
-  };
-
   useEffect(() => {
-    async function fetchData() {
+    function fetchData() {
       const token = sessionStorage.getItem('token');
       const headers = { headers: { Authorization: `Bearer ${token}` } };
 
-      await profile(headers)
-        .then((res) => {
-          if (res.status === 200) {
-            setProfileInfos(res.data);
-            setName(res.data.name);
-            setLinkedin(res.data.linkedin);
-            setImage(`${urlFiles}/${res.data.image}`);
-          }
-        })
+      profile(headers)
         .catch(() => {
           enqueueSnackbar(
             'Problema ao buscar informações do usuário. Verifique sua conexão e tente novamente.',
@@ -88,11 +71,11 @@ function Mentor() {
         });
     }
 
-    async function fetchCards() {
+    function fetchCards() {
       const token = sessionStorage.getItem('token');
       const headers = { headers: { Authorization: `Bearer ${token}` } };
 
-      await mentoriasByMentor(headers)
+      mentoriasByMentor(headers)
         .then((res) => {
           if (res.data.length === 0) {
             setMentorias(
@@ -117,12 +100,12 @@ function Mentor() {
     <>
       <Container>
         <StyledContainer>
-          <ProfileInfo
+          {/* <ProfileInfo
             name={name}
             linkedin={linkedin}
             image={image}
             editFunction={editProfilePage}
-          />
+          /> */}
           <StyledContainer.HeaderPage>
             <StyledContainer.Title> MINHAS MENTORIAS </StyledContainer.Title>
             <RedeButton onClick={routeCadastro} descricao="+ NOVA MENTORIA" />
@@ -140,7 +123,7 @@ function Mentor() {
                 isVisible={mentoria.data.isVisible}
               />
             ))
-          ) : (<StyledContainer.Subtitle> Nenhuma mentoria encontrada!</StyledContainer.Subtitle>)}
+          ) : (<StyledContainer.Subtitle>Nenhuma mentoria encontrada!</StyledContainer.Subtitle>)}
         </StyledContainer>
       </Container>
     </>
