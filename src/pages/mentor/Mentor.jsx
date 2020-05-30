@@ -44,7 +44,14 @@ function Mentor() {
     const allMentorias = mentorias;
     allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
     setMentorias(allMentorias);
-    // mudarVisibilidadeMentoria(config); ROUTE NEED TO BE BUILT
+    const token = sessionStorage.getItem('token');
+    const { id } = mentorias[i];
+    const config = {
+      params: { id },
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    mudarVisibilidade(config);
   };
 
   const editPage = (mentoria) => {
