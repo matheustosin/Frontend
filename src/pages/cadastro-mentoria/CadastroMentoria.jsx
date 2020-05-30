@@ -8,11 +8,8 @@ import RedeTextField from '../../components/RedeTextField/RedeTextField';
 // import RedeInputRadio from '../../components/RedeInputRadio';
 import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
-
 import plusButton from '../../assets/plus-circle.png';
-
 import './style.css';
-
 
 function CadastroMentoria() {
   const oldMentoria = JSON.parse(sessionStorage.getItem('oldMentoria'));
@@ -52,11 +49,10 @@ function CadastroMentoria() {
     setDayOfWeek(dates);
   }
 
-  function handleAddMentoria(event) {
+  const handleAddMentoria = (event) => {
     event.preventDefault();
     const token = sessionStorage.getItem('token');
     const data = new FormData();
-
     data.append('title', title);
     data.append('description', description);
     data.append('knowledgeArea', knowledgeArea);
@@ -68,8 +64,8 @@ function CadastroMentoria() {
       data.append('dayOfWeek', dayOfWeek[index]);
     });
 
-
-    if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('mentoringOption') || !data.get('time') || !data.get('dayOfWeek')) {
+    // || !data.get('mentoringOption')
+    if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('time') || !data.get('dayOfWeek')) {
       alert('Preencha todos os campos.');
     } else if (!data.get('image')) {
       alert('Insira uma foto para a mentoria.');
