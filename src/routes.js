@@ -10,6 +10,7 @@ import CadastroMentorado from './pages/cadastro-mentorado/CadastroMentorado';
 import CadastroMentoria from './pages/cadastro-mentoria/CadastroMentoria';
 import MentoriasDisponiveis from './pages/mentorias/MentoriasDisponiveis';
 import Aprendiz from './pages/aprendiz/Aprendiz';
+import Administrador from './pages/adm/Adm';
 
 
 export default function Routes() {
@@ -25,6 +26,7 @@ export default function Routes() {
         <Route path="/mentor" component={Mentor} />
         <Route path="/mentorias-disponiveis" component={MentoriasDisponiveis} />
         <Route path="/aprendiz" component={Aprendiz} />
+        <Route path="/administrador" component={Administrador} />
       </Switch>
     </BrowserRouter>
   );
