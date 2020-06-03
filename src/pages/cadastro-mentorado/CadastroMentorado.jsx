@@ -62,7 +62,13 @@ function CadastroMentorado() {
       enqueue('Preencha todos os campos.');
     } else if (!data.get('image')) {
       enqueue('Insira uma foto de perfil.');
-    } else if (!acceptTerms) {
+    }  else if (
+      data.get('password')
+      && confirmarSenha
+      && data.get('password') !== confirmarSenha
+    ) {
+      enqueue('Senhas não são iguais.');
+    }  else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
     } else {
       cadastrarUsuario(data)
