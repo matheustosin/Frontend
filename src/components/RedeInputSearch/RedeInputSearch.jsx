@@ -3,22 +3,19 @@ import { string, func } from 'prop-types';
 import Container from './StyledComponents';
 import Input from './StyledComponents/Input';
 
-
-const RedeInputSearch = ({
-  placeholder, onChange,
-}) => (
+const RedeInputSearch = ({ placeholder, onChange }) => (
   <Container>
     <Input type="text" placeholder={placeholder} onChange={onChange} />
   </Container>
 );
 
 RedeInputSearch.propTypes = {
-  descricao: string,
+  placeholder: string,
   onChange: func,
 };
 
 RedeInputSearch.defaultProps = {
-  descricao: '',
+  placeholder: '',
   onChange: () => {},
 };
 

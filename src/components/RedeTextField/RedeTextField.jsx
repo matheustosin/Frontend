@@ -20,7 +20,7 @@ const RedeTextField = ({
 RedeTextField.propTypes = {
   descricao: string,
   tipo: string,
-  valor: string.isRequired,
+  valor: string,
   erro: bool,
   msgAjuda: string,
   onChange: func,
@@ -29,6 +29,7 @@ RedeTextField.propTypes = {
 RedeTextField.defaultProps = {
   descricao: '',
   tipo: '',
+  valor: '',
   erro: false,
   msgAjuda: '',
   onChange: () => { },

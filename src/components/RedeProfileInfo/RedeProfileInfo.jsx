@@ -1,36 +1,26 @@
 import React from 'react';
-import { string, func, bool } from 'prop-types';
-import Container from './StyledComponents';
-import edition from '../../assets/create-new-pencil-button.png';
-import linkedinIcon from '../../assets/linkedin.png';
-import UserInformations from './StyledComponents/user-informations';
-import Logo from './StyledComponents/logo';
+import { string, func } from 'prop-types';
 import Icon from '../RedeIcon/RedeIcon';
+import Container from './StyledComponents';
+import linkedinIcon from '../../assets/linkedin.png';
 import Information from './StyledComponents/information';
-import UserName from './StyledComponents/user-name';
-import Bottom from './StyledComponents/bottom';
+import edition from '../../assets/create-new-pencil-button.png';
+
 const ProfileUser = ({
-  name,
-  linkedin,
-  image,
-  editFunction,
+  name, linkedin, image, editFunction,
 }) => (
   <Container>
-    <Logo src={image} />
-    <UserInformations>
-      <UserName>
-        {name}
-      </UserName>
+    <Container.Logo src={image} />
+    <Container.UserInformations>
+      <Container.UserName>{name}</Container.UserName>
       <Information>
         <Information.Icon imageUrl={linkedinIcon} />
-        <Information.Name>
-          {linkedin}
-        </Information.Name>
+        <Information.Name>{linkedin}</Information.Name>
       </Information>
-      <Bottom>
+      <Container.Bottom>
         <Icon imageUrl={edition} onClick={editFunction} />
-      </Bottom>
-    </UserInformations>
+      </Container.Bottom>
+    </Container.UserInformations>
   </Container>
 );
 

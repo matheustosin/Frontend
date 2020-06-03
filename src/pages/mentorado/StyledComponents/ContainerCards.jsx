@@ -10,5 +10,4 @@ const ContainerCards = styled.div`
     }
 `;
 
-
 export default ContainerCards;

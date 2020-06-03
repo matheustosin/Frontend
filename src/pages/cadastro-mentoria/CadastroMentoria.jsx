@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Container from './StyledComponents';
-import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import { cadastrarMentoria, atualizarMentoria } from '../../services/mentoria';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeTextArea from '../../components/RedeTextArea/RedeTextArea';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
-import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
+// import RedeInputRadio from '../../components/RedeInputRadio';
 import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
-
 import plusButton from '../../assets/plus-circle.png';
-
 import './style.css';
 
-
 function CadastroMentoria() {
-
   const oldMentoria = JSON.parse(sessionStorage.getItem('oldMentoria'));
-  
-  const PageTitle = oldMentoria ? 'Atualização de Mentoria' : 'Nova Mentoria';
+
+  // const PageTitle = oldMentoria ? 'Atualização de Mentoria' : 'Nova Mentoria';
   const ActionButtonTitle = oldMentoria ? 'Atualizar Mentoria' : 'Criar Mentoria';
   const [title, setTitle] = useState(oldMentoria ? oldMentoria.data.title : '');
   const [description, setDescription] = useState(oldMentoria ? oldMentoria.data.description : '');
@@ -30,7 +25,7 @@ function CadastroMentoria() {
   const [image, setImage] = useState(oldMentoria ? oldMentoria.data.image : '');
   const [maxAddHour, setMaxAddHour] = useState(5);
 
-  
+
   const history = useHistory();
 
   function getSelectsValues() {
@@ -54,11 +49,10 @@ function CadastroMentoria() {
     setDayOfWeek(dates);
   }
 
-  function handleAddMentoria(event) {
+  const handleAddMentoria = (event) => {
     event.preventDefault();
     const token = sessionStorage.getItem('token');
     const data = new FormData();
-
     data.append('title', title);
     data.append('description', description);
     data.append('knowledgeArea', knowledgeArea);
@@ -70,8 +64,8 @@ function CadastroMentoria() {
       data.append('dayOfWeek', dayOfWeek[index]);
     });
 
-
-    if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('mentoringOption') || !data.get('time') || !data.get('dayOfWeek')) {
+    // || !data.get('mentoringOption')
+    if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('time') || !data.get('dayOfWeek')) {
       alert('Preencha todos os campos.');
     } else if (!data.get('image')) {
       alert('Insira uma foto para a mentoria.');
@@ -141,7 +135,6 @@ function CadastroMentoria() {
 
   return (
     <Container>
-      <RedeHeader descricao={PageTitle} />
       <Container.Form>
         <Container.Options>
           <RedeTextField
@@ -164,13 +157,13 @@ function CadastroMentoria() {
         </Container.Options>
         <RedeHorizontalSeparator />
         <Container.SecondOption>
-          <RedeInputRadio
+          {/* <RedeInputRadio
             descricao="Opções de Mentoria"
             tipo="radio"
             nome="optmentorias"
             checked="1"
             onChange={(e) => setMentoringOption(e.target.value)}
-          />
+          /> */}
           <RedeFormLabel descricao="Datas e Horários Disponíveis" />
 
           <div className="select-data-horarios">
@@ -180,7 +173,7 @@ function CadastroMentoria() {
             </div>
             <div className="data-hora">
               <select className="select-class" onChange={getSelectsValues}>
-                <option value="" selected />
+                <option value="" disabled selected>Dia</option>
                 <option value="Segunda">Segunda</option>
                 <option value="Terça">Terça</option>
                 <option value="Quarta">Quarta</option>
@@ -190,7 +183,7 @@ function CadastroMentoria() {
               </select>
 
               <select className="select-class" onChange={getSelectsValues}>
-                <option value="" selected />
+                <option value="" disabled selected>Hoário...</option>
                 <option value="9:00:00">09:00</option>
                 <option value="10:00:00">10:00</option>
                 <option value="11:00:00">11:00</option>
@@ -207,7 +200,9 @@ function CadastroMentoria() {
                 <option value="21:00:00">22:00</option>
               </select>
 
-              <img src={plusButton} onClick={addHour} />
+              <div onClick={addHour}>
+                <img src={plusButton} alt="Adicionar" />
+              </div>
             </div>
           </div>
         </Container.SecondOption>
@@ -218,7 +213,7 @@ function CadastroMentoria() {
         <RedeButton descricao={ActionButtonTitle} onClick={handleAddMentoria} />
 
       </Container.Submit>
-    </Container>
+    </Container >
   );
 }
 

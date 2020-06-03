@@ -15,4 +15,3 @@ const CaminhoAp = styled.div`
 `;
 
 export default CaminhoAp;
-
