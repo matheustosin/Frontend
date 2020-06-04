@@ -7,6 +7,7 @@ import { login, profile } from '../../services/user';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeSeparator from '../../components/RedeSeparator/RedeSeparator';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
+import pushIfNecessary from '../../utils/HTMLUtils';
 
 function Login() {
   const history = useHistory();
@@ -19,7 +20,10 @@ function Login() {
     const tkn = sessionStorage.getItem('token');
     if (tkn) {
       profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
-        history.push((resp.data.userType === 1) ? '/mentor' : '/mentorado');
+        pushIfNecessary(
+          resp.data.userType,
+          (link) => history.push(link),
+        );
       });
     }
     // eslint-disable-next-line

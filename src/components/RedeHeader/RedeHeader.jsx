@@ -6,6 +6,7 @@ import { profile as getUser } from '../../services/user';
 import Container from './StyledComponents';
 import { urlFiles } from '../../services/http';
 import standartPhoto from '../../assets/account.png';
+import { userTypes } from '../../utils/userType.constants';
 
 // const getTitle = () => sessionStorage.getItem('headerTitle');
 const excludedPaths = ['/', '/register', '/cadastro-mentor', '/cadastro-mentorado'];
@@ -72,9 +73,14 @@ const RedeHeader = (props) => {
   const handleLogoClick = () => {
     let to = '/';
     if (profile) {
-      to = (profile.userType === 1) ? '/Mentor' : 'Mentorado';
+      to = (profile.userType === 1) ? '/mentor' : '/mentorado';
     }
     history.push(to);
+  };
+
+  const escolherHome = (path) => {
+    sessionStorage.setItem('homeEscolhida', path);
+    history.push(`/${path}`);
   };
 
   return (
@@ -93,18 +99,43 @@ const RedeHeader = (props) => {
 
       </Container>
       <Container.Clearfix />
-      <Menu
-        id="user-menu"
-        className="header-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={() => { }} disabled>{profile ? profile.name : ''}</MenuItem>
-        <MenuItem onClick={handleEditProfile}>Editar perfil</MenuItem>
-        <MenuItem onClick={handleLogOut}>Sair</MenuItem>
-      </Menu>
+      {
+        profile && (
+          <Menu
+            id="user-menu"
+            className="header-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={() => { }} disabled>{profile ? profile.name : ''}</MenuItem>
+            {profile.userType === userTypes.ADMINISTRADOR && props.location.pathname !== ('/administrador')
+              && (<MenuItem onClick={() => escolherHome('administrador')}>Home Administrador</MenuItem>)}
+            {(profile.userType === userTypes.MENTOREMENTORADO
+              || profile.userType === userTypes.ADMINISTRADOR)
+              && (
+                !sessionStorage.getItem('homeEscolhida')
+                || sessionStorage.getItem('homeEscolhida') !== 'mentor'
+              )
+              && (
+                <MenuItem onClick={() => escolherHome('mentor')}>Home Mentor</MenuItem>
+              )}
+            {(profile.userType === userTypes.MENTOREMENTORADO
+              || profile.userType === userTypes.ADMINISTRADOR)
+              && (
+                sessionStorage.getItem('homeEscolhida')
+                && sessionStorage.getItem('homeEscolhida') !== 'mentorado'
+              )
+              && (
+                <MenuItem onClick={() => escolherHome('mentorado')}>Home Mentorado</MenuItem>
+              )}
+            <MenuItem onClick={handleEditProfile}>Editar perfil</MenuItem>
+            <MenuItem onClick={handleLogOut}>Sair</MenuItem>
+          </Menu>
+
+        )
+      }
     </>
   );
 };

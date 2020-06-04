@@ -9,6 +9,7 @@ import { mentoriasByMentor, desativarMentoria, mudarVisibilidade } from '../../s
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
 import RedeButton from '../../components/RedeButton/RedeButton';
+import { userTypes } from '../../utils/userType.constants';
 
 function Mentor() {
   const history = useHistory();
@@ -63,17 +64,23 @@ function Mentor() {
     history.push('/cadastro-mentoria');
   };
 
-  useEffect(() => {
+  useEffect(() => { // didMount
     function fetchData() {
       const token = sessionStorage.getItem('token');
       const headers = { headers: { Authorization: `Bearer ${token}` } };
 
       profile(headers)
+        .then((resp) => {
+          if (resp.data.userType === userTypes.MENTORADO) {
+            history.push('/mentorado');
+          }
+        })
         .catch(() => {
           enqueueSnackbar(
             'Problema ao buscar informações do usuário. Verifique sua conexão e tente novamente.',
             { variant: 'error', autoHideDuration: 2500 },
           );
+          history.push('/');
         });
     }
 

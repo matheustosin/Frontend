@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useSnackbar } from 'notistack';
 import AccountImage from '../../assets/account.png';
-import { cadastrarUsuario, profile } from '../../services/user';
+import { cadastrarUsuario, profile, editarUsuario } from '../../services/user';
 import { formatCPF, formatTelefone } from '../../utils/maskUtils';
 import Container from './StyledComponents';
 import RedeButton from '../../components/RedeButton/RedeButton';
@@ -10,6 +10,7 @@ import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
 import { urlFiles } from '../../services/http';
+import pushIfNecessary from '../../utils/HTMLUtils';
 
 function CadastroMentor() {
   const history = useHistory();
@@ -37,7 +38,10 @@ function CadastroMentor() {
     // sessionStorage.setItem('headerTitle', `${old ? 'Edição' : 'Cadastro'} Mentor`);
     if (!old && tkn) {
       profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
-        history.push((resp.data.userType === 1) ? '/mentor' : '/mentorado');
+        pushIfNecessary(
+          resp.data.userType,
+          (link) => history.push(link),
+        );
       });
     }
     if (old) {
@@ -111,8 +115,30 @@ function CadastroMentor() {
   };
 
   const attemptEdit = () => {
-    enqueue('TODO: EDIT MENTOR', 'info');
-    // THEN => PUSH TO /MENTOR
+    const tkn = sessionStorage.getItem('token');
+    const headers = { headers: { Authorization: `Bearer ${tkn}` } };
+    const data = new FormData();
+    data.append('image', image);
+    data.append('name', name);
+    data.append('email', email);
+    data.append('phone', phone);
+    data.append('linkedin', linkedin);
+    data.append('cpf', cpf);
+    data.append('password', password);
+    data.append('areas', areas);
+    data.append('flag', 1);
+    editarUsuario(data, headers)
+      .then(() => {
+        enqueue('Usuário alterado com sucesso!', 'success');
+      })
+      .catch(() => {
+        enqueue('Não foi possível editar, tente novamente.');
+      }).finally(() => {
+        pushIfNecessary(
+          1,
+          (link) => history.push(link),
+        );
+      });
   };
 
   const handleImage = () => {
