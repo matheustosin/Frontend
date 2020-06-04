@@ -81,7 +81,7 @@ function CadastroMentorado() {
     data.append('phone', telefone);
     data.append('password', senha);
     data.append('registration', matricula);
-    data.append('flag', 2); // mentorado flag
+    data.append('userType', 2); // mentorado flag
 
     if (
       !data.get('name')
@@ -124,7 +124,7 @@ function CadastroMentorado() {
     data.append('cpf', cpf);
     data.append('phone', telefone);
     data.append('registration', matricula);
-    data.append('flag', 2); // mentorado flag
+    data.append('userType', 2); // mentorado flag
     editarUsuario(data, headers)
       .then(() => {
         enqueue('Usuário alterado com sucesso!', 'success');

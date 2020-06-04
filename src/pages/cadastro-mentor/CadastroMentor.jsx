@@ -76,8 +76,8 @@ function CadastroMentor() {
     data.append('linkedin', linkedin);
     data.append('cpf', cpf);
     data.append('password', password);
-    data.append('areas', areas);
-    data.append('flag', 1);
+    data.append('areas[]', areas);
+    data.append('userType', 1);
 
     if (
       !data.get('name')
@@ -85,7 +85,7 @@ function CadastroMentor() {
       || !data.get('phone')
       || !data.get('linkedin')
       || !data.get('cpf')
-      || !data.get('areas')
+      || !data.get('areas[]')
       || !data.get('password')
       || !confirmPassword
     ) {
@@ -124,9 +124,8 @@ function CadastroMentor() {
     data.append('phone', phone);
     data.append('linkedin', linkedin);
     data.append('cpf', cpf);
-    data.append('password', password);
-    data.append('areas', areas);
-    data.append('flag', 1);
+    data.append('areas[]', areas);
+    data.append('userType', 1);
     editarUsuario(data, headers)
       .then(() => {
         enqueue('Usuário alterado com sucesso!', 'success');
