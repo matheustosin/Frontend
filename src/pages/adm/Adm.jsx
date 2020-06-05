@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCard/RedeCard';
+import edition from '../../assets/create-new-pencil-button.png';
+import confirm from '../../assets/confirm.png';
+import denied from '../../assets/denied.png';
 import Container from './StyledComponents';
 import { urlFiles } from '../../services/http';
 import { pendingMentorings } from '../../services/adm';
