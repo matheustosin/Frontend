@@ -47,7 +47,6 @@ function CadastroMentor() {
     if (old) {
       setIsEditing(true);
       const oldProfile = JSON.parse(old);
-      console.log(oldProfile);
       setName(oldProfile.name);
       setCpf(oldProfile.cpf);
       setEmail(oldProfile.email);
@@ -127,7 +126,8 @@ function CadastroMentor() {
     data.append('areas[]', areas);
     data.append('userType', 1);
     editarUsuario(data, headers)
-      .then(() => {
+      .then((resp) => {
+        sessionStorage.setItem('token', resp.data.token);
         enqueue('Usuário alterado com sucesso!', 'success');
       })
       .catch(() => {

@@ -42,7 +42,6 @@ const RedeHeader = (props) => {
   useEffect(() => { // Ao Mudar o tkn
     if (!tkn) return;
     getUser({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
-      console.log('results: ', resp);
       setProfile(resp.data);
     }).catch((erro) => {
       console.error(erro);

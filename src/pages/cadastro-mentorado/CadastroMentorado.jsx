@@ -53,7 +53,6 @@ function CadastroMentorado() {
     if (old) {
       setIsEditing(true);
       const oldProfile = JSON.parse(old);
-      console.log(oldProfile);
       setNome(oldProfile.name);
       setDataNascimento(oldProfile.birthDate);
       setCpf(oldProfile.cpf);
@@ -108,7 +107,7 @@ function CadastroMentorado() {
         })
         .catch((err) => {
           enqueue('Não foi possível realizar o cadastro. ');
-          console.log(err);
+          console.error(err);
         });
     }
   };
@@ -126,7 +125,8 @@ function CadastroMentorado() {
     data.append('registration', matricula);
     data.append('userType', 2); // mentorado flag
     editarUsuario(data, headers)
-      .then(() => {
+      .then((resp) => {
+        sessionStorage.setItem('token', resp.data.token);
         enqueue('Usuário alterado com sucesso!', 'success');
       })
       .catch(() => {
