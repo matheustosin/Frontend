@@ -3,14 +3,12 @@ import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCard/RedeCard';
 import Container from './StyledComponents';
 import { urlFiles } from '../../services/http';
-import { mentoriasByMentorado } from '../../services/mentorado';
-import RedeIcon from '../../components/RedeIcon/RedeIcon';
+import { pendingMentorings } from '../../services/adm';
+import Title2 from './StyledComponents/Title2';
 
 function Administrador() {
     
     const [cards, setCards] = useState('');
-    const [areaConhecimento, setAreaConhecimento] = useState(sessionStorage.getItem('areaSelected'));
-    const [mentorias, setMentorias] = useState([]);
 
     useEffect(()=>{
         const token = sessionStorage.getItem('token');
@@ -19,40 +17,24 @@ function Administrador() {
         getMentorias(headers);
     }, [])
 
-    function attemptSearch(event) { 
-        const searchCards = mentorias.filter(function (e) {
-            return e.title.toLowerCase().indexOf(event.toLowerCase()) !== -1;
-        });
-        generateCards(searchCards);
-    }
 
     function getMentorias(headers) {
         
-        mentoriasByMentorado(headers) 
+        pendingMentorings(headers) 
         .then((res) => {
             if (res.status === 200) {
-                    filterMentorias(res.data);
+                    generateCards(res.data);
                 }
             })
             .catch((err) => {
-                setCards('Nenhuma mentoria encontrada para a Área de Conhecimento selecionada.');
+                setCards('Nenhuma mentoria encontrada para ser aprovada.');
                 console.error(err);
             });
     }
 
-    function filterMentorias(arrayMentoriasAll) {
+    function generateCards(mentorias) {
 
-        const mentoriasAreaConhecimento = arrayMentoriasAll
-        .filter(function (e) {
-            return e.knowledgeArea == areaConhecimento;
-        });
-        setMentorias(mentoriasAreaConhecimento);
-        generateCards(mentoriasAreaConhecimento);
-    }
-
-    function generateCards(mentoriasAreaConhecimento) {
-
-        const cardsMentorias = mentoriasAreaConhecimento
+        const cardsMentorias = mentorias
         .map((mentoria) => (  
             <Card 
                 title={mentoria.title}
@@ -68,8 +50,8 @@ function Administrador() {
         <Container>
             <RedeHeader />
             <Container.Title>APROVAÇÕES PENDENTES</Container.Title>
+            <Title2>Você tem X mentorias para aprovar</Title2>
             <br/>
-            <RedeIcon imageUrl={edition} />
             {cards}
         </Container>
     );  
