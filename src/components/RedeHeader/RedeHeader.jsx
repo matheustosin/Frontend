@@ -71,7 +71,7 @@ const RedeHeader = (props) => {
       case userTypes.MENTOREMENTORADO:
         to = sessionStorage.getItem('homeEscolhida')
           ? `/cadastro-${sessionStorage.getItem('homeEscolhida')}`
-          : '/cadastro/mentor';
+          : '/cadastro-mentor';
         break;
       case userTypes.MENTOR:
         to = '/cadastro-mentor';
