@@ -14,6 +14,11 @@ import CardFooter from './StyledComponents/card-footer';
 import CardContent from './StyledComponents/card-content';
 import IconsWrapper from './StyledComponents/icons-wrapper';
 import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
+import MentorName from './StyledComponents/mentor-name';
+import MentorImage from './StyledComponents/mentor-image';
+
+import ICON from '../../assets/caminho.png';
+
 
 const Card = ({
   title,
@@ -25,6 +30,8 @@ const Card = ({
   isVisible,
   timeSlots,
   mentorias,
+  mentorName,
+  mentorImage,
 }) => {
   console.log('TODO: TimeSlots: ', timeSlots);
 
@@ -54,7 +61,7 @@ const Card = ({
             <IconsWrapper>
               <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
               {
-                mentorias && (
+                !mentorias && (
                   <>
                     <RedeIcon imageUrl={remove} onClick={removeFunction} />
                     <RedeIcon
@@ -65,6 +72,16 @@ const Card = ({
                   </>
                 )
               }
+              {
+                mentorias && (
+                  <>
+                    <MentorName>{mentorName}</MentorName>
+                    <MentorImage src={mentorImage}/>
+                  </>
+                )
+
+              }
+             
             </IconsWrapper>
           </CardFooter.Content>
         </CardFooter>
@@ -81,7 +98,7 @@ Card.propTypes = {
   removeFunction: func,
   editFunction: func,
   mentorias: bool,
-
+  mentorName: string,
 };
 
 Card.defaultProps = {
@@ -92,7 +109,7 @@ Card.defaultProps = {
   removeFunction: null,
   editFunction: null,
   mentorias: false,
-
+  mentorName: '',
 };
 
 export default Card;
