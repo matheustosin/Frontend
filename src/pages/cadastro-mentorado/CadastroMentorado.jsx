@@ -16,6 +16,7 @@ import {
 } from '../../utils/maskUtils';
 import { urlFiles } from '../../services/http';
 import pushIfNecessary from '../../utils/HTMLUtils';
+import { userTypes } from '../../utils/userType.constants';
 
 function CadastroMentorado() {
   const history = useHistory();
@@ -31,6 +32,7 @@ function CadastroMentorado() {
   const [imageurl, setImageurl] = useState(AccountImage);
   const [imagem, setImagem] = useState('');
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
@@ -98,21 +100,28 @@ function CadastroMentorado() {
     } else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
     } else {
+      setLoading(true);
       cadastrarUsuario(data)
         .then((res) => {
           if (res.status === 200) {
             enqueue('Usuário cadastrado com sucesso!', 'success');
-            history.push('/');
+            pushIfNecessary(
+              userTypes.MENTORADO,
+              (link) => history.push(link),
+            );
           }
         })
         .catch((err) => {
           enqueue('Não foi possível realizar o cadastro. ');
           console.error(err);
+        }).finally(() => {
+          setLoading(false);
         });
     }
   };
 
   const handleEdit = () => {
+    setLoading(true);
     const tkn = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${tkn}` } };
     const data = new FormData();
@@ -128,14 +137,15 @@ function CadastroMentorado() {
       .then((resp) => {
         sessionStorage.setItem('token', resp.data.token);
         enqueue('Usuário alterado com sucesso!', 'success');
-      })
-      .catch(() => {
-        enqueue('Não foi possível editar, tente novamente.');
-      }).finally(() => {
         pushIfNecessary(
           2,
           (link) => history.push(link),
         );
+      })
+      .catch(() => {
+        enqueue('Não foi possível editar, tente novamente.');
+      }).finally(() => {
+        setLoading(false);
       });
   };
 
@@ -194,7 +204,7 @@ function CadastroMentorado() {
       {isEditing ? (
         <>
           <Container>
-            <RedeButton descricao="Salvar alterações" onClick={handleEdit} />
+            <RedeButton descricao="Salvar alterações" onClick={handleEdit} loading={loading} />
           </Container>
         </>
       )
@@ -228,7 +238,7 @@ function CadastroMentorado() {
             </Container.FlexContainer>
 
             <Container>
-              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={((!senha && !confirmarSenha) || (senha !== confirmarSenha)) || !acceptTerms} />
+              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={((!senha && !confirmarSenha) || (senha !== confirmarSenha)) || !acceptTerms} loading={loading} />
             </Container>
           </>
         )}

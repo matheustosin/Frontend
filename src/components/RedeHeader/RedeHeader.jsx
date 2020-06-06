@@ -88,7 +88,7 @@ const RedeHeader = (props) => {
 
   const handleLogoClick = () => {
     let to = '/';
-    if (!profile) history.push(to);
+    if (!profile || !profile.userType) return history.push(to);
     switch (profile.userType) {
       case userTypes.ADMINISTRADOR:
         to = '/administrador';
@@ -105,9 +105,9 @@ const RedeHeader = (props) => {
         to = '/mentorado';
         break;
       default:
-        return;
+        return '';
     }
-    history.push(to);
+    return history.push(to);
   };
 
   const escolherHome = (path) => {

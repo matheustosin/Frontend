@@ -11,6 +11,7 @@ import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/Re
 import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
 import { urlFiles } from '../../services/http';
 import pushIfNecessary from '../../utils/HTMLUtils';
+import { userTypes } from '../../utils/userType.constants';
 
 function CadastroMentor() {
   const history = useHistory();
@@ -26,6 +27,7 @@ function CadastroMentor() {
   const [areas, setAreas] = useState('');
   const [imageurl, setImageurl] = useState(AccountImage);
   const [acceptTerms, setAcceptTerms] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
@@ -100,6 +102,7 @@ function CadastroMentor() {
     } else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
     } else {
+      setLoading(true);
       cadastrarUsuario(data)
         .then((res) => {
           if (res.status === 200) {
@@ -109,11 +112,15 @@ function CadastroMentor() {
         })
         .catch(() => {
           enqueue('Não foi possível realizar o cadastro. ');
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
 
   const attemptEdit = () => {
+    setLoading(true);
     const tkn = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${tkn}` } };
     const data = new FormData();
@@ -129,14 +136,15 @@ function CadastroMentor() {
       .then((resp) => {
         sessionStorage.setItem('token', resp.data.token);
         enqueue('Usuário alterado com sucesso!', 'success');
+        pushIfNecessary(
+          userTypes.MENTOR,
+          (link) => history.push(link),
+        );
       })
       .catch(() => {
         enqueue('Não foi possível editar, tente novamente.');
       }).finally(() => {
-        pushIfNecessary(
-          1,
-          (link) => history.push(link),
-        );
+        setLoading(false);
       });
   };
 
@@ -195,7 +203,7 @@ function CadastroMentor() {
       {(isEditing) ? (
         <>
           <Container>
-            <RedeButton descricao="Editar perfil" onClick={attemptEdit} />
+            <RedeButton descricao="Editar perfil" onClick={attemptEdit} loading={loading} />
           </Container>
         </>
       )
@@ -229,7 +237,7 @@ function CadastroMentor() {
             </Container.FlexContainer>
 
             <Container>
-              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={((!password && !confirmPassword) || (password !== confirmPassword)) || !acceptTerms} />
+              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={((!password && !confirmPassword) || (password !== confirmPassword)) || !acceptTerms} loading={loading} />
             </Container>
           </>
         )}
