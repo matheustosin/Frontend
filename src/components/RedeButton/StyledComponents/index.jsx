@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Desabilitado from './Desabilitado';
 import Claro from './Claro';
+import Loading from './Loading';
 import Cancelar from './Cancelar';
 
 import COLOR from '../../../utils/colors.constants';
@@ -17,6 +18,9 @@ const Button = styled.button`
   border-radius: 10px;
   color: ${COLOR.AZUL};
   background-color: ${COLOR.AMARELO};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   :hover {
     box-shadow: 0 0 15px ${COLOR.AMARELO};
@@ -29,6 +33,7 @@ const Button = styled.button`
   ${({ claro }) => claro && Claro}
   ${({ cancelar }) => cancelar && Cancelar}
   ${({ disabled }) => disabled && Desabilitado}
+  ${({ loading }) => loading && Loading}
 `;
 
 Button.displayName = 'Button';
