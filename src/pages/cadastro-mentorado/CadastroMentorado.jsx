@@ -228,7 +228,7 @@ function CadastroMentorado() {
             </Container.FlexContainer>
 
             <Container>
-              <RedeButton descricao="Cadastrar" onClick={attemptRegister} />
+              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={((!senha && !confirmarSenha) || (senha !== confirmarSenha)) || !acceptTerms} />
             </Container>
           </>
         )}

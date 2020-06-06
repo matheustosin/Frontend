@@ -65,14 +65,47 @@ const RedeHeader = (props) => {
 
   const handleEditProfile = () => {
     sessionStorage.setItem('oldProfile', JSON.stringify(profile));
-    history.push((profile.userType === 1) ? '/cadastro-mentor' : '/cadastro-mentorado');
+    let to = '';
+    switch (profile.userType) {
+      case userTypes.ADMINISTRADOR:
+      case userTypes.MENTOREMENTORADO:
+        to = sessionStorage.getItem('homeEscolhida')
+          ? `/cadastro-${sessionStorage.getItem('homeEscolhida')}`
+          : '/cadastro/mentor';
+        break;
+      case userTypes.MENTOR:
+        to = '/cadastro-mentor';
+        break;
+      case userTypes.MENTORADO:
+        to = '/cadastro-mentorado';
+        break;
+      default:
+        return;
+    }
+    history.push(to);
     handleMenuClose();
   };
 
   const handleLogoClick = () => {
     let to = '/';
-    if (profile) {
-      to = (profile.userType === 1) ? '/mentor' : '/mentorado';
+    if (!profile) history.push(to);
+    switch (profile.userType) {
+      case userTypes.ADMINISTRADOR:
+        to = '/administrador';
+        break;
+      case userTypes.MENTOREMENTORADO:
+        to = sessionStorage.getItem('homeEscolhida')
+          ? `/${sessionStorage.getItem('homeEscolhida')}`
+          : '/mentor';
+        break;
+      case userTypes.MENTOR:
+        to = '/mentor';
+        break;
+      case userTypes.MENTORADO:
+        to = '/mentorado';
+        break;
+      default:
+        return;
     }
     history.push(to);
   };
@@ -80,6 +113,7 @@ const RedeHeader = (props) => {
   const escolherHome = (path) => {
     sessionStorage.setItem('homeEscolhida', path);
     history.push(`/${path}`);
+    handleMenuClose();
   };
 
   return (
