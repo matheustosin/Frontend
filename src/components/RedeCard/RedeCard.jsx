@@ -16,9 +16,7 @@ import IconsWrapper from './StyledComponents/icons-wrapper';
 import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 import MentorName from './StyledComponents/mentor-name';
 import MentorImage from './StyledComponents/mentor-image';
-
-import ICON from '../../assets/caminho.png';
-
+import MentorContent from './StyledComponents/mentor-content';
 
 const Card = ({
   title,
@@ -74,10 +72,10 @@ const Card = ({
               }
               {
                 mentorias && (
-                  <>
+                  <MentorContent>
                     <MentorName>{mentorName.split(" ").join("\n")}</MentorName>
                     <MentorImage src={mentorImage}/>
-                  </>
+                  </MentorContent>
                 )
               }
             </IconsWrapper>
