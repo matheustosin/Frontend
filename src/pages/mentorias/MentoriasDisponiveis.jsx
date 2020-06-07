@@ -24,7 +24,7 @@ function MentoriasDisponiveis() {
           description={mentoria.description}
           image={`${urlFiles}/${mentoria.image}`}
           mentorias
-          mentorName={mentoria.mentorInfos.name}
+          mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join("")}
           mentorImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
         />
       ));
