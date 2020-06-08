@@ -7,9 +7,11 @@ import { login, profile } from '../../services/user';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeSeparator from '../../components/RedeSeparator/RedeSeparator';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
+import pushIfNecessary from '../../utils/HTMLUtils';
 
 function Login() {
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const { enqueueSnackbar } = useSnackbar();
@@ -19,13 +21,17 @@ function Login() {
     const tkn = sessionStorage.getItem('token');
     if (tkn) {
       profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
-        history.push((resp.data.userType === 1) ? '/mentor' : '/mentorado');
+        pushIfNecessary(
+          resp.data.userType,
+          (link) => history.push(link),
+        );
       });
     }
     // eslint-disable-next-line
   }, []);
 
   const attemptLogin = (event) => {
+    setLoading(true);
     event.preventDefault();
     const data = {
       email,
@@ -39,12 +45,18 @@ function Login() {
         .then((res) => {
           if (res.status === 200) {
             sessionStorage.setItem('token', res.data.token);
-            history.push((res.data.result.userType === 1) ? '/mentor' : '/mentorado');
+            pushIfNecessary(
+              res.data.result.userType,
+              (link) => history.push(link),
+            );
           }
         })
         .catch((err) => {
           enqueueSnackbar('Acesso não autorizado. Verifique seu email e sua senha.', { variant: 'error', autoHideDuration: 2500 });
           console.error(err);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
@@ -63,7 +75,7 @@ function Login() {
             onChange={(evt) => setPassword(evt.target.value)}
           />
           <Container.ForgotPassword> Esqueci minha senha </Container.ForgotPassword>
-          <RedeButton descricao="Entrar" onClick={attemptLogin} />
+          <RedeButton descricao="Entrar" onClick={attemptLogin} loading={loading} />
           <RedeSeparator descricao="Novo na Rede ?"> </RedeSeparator>
           <Link to="/register">
             <RedeButton descricao="Cadastrar" />

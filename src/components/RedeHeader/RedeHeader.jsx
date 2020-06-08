@@ -6,6 +6,7 @@ import { profile as getUser } from '../../services/user';
 import Container from './StyledComponents';
 import { urlFiles } from '../../services/http';
 import standartPhoto from '../../assets/account.png';
+import { userTypes } from '../../utils/userType.constants';
 
 // const getTitle = () => sessionStorage.getItem('headerTitle');
 const excludedPaths = ['/', '/register', '/cadastro-mentor', '/cadastro-mentorado'];
@@ -41,7 +42,6 @@ const RedeHeader = (props) => {
   useEffect(() => { // Ao Mudar o tkn
     if (!tkn) return;
     getUser({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
-      console.log('results: ', resp);
       setProfile(resp.data);
     }).catch((erro) => {
       console.error(erro);
@@ -65,16 +65,55 @@ const RedeHeader = (props) => {
 
   const handleEditProfile = () => {
     sessionStorage.setItem('oldProfile', JSON.stringify(profile));
-    history.push((profile.userType === 1) ? '/cadastro-mentor' : '/cadastro-mentorado');
+    let to = '';
+    switch (profile.userType) {
+      case userTypes.ADMINISTRADOR:
+      case userTypes.MENTOREMENTORADO:
+        to = sessionStorage.getItem('homeEscolhida')
+          ? `/cadastro-${sessionStorage.getItem('homeEscolhida')}`
+          : '/cadastro-mentor';
+        break;
+      case userTypes.MENTOR:
+        to = '/cadastro-mentor';
+        break;
+      case userTypes.MENTORADO:
+        to = '/cadastro-mentorado';
+        break;
+      default:
+        return;
+    }
+    history.push(to);
     handleMenuClose();
   };
 
   const handleLogoClick = () => {
     let to = '/';
-    if (profile) {
-      to = (profile.userType === 1) ? '/Mentor' : 'Mentorado';
+    if (!profile || !profile.userType) return history.push(to);
+    switch (profile.userType) {
+      case userTypes.ADMINISTRADOR:
+        to = '/administrador';
+        break;
+      case userTypes.MENTOREMENTORADO:
+        to = sessionStorage.getItem('homeEscolhida')
+          ? `/${sessionStorage.getItem('homeEscolhida')}`
+          : '/mentor';
+        break;
+      case userTypes.MENTOR:
+        to = '/mentor';
+        break;
+      case userTypes.MENTORADO:
+        to = '/mentorado';
+        break;
+      default:
+        return '';
     }
-    history.push(to);
+    return history.push(to);
+  };
+
+  const escolherHome = (path) => {
+    sessionStorage.setItem('homeEscolhida', path);
+    history.push(`/${path}`);
+    handleMenuClose();
   };
 
   return (
@@ -93,18 +132,43 @@ const RedeHeader = (props) => {
 
       </Container>
       <Container.Clearfix />
-      <Menu
-        id="user-menu"
-        className="header-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={() => { }} disabled>{profile ? profile.name : ''}</MenuItem>
-        <MenuItem onClick={handleEditProfile}>Editar perfil</MenuItem>
-        <MenuItem onClick={handleLogOut}>Sair</MenuItem>
-      </Menu>
+      {
+        profile && (
+          <Menu
+            id="user-menu"
+            className="header-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={() => { }} disabled>{profile ? profile.name : ''}</MenuItem>
+            {profile.userType === userTypes.ADMINISTRADOR && props.location.pathname !== ('/administrador')
+              && (<MenuItem onClick={() => escolherHome('administrador')}>Home Administrador</MenuItem>)}
+            {(profile.userType === userTypes.MENTOREMENTORADO
+              || profile.userType === userTypes.ADMINISTRADOR)
+              && (
+                !sessionStorage.getItem('homeEscolhida')
+                || sessionStorage.getItem('homeEscolhida') !== 'mentor'
+              )
+              && (
+                <MenuItem onClick={() => escolherHome('mentor')}>Home Mentor</MenuItem>
+              )}
+            {(profile.userType === userTypes.MENTOREMENTORADO
+              || profile.userType === userTypes.ADMINISTRADOR)
+              && (
+                sessionStorage.getItem('homeEscolhida')
+                && sessionStorage.getItem('homeEscolhida') !== 'mentorado'
+              )
+              && (
+                <MenuItem onClick={() => escolherHome('mentorado')}>Home Mentorado</MenuItem>
+              )}
+            <MenuItem onClick={handleEditProfile}>Editar perfil</MenuItem>
+            <MenuItem onClick={handleLogOut}>Sair</MenuItem>
+          </Menu>
+
+        )
+      }
     </>
   );
 };
