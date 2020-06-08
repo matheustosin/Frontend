@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import Container from './StyledComponents';
 import { cadastrarMentoria, atualizarMentoria } from '../../services/mentoria';
 import RedeButton from '../../components/RedeButton/RedeButton';
@@ -9,7 +10,14 @@ import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 import plusButton from '../../assets/plus-circle.png';
-import './style.css';
+import removeButton from '../../assets/remove-button.png';
+
+import DivCheckbox from './StyledComponents/DivCheckbox';
+import Checkbox from './StyledComponents/Checkbox';
+import DivSelect from './StyledComponents/DivSelect';
+import ContainerDataHora from './StyledComponents/ContainerDataHora';
+import Select from './StyledComponents/Select';
+
 
 function CadastroMentoria() {
   const oldMentoria = JSON.parse(sessionStorage.getItem('oldMentoria'));
@@ -23,12 +31,21 @@ function CadastroMentoria() {
   const [time, setTime] = useState(oldMentoria ? new Date(oldMentoria.data.dateTime).getHours() : []);
   const [dayOfWeek, setDayOfWeek] = useState(oldMentoria ? String(oldMentoria.data.dayOfWeek).toLowerCase() : []);
   const [image, setImage] = useState(oldMentoria ? oldMentoria.data.image : '');
-  const [maxAddHour, setMaxAddHour] = useState(5);
 
+  const [daysSelect] = useState(['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']);
+  const [hoursSelect] = useState(['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']);
+
+  const [listDataHours, setListDataHours] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
+    enqueueSnackbar(msg, { variant, autoHideDuration });
+  };
 
   const history = useHistory();
 
-  function getSelectsValues() {
+  const getSelectsValues = (e) => {
+    e.preventDefault();
     const hours = [];
     const dates = [];
     document.querySelectorAll('select')
@@ -47,7 +64,8 @@ function CadastroMentoria() {
 
     setTime(hours);
     setDayOfWeek(dates);
-  }
+  };
+
 
   const handleAddMentoria = (event) => {
     event.preventDefault();
@@ -66,11 +84,11 @@ function CadastroMentoria() {
 
     // || !data.get('mentoringOption')
     if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('time') || !data.get('dayOfWeek')) {
-      alert('Preencha todos os campos.');
+      enqueue('Preencha todos os campos.');
     } else if (!data.get('image')) {
-      alert('Insira uma foto para a mentoria.');
+      enqueue('Insira uma foto para mentoria');
     } else if (time.length !== dayOfWeek.length) {
-      alert('Deve ser ser selecionado a mesma quantidade de horarios e datas');
+      enqueue('Deve ser adicionado a mesma quandidade de horarios e datas');
     } else if (oldMentoria) {
       if (
         typeof image === 'string'
@@ -78,35 +96,35 @@ function CadastroMentoria() {
       const headers = { headers: { param: { id: oldMentoria.id }, Authorization: `Bearer ${token}` } };
       atualizarMentoria(headers, data).then((res) => {
         if (res.status === 200) {
-          alert('Atualizado com sucesso');
+          enqueue('Mentoria atualiada com sucesso', 'success');
         }
         history.push('/mentor');
       }).catch((err) => {
-        alert('Problema ao atualizar mentoria');
+        enqueue('Problema ao atualizar mentoria');
         console.error(err);
       });
     } else {
       const headers = { headers: { Authorization: `Bearer ${token}` } };
       cadastrarMentoria(headers, data).then((res) => {
         if (res.status === 200) {
-          alert('Cadastrado com sucesso');
+          enqueue('Mentoria cadastrada com sucesso', 'success');
         }
         history.push('/mentor');
       }).catch((err) => {
-        alert('Problema ao cadastrar mentoria');
+        enqueue('Problema ao cadastrar mentoria');
         console.error(err);
       });
     }
-  }
+  };
   function handleImage() {
     document.getElementById('fileButton').click();
     document.getElementById('fileButton').onchange = (event) => {
-      console.log(event.target);
       setImage(event.target.files[0]);
     };
   }
 
-  function cleanForm() {
+  const cleanForm = (event) => {
+    event.preventDefault();
     setTitle('');
     setDescription('');
     setKnowledgeArea('');
@@ -116,22 +134,30 @@ function CadastroMentoria() {
     setImage('');
     history.push('/mentor');
     sessionStorage.removeItem('oldMentoria');
-  }
+  };
+
+  const handleRemove = (e, id) => {
+    setListDataHours(
+      listDataHours.filter((el, ix) => ix !== id),
+    );
+  };
 
   // eslint-disable-next-line consistent-return
-  function addHour() {
-    console.log(maxAddHour);
-    if (maxAddHour < 1) {
-      return alert('Não pode mais adicionar horarios');
-    }
-    const elementDuplicate = document.querySelector('.data-hora').cloneNode(true);
-    const parentElement = document.querySelector('.select-data-horarios');
-    elementDuplicate.lastChild.src = '';
-    elementDuplicate.children[0].addEventListener('change', getSelectsValues);
-    elementDuplicate.children[1].addEventListener('change', getSelectsValues);
-    parentElement.appendChild(elementDuplicate);
-    setMaxAddHour(maxAddHour - 1);
-  }
+  const handleAdd = () => {
+    const element = (
+      <>
+        <Select objectValues={daysSelect} onChange={(event) => getSelectsValues(event)} />
+        <Select objectValues={hoursSelect} onChange={(event) => getSelectsValues(event)} />
+      </>
+    );
+
+    setListDataHours([...listDataHours, element]);
+  };
+
+  useEffect(() => { // did Mount
+    handleAdd();
+  }, []);
+
 
   return (
     <Container>
@@ -157,63 +183,40 @@ function CadastroMentoria() {
         </Container.Options>
         <RedeHorizontalSeparator />
         <Container.SecondOption>
-          {/* <RedeInputRadio
-            descricao="Opções de Mentoria"
-            tipo="radio"
-            nome="optmentorias"
-            checked="1"
-            onChange={(e) => setMentoringOption(e.target.value)}
-          /> */}
+          <DivCheckbox>
+            <RedeFormLabel descricao="Opções de Mentoria" />
+            <DivCheckbox.Options>
+              <Checkbox value="online" label="Online" />
+              <Checkbox value="presencial" label="Presencial" />
+            </DivCheckbox.Options>
+          </DivCheckbox>
           <RedeFormLabel descricao="Datas e Horários Disponíveis" />
 
-          <div className="select-data-horarios">
-            <div className="labels">
+          <DivSelect className="select-data-horarios">
+            <DivSelect.Labels>
               <p>Data</p>
-              <p>Horários</p>
-            </div>
-            <div className="data-hora">
-              <select className="select-class" onChange={getSelectsValues}>
-                <option value="" disabled selected>Dia</option>
-                <option value="Segunda">Segunda</option>
-                <option value="Terça">Terça</option>
-                <option value="Quarta">Quarta</option>
-                <option value="Quinta">Quinta</option>
-                <option value="Sexta">Sexta</option>
-                <option value="Sabado">Sabado</option>
-              </select>
-
-              <select className="select-class" onChange={getSelectsValues}>
-                <option value="" disabled selected>Hoário...</option>
-                <option value="9:00:00">09:00</option>
-                <option value="10:00:00">10:00</option>
-                <option value="11:00:00">11:00</option>
-                <option value="12:00:00">12:00</option>
-                <option value="13:00:00">13:00</option>
-                <option value="14:00:00">14:00</option>
-                <option value="15:00:00">15:00</option>
-                <option value="16:00:00">16:00</option>
-                <option value="17:00:00">17:00</option>
-                <option value="18:00:00">18:00</option>
-                <option value="19:00:00">19:00</option>
-                <option value="20:00:00">20:00</option>
-                <option value="21:00:00">21:00</option>
-                <option value="21:00:00">22:00</option>
-              </select>
-
-              <div onClick={addHour}>
-                <img src={plusButton} alt="Adicionar" />
-              </div>
-            </div>
-          </div>
+              <p style={{ 'margin-left': '70px' }}>Horários</p>
+            </DivSelect.Labels>
+            {
+              listDataHours.map((element, index) => (
+                <ContainerDataHora>
+                  {element}
+                  {index === (listDataHours.length - 1) && listDataHours.length < 6
+                    ? <img onClick={(e) => handleAdd(e)} src={plusButton} alt="Adicionar" />
+                    : <img onClick={(e) => handleRemove(e, index)} src={removeButton} alt="Remover" />}
+                </ContainerDataHora>
+              ))
+            }
+          </DivSelect>
         </Container.SecondOption>
       </Container.Form>
 
       <Container.Submit>
-        <RedeButton descricao="Cancelar" cancelar onClick={cleanForm} />
+        <RedeButton descricao="Cancelar" cancelar onClick={(e) => cleanForm(e)} />
         <RedeButton descricao={ActionButtonTitle} onClick={handleAddMentoria} />
 
       </Container.Submit>
-    </Container >
+    </Container>
   );
 }
 
