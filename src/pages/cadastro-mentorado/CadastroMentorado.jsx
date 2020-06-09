@@ -17,6 +17,7 @@ import {
 import { urlFiles } from '../../services/http';
 import pushIfNecessary from '../../utils/HTMLUtils';
 import { userTypes } from '../../utils/userType.constants';
+import { validateEmail } from '../../utils/validationUtils';
 
 function CadastroMentorado() {
   const history = useHistory();
@@ -97,6 +98,8 @@ function CadastroMentorado() {
       enqueue('Preencha todos os campos.');
     } else if (!data.get('image')) {
       enqueue('Insira uma foto de perfil.');
+    } else if (! validateEmail(data.get('email'))) {
+      enqueue('Fomato incorreto de e-mail.');
     }  else if (
       data.get('password')
       && confirmarSenha
