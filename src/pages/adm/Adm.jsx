@@ -6,7 +6,7 @@ import confirm from '../../assets/confirm.png';
 import denied from '../../assets/denied.png';
 import Container from './StyledComponents';
 import { urlFiles } from '../../services/http';
-import { pendingMentorings } from '../../services/adm';
+import { pendingMentorings, mentoringEvaluation } from '../../services/adm';
 import Title2 from './StyledComponents/Title2';
 import RedeIcon from '../../components/RedeIcon/RedeIcon';
 import ContainerIcon from './StyledComponents/ContainerIcon';
@@ -22,35 +22,51 @@ function Administrador() {
         getMentorias(headers);
     }, [])
 
+    function evaluateMentoring(mentoria) {
+        const token = sessionStorage.getItem('token');
+        const headers = { headers: { Authorization: `Bearer ${token}` } };
+        const id = mentoria.id;
+        
+        mentoringEvaluation(headers, id)
+        .then((res) => {
+            if (res.status === 200) {
+                alert('SUCESSO!');
+            }
+        })
+        .catch((err) => {
+            alert('A mentoria não pôde ser aprovada!');
+        });
+    }
 
     function getMentorias(headers) {
         
         pendingMentorings(headers) 
         .then((res) => {
             if (res.status === 200) {
+                    // console.log(res);
                     generateCards(res.data);
                 }
             })
             .catch((err) => {
                 setCards('Nenhuma mentoria encontrada para ser aprovada.');
-                console.error(err);
+                // console.error(err);
             });
     }
 
     function generateCards(mentorias) {
-        
+
         const cardsMentorias = mentorias
-        .map((mentoria) => (  
+        .map((mentoria, key) => (  
             <>
             <Card 
                 key={mentoria.id}
-                title={mentoria.title}
-                description={mentoria.description}
-                image={`${urlFiles}/${mentoria.image}`}
+                title={mentoria.data.title}
+                description={mentoria.data.description}
+                image={`${urlFiles}/${mentoria.data.image}`}
                 mentorias={true}
             />
             <ContainerIcon>
-                <RedeIcon imageUrl={confirm} />
+                <RedeIcon imageUrl={confirm} onClick={() => evaluateMentoring(mentoria)}/>
                 <RedeIcon imageUrl={denied} />
                 <RedeIcon imageUrl={edition} />
             </ContainerIcon>
