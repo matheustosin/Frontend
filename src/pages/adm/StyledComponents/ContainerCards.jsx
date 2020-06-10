@@ -1,12 +1,17 @@
 import styled from "styled-components";
 
-import Title from "./Title";
-
-const Container = styled.div`
+const ContainerCards = styled.div`
   display: flex;
+  /* flex-direction: column; */
   align-items: center;
-  flex-direction: column;
-  padding: 10px 15px;
+
+  place-content: center;
+
+  width: 100%;
+
+  position: relative;
+
+  
 
   @media only screen and (max-width: 768px) {
     width: 100%;
@@ -14,6 +19,4 @@ const Container = styled.div`
   }
 `;
 
-Container.Title = Title;
-
-export default Container;
+export default ContainerCards;
