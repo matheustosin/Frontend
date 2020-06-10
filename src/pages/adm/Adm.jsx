@@ -25,11 +25,18 @@ function Administrador() {
   }, []);
 
   function evaluateMentoring(mentoria) {
+    console.log( mentoria)
+    const id = mentoria.id;
     const token = sessionStorage.getItem('token');
-    const headers = { headers: { Authorization: `Bearer ${token}` } };
-    const { id } = mentoria;
-
-    mentoringEvaluation(headers, id)
+    const body = {
+        title: mentoria.data.title,
+        approved: mentoria.data.approved
+    }
+    const config = {
+        param: id,
+        headers: { Authorization: `Bearer ${token}` }
+    }
+    mentoringEvaluation(body, config)
       .then((res) => {
         if (res.status === 200) {
           alert('SUCESSO!');
@@ -55,7 +62,7 @@ function Administrador() {
   }
 
   function generateCards(mentorias) {
-    const cardsMentorias = mentorias.map((mentoria, key) => (
+    const cardsMentorias = mentorias.map((mentoria) => (
       <ContainerCards>
         <Card
           key={mentoria.id}
