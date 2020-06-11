@@ -97,11 +97,11 @@ function CadastroMentoria() {
         console.error(err);
       });
     }
-  }
+  };
+
   function handleImage() {
     document.getElementById('fileButton').click();
     document.getElementById('fileButton').onchange = (event) => {
-      console.log(event.target);
       setImage(event.target.files[0]);
     };
   }
