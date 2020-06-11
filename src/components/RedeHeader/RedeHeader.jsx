@@ -148,8 +148,8 @@ const RedeHeader = (props) => {
             {(profile.userType === userTypes.MENTOREMENTORADO
               || profile.userType === userTypes.ADMINISTRADOR)
               && (
-                !sessionStorage.getItem('homeEscolhida')
-                || sessionStorage.getItem('homeEscolhida') !== 'mentor'
+                sessionStorage.getItem('homeEscolhida')
+                && sessionStorage.getItem('homeEscolhida') !== 'mentor'
               )
               && (
                 <MenuItem onClick={() => escolherHome('mentor')}>Home Mentor</MenuItem>
@@ -157,8 +157,8 @@ const RedeHeader = (props) => {
             {(profile.userType === userTypes.MENTOREMENTORADO
               || profile.userType === userTypes.ADMINISTRADOR)
               && (
-                sessionStorage.getItem('homeEscolhida')
-                && sessionStorage.getItem('homeEscolhida') !== 'mentorado'
+                !sessionStorage.getItem('homeEscolhida')
+                || sessionStorage.getItem('homeEscolhida') !== 'mentorado'
               )
               && (
                 <MenuItem onClick={() => escolherHome('mentorado')}>Home Mentorado</MenuItem>
