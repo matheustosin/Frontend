@@ -9,10 +9,11 @@ const RedeTextField = ({
   onChange,
   erro,
   msgAjuda,
+  disabled,
 }) => (
   <TextField erro={erro}>
     <TextField.Label>{descricao}</TextField.Label>
-    <TextField.Input type={tipo} value={valor} onChange={onChange} />
+    <TextField.Input type={tipo} value={valor} onChange={onChange} disabled={disabled} />
     <TextField.MsgAjuda>{msgAjuda}</TextField.MsgAjuda>
   </TextField>
 );

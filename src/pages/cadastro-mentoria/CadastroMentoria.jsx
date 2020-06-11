@@ -17,6 +17,7 @@ import DivSelect from './StyledComponents/DivSelect';
 import ContainerDataHora from './StyledComponents/ContainerDataHora';
 import Select from './StyledComponents/Select';
 import DivImage from './StyledComponents/DivImage';
+import { profile } from '../../services/user';
 
 
 function CadastroMentoria() {
@@ -164,6 +165,10 @@ function CadastroMentoria() {
   };
 
   useEffect(() => { // did Mount
+    const token = sessionStorage.getItem('token');
+    profile({ headers: { Authorization: `Bearer ${token}` } }).then((res) => {
+      setKnowledgeArea(res.data.areas);
+    });
     handleAdd();
   }, []);
 
@@ -186,6 +191,7 @@ function CadastroMentoria() {
             descricao="Área de Conhecimento"
             valor={knowledgeArea}
             onChange={(e) => setKnowledgeArea(e.target.value)}
+            disabled
           />
           <input id="fileButton" type="file" hidden />
           <DivImage image={imageUrl}>
