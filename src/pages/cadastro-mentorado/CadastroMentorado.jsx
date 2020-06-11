@@ -97,13 +97,13 @@ function CadastroMentorado() {
       enqueue('Preencha todos os campos.');
     } else if (!data.get('image')) {
       enqueue('Insira uma foto de perfil.');
-    }  else if (
+    } else if (
       data.get('password')
       && confirmarSenha
       && data.get('password') !== confirmarSenha
     ) {
       enqueue('Senhas não são iguais.');
-    }  else if (!acceptTerms) {
+    } else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
     } else {
       setLoading(true);
@@ -128,6 +128,7 @@ function CadastroMentorado() {
 
   const handleEdit = () => {
     setLoading(true);
+    const oldProfile = JSON.parse(sessionStorage.getItem('oldProfile'));
     const tkn = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${tkn}` } };
     const data = new FormData();
@@ -138,7 +139,7 @@ function CadastroMentorado() {
     data.append('cpf', cpf);
     data.append('phone', telefone);
     data.append('registration', matricula);
-    data.append('userType', 2); // mentorado flag
+    data.append('userType', oldProfile.userType);
     editarUsuario(data, headers)
       .then((resp) => {
         sessionStorage.setItem('token', resp.data.token);

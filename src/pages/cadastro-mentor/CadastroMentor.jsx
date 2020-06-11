@@ -121,6 +121,7 @@ function CadastroMentor() {
 
   const attemptEdit = () => {
     setLoading(true);
+    const oldProfile = JSON.parse(sessionStorage.getItem('oldProfile'));
     const tkn = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${tkn}` } };
     const data = new FormData();
@@ -131,7 +132,7 @@ function CadastroMentor() {
     data.append('linkedin', linkedin);
     data.append('cpf', cpf);
     data.append('areas[]', areas);
-    data.append('userType', 1);
+    data.append('userType', oldProfile.userType);
     editarUsuario(data, headers)
       .then((resp) => {
         sessionStorage.setItem('token', resp.data.token);
