@@ -19,6 +19,7 @@ function Administrador() {
   const [cards, setCards] = useState('');
   const [flagModal, setFlagModal] = useState(false);
   const [mentoria, setMentoria] = useState(null);
+  const [newTitle, setNewTitle] = useState('');
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
@@ -28,16 +29,16 @@ function Administrador() {
   }, []);
 
   function evaluateMentoring(mentoria) {
-    const id = mentoria.id;
+    const { id } = mentoria;
     const token = sessionStorage.getItem('token');
     const body = {
-        title: mentoria.data.title,
-        approved: mentoria.data.mentoringApproved
-    }
+      title: mentoria.data.title,
+      approved: mentoria.data.mentoringApproved,
+    };
     const config = {
-        param: id,
-        headers: { Authorization: `Bearer ${token}` }
-    }
+      param: id,
+      headers: { Authorization: `Bearer ${token}` },
+    };
     console.log(config);
     mentoringEvaluation(body, config)
       .then((res) => {
@@ -65,7 +66,8 @@ function Administrador() {
   }
 
   function abreModal(mentoria) {
-    setMentoria(mentoria)
+    setMentoria(mentoria);
+    setNewTitle(mentoria.data.title);
     setFlagModal(true);
   }
 
@@ -74,11 +76,11 @@ function Administrador() {
   }
 
   function atualizaMentoria(mentoria) {
-    console.log(mentoria)
+    console.log(mentoria);
   }
 
   function generateCards(mentorias) {
-    console.log(mentorias)
+    console.log(mentorias);
     const cardsMentorias = mentorias.map((mentoria) => (
       <ContainerCards>
         <Card
@@ -86,9 +88,9 @@ function Administrador() {
           title={mentoria.data.title}
           description={mentoria.data.description}
           image={`${urlFiles}/${mentoria.data.image}`}
-          mentorName ={mentoria.mentorInfos.name}
-          mentorImage ={`${urlFiles}/${mentoria.mentorInfos.image}`}
-          mentorias={true}
+          mentorName={mentoria.mentorInfos.name}
+          mentorImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
+          mentorias
         />
         <div>
           <ContainerIcon>
@@ -103,10 +105,11 @@ function Administrador() {
               <RedeIcon name="imag" imageUrl={denied} />
             </div>
             <div>
-              <RedeIcon 
+              <RedeIcon
                 name="imag"
                 imageUrl={edition}
-                onClick={() => abreModal(mentoria)} />
+                onClick={() => abreModal(mentoria)}
+              />
             </div>
           </ContainerIcon>
         </div>
@@ -119,10 +122,22 @@ function Administrador() {
     <Container>
       <RedeHeader />
       <Container.Title>APROVAÇÕES PENDENTES</Container.Title>
-      <Title2>Você tem {cards.length} mentorias para aprovar</Title2>
+      <Title2>
+        Você tem
+        {' '}
+        {cards.length}
+        {' '}
+        mentorias para aprovar
+      </Title2>
       <br />
       {cards}
-      <Modal open={flagModal} handleClose={() => fechaModal()} editFunction={() => atualizaMentoria(mentoria)} mentoriaTitle={mentoria}/>
+      <Modal
+        open={flagModal}
+        handleClose={() => fechaModal()}
+        editFunction={() => atualizaMentoria(mentoria)}
+        mentoriaTitle={newTitle}
+        onChange={(e) => setNewTitle(e.target.value)}
+      />
     </Container>
   );
 }
