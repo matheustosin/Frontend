@@ -12,13 +12,14 @@ const Container = styled.div`
   width: 100%;
   height: 70px;
   display: flex;
-  overflow: hidden;
+ 
   align-items: center;
   position: fixed;
   left: 0;
   top: 0;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.5);
   background: ${COLOR.AZUL} 0% 0% no-repeat padding-box;
+  z-index: 9;
 `;
 
 Container.Logo = Logo;
