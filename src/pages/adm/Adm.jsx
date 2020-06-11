@@ -4,6 +4,7 @@ import Card from '../../components/RedeCard/RedeCard';
 import edition from '../../assets/create-new-pencil-button.png';
 import confirm from '../../assets/confirm.png';
 import denied from '../../assets/denied.png';
+import Modal from './StyledComponents/Modal';
 
 import Container from './StyledComponents';
 import RedeIcon from '../../components/RedeIcon/RedeIcon';
@@ -16,7 +17,9 @@ import { pendingMentorings, mentoringEvaluation } from '../../services/adm';
 
 function Administrador() {
   const [cards, setCards] = useState('');
-  // let count;
+  const [flagModal, setFlagModal] = useState(false);
+  const [mentoria, setMentoria] = useState(null);
+
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
@@ -25,17 +28,17 @@ function Administrador() {
   }, []);
 
   function evaluateMentoring(mentoria) {
-    console.log( mentoria)
     const id = mentoria.id;
     const token = sessionStorage.getItem('token');
     const body = {
         title: mentoria.data.title,
-        approved: mentoria.data.approved
+        approved: mentoria.data.mentoringApproved
     }
     const config = {
         param: id,
         headers: { Authorization: `Bearer ${token}` }
     }
+    console.log(config);
     mentoringEvaluation(body, config)
       .then((res) => {
         if (res.status === 200) {
@@ -61,7 +64,21 @@ function Administrador() {
       });
   }
 
+  function abreModal(mentoria) {
+    setMentoria(mentoria)
+    setFlagModal(true);
+  }
+
+  function fechaModal() {
+    setFlagModal(false);
+  }
+
+  function atualizaMentoria(mentoria) {
+    console.log(mentoria)
+  }
+
   function generateCards(mentorias) {
+    console.log(mentorias)
     const cardsMentorias = mentorias.map((mentoria) => (
       <ContainerCards>
         <Card
@@ -84,14 +101,15 @@ function Administrador() {
               <RedeIcon name="imag" imageUrl={denied} />
             </div>
             <div>
-              <RedeIcon name="imag" imageUrl={edition} />
+              <RedeIcon 
+                name="imag"
+                imageUrl={edition}
+                onClick={() => abreModal(mentoria)} />
             </div>
           </ContainerIcon>
         </div>
       </ContainerCards>
     ));
-    // count = mentorias;
-    // console.log(count);
     setCards(cardsMentorias);
   }
 
@@ -99,9 +117,10 @@ function Administrador() {
     <Container>
       <RedeHeader />
       <Container.Title>APROVAÇÕES PENDENTES</Container.Title>
-      <Title2>Você tem X mentorias para aprovar</Title2>
+      <Title2>Você tem {cards.length} mentorias para aprovar</Title2>
       <br />
       {cards}
+      <Modal open={flagModal} handleClose={() => fechaModal()} editFunction={() => atualizaMentoria(mentoria)} mentoriaTitle={mentoria}/>
     </Container>
   );
 }
