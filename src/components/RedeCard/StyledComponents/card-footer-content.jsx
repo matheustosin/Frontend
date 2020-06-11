@@ -9,10 +9,11 @@ flex-direction:row;
 justify-content:space-between;
 align-items:center;
 
-@media screen and (max-width:500px){
+
+@media screen and (max-width:1000px){
   flex-direction:column;
   justify-content:space-between;
-  ${IconsWrapper}, ${TimeSlotWrapper}{
+  ${IconsWrapper} {
     justify-content:space-around;
   }
 }
