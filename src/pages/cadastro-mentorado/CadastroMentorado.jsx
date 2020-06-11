@@ -160,6 +160,12 @@ function CadastroMentorado() {
     let url;
     document.getElementById('fileButton').click();
     document.getElementById('fileButton').onchange = (event) => {
+      const imageType = event.target.files[0].type;
+
+      if (!['image/jpg', 'image/jpeg'].includes(imageType)) {
+        return enqueue('A imagem precisa ser JPG/JPEG');
+      }
+
       try {
         url = URL.createObjectURL(event.target.files[0]);
       } catch (e) {

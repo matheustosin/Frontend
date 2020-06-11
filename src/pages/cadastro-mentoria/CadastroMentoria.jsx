@@ -10,6 +10,7 @@ import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 import plusButton from '../../assets/plus-circle.png';
 import './style.css';
+import { useSnackbar } from 'notistack';
 
 function CadastroMentoria() {
   const oldMentoria = JSON.parse(sessionStorage.getItem('oldMentoria'));
@@ -24,7 +25,11 @@ function CadastroMentoria() {
   const [dayOfWeek, setDayOfWeek] = useState(oldMentoria ? String(oldMentoria.data.dayOfWeek).toLowerCase() : []);
   const [image, setImage] = useState(oldMentoria ? oldMentoria.data.image : '');
   const [maxAddHour, setMaxAddHour] = useState(5);
-
+  
+  const { enqueueSnackbar } = useSnackbar();
+  const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
+    enqueueSnackbar(msg, { variant, autoHideDuration });
+  };
 
   const history = useHistory();
 
@@ -102,6 +107,13 @@ function CadastroMentoria() {
   function handleImage() {
     document.getElementById('fileButton').click();
     document.getElementById('fileButton').onchange = (event) => {
+      const imageType = event.target.files[0].type;
+
+      if (!['image/jpg', 'image/jpeg'].includes(imageType)) {
+        return enqueue('A imagem precisa ser JPG/JPEG');
+      }
+
+      
       setImage(event.target.files[0]);
     };
   }
