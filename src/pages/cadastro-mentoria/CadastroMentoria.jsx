@@ -17,6 +17,7 @@ import DivSelect from './StyledComponents/DivSelect';
 import ContainerDataHora from './StyledComponents/ContainerDataHora';
 import Select from './StyledComponents/Select';
 import DivImage from './StyledComponents/DivImage';
+import Espaco from './StyledComponents/Espaco';
 import { profile } from '../../services/user';
 
 
@@ -187,6 +188,7 @@ function CadastroMentoria() {
             valor={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          <Espaco />
           <RedeTextField
             descricao="Área de Conhecimento"
             valor={knowledgeArea}
@@ -208,6 +210,7 @@ function CadastroMentoria() {
               <Checkbox name="mentoring-option" value="presencial" label="Presencial" onChange={(e) => handleOptionsMentoring(e.target)} />
             </DivCheckbox.Options>
           </DivCheckbox>
+          <Espaco />
           <RedeFormLabel descricao="Datas e Horários Disponíveis" />
 
           <DivSelect className="select-data-horarios">
