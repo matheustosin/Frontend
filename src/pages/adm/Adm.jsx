@@ -86,7 +86,9 @@ function Administrador() {
           title={mentoria.data.title}
           description={mentoria.data.description}
           image={`${urlFiles}/${mentoria.data.image}`}
-          mentorias
+          mentorName ={mentoria.mentorInfos.name}
+          mentorImage ={`${urlFiles}/${mentoria.mentorInfos.image}`}
+          mentorias={true}
         />
         <div>
           <ContainerIcon>

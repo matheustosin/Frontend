@@ -9,10 +9,12 @@ flex-direction:column;
 padding:0px 20px 0px 20px;
 font-weight: 600;
 color:${COLORS.AZUL};
-@media screen and (max-width:500px){
+@media screen and (max-width:1000px){
+  height:auto;
   width:90%;
   padding:0px;
-  margin-bottom:0px;
+  margin-bottom: 10px;
+  margin-top:10px;
 }
 `;
 export default CardContent;
