@@ -3,22 +3,20 @@ import React from 'react';
 
 import SelectStyled from './SelectStyled';
 
-const Select = ({ objectValues, onChange }) => (
+const Select = ({ options, select, onChange }) => (
   <SelectStyled onChange={onChange}>
-    {objectValues.map((value) => (
-      <option value={value}>{value}</option>
-    ))}
+    {options.map((value) => ((value === select) ? <option value={value} selected>{value}</option> : <option value={value}>{value}</option>))}
   </SelectStyled>
 );
 
 Select.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  objectValues: object,
+  options: object,
   onChange: func,
 };
 
 Select.defaultProps = {
-  objectValues: object,
+  options: object,
   onChange: () => {},
 };
 

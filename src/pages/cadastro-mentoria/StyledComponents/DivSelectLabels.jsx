@@ -9,6 +9,7 @@ const DivSelectLabels = styled.div`
   color: #00273F;
   font-weight: bold;
   margin-bottom: 10px;
+
 `;
 
 

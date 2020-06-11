@@ -7,6 +7,7 @@ const DivSelect = styled.div`
   flex-direction: column;
   align-items: baseline;
   align-content: center;
+   
 `;
 
 DivSelect.Labels = DivSelectLabels;
