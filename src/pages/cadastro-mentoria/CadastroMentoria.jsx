@@ -21,6 +21,11 @@ import Espaco from './StyledComponents/Espaco';
 import { profile } from '../../services/user';
 
 
+/**
+ *
+ * @returns {*}
+ * @constructor
+ */
 function CadastroMentoria() {
   const oldMentoria = JSON.parse(sessionStorage.getItem('oldMentoria'));
 
@@ -188,7 +193,7 @@ function CadastroMentoria() {
             valor={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <Espaco />
+          <Espaco size="18px" />
           <RedeTextField
             descricao="Área de Conhecimento"
             valor={knowledgeArea}
@@ -210,7 +215,7 @@ function CadastroMentoria() {
               <Checkbox name="mentoring-option" value="presencial" label="Presencial" onChange={(e) => handleOptionsMentoring(e.target)} />
             </DivCheckbox.Options>
           </DivCheckbox>
-          <Espaco />
+          <Espaco size="12px" />
           <RedeFormLabel descricao="Datas e Horários Disponíveis" />
 
           <DivSelect className="select-data-horarios">

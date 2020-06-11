@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Espaco = styled.div`
-  margin-top: 18px;
+  margin-top: ${(props) => props.size};
 `;
 
 export default Espaco;
