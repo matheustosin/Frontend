@@ -211,8 +211,8 @@ function CadastroMentoria() {
           <DivCheckbox>
             <RedeFormLabel descricao="Opções de Mentoria" />
             <DivCheckbox.Options>
-              <Checkbox name="mentoring-option" value="online" label="Online" onChange={(e) => handleOptionsMentoring(e.target)} />
-              <Checkbox name="mentoring-option" value="presencial" label="Presencial" onChange={(e) => handleOptionsMentoring(e.target)} />
+              <Checkbox name="mentoring-option" value="Online" label="Online" onChange={(e) => handleOptionsMentoring(e.target)} />
+              <Checkbox name="mentoring-option" value="Presencial" label="Presencial" onChange={(e) => handleOptionsMentoring(e.target)} />
             </DivCheckbox.Options>
           </DivCheckbox>
           <Espaco size="12px" />
