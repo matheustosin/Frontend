@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, useHistory } from 'react-router';
 import { useSnackbar } from 'notistack';
-import { cadastrarUsuario, profile } from '../../services/user';
+import { cadastrarUsuario, profile, editarUsuario } from '../../services/user';
 import Container from '../cadastro-mentor/StyledComponents';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
@@ -15,6 +15,8 @@ import {
   formatMatricula,
 } from '../../utils/maskUtils';
 import { urlFiles } from '../../services/http';
+import pushIfNecessary from '../../utils/HTMLUtils';
+import { userTypes } from '../../utils/userType.constants';
 
 function CadastroMentorado() {
   const history = useHistory();
@@ -30,6 +32,7 @@ function CadastroMentorado() {
   const [imageurl, setImageurl] = useState(AccountImage);
   const [imagem, setImagem] = useState('');
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
@@ -42,13 +45,16 @@ function CadastroMentorado() {
     // sessionStorage.setItem('headerTitle', `${old ? 'Edição' : 'Cadastro'} Mentorado`);
     if (!old && tkn) {
       profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
-        history.push((resp.data.userType === 1) ? '/mentor' : '/mentorado');
+        pushIfNecessary(
+          resp.data.userType,
+          (link) => history.push(link),
+        );
+        // history.push((resp.data.userType === 1) ? '/mentor' : '/mentorado');
       });
     }
     if (old) {
       setIsEditing(true);
       const oldProfile = JSON.parse(old);
-      console.log(oldProfile);
       setNome(oldProfile.name);
       setDataNascimento(oldProfile.birthDate);
       setCpf(oldProfile.cpf);
@@ -76,7 +82,7 @@ function CadastroMentorado() {
     data.append('phone', telefone);
     data.append('password', senha);
     data.append('registration', matricula);
-    data.append('flag', 2); // mentorado flag
+    data.append('userType', 2); // mentorado flag
 
     if (
       !data.get('name')
@@ -91,26 +97,63 @@ function CadastroMentorado() {
       enqueue('Preencha todos os campos.');
     } else if (!data.get('image')) {
       enqueue('Insira uma foto de perfil.');
+    } else if (
+      data.get('password')
+      && confirmarSenha
+      && data.get('password') !== confirmarSenha
+    ) {
+      enqueue('Senhas não são iguais.');
     } else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
     } else {
+      setLoading(true);
       cadastrarUsuario(data)
         .then((res) => {
           if (res.status === 200) {
             enqueue('Usuário cadastrado com sucesso!', 'success');
-            history.push('/');
+            pushIfNecessary(
+              userTypes.MENTORADO,
+              (link) => history.push(link),
+            );
           }
         })
         .catch((err) => {
           enqueue('Não foi possível realizar o cadastro. ');
-          console.log(err);
+          console.error(err);
+        }).finally(() => {
+          setLoading(false);
         });
     }
   };
 
   const handleEdit = () => {
-    enqueue('TODO: EDIT MENTORADO', 'info');
-    // THEN => PUSH TO /MENTORADO
+    setLoading(true);
+    const oldProfile = JSON.parse(sessionStorage.getItem('oldProfile'));
+    const tkn = sessionStorage.getItem('token');
+    const headers = { headers: { Authorization: `Bearer ${tkn}` } };
+    const data = new FormData();
+    data.append('image', imagem);
+    data.append('name', nome);
+    data.append('email', email);
+    data.append('birthDate', dataNascimento);
+    data.append('cpf', cpf);
+    data.append('phone', telefone);
+    data.append('registration', matricula);
+    data.append('userType', oldProfile.userType);
+    editarUsuario(data, headers)
+      .then((resp) => {
+        sessionStorage.setItem('token', resp.data.token);
+        enqueue('Usuário alterado com sucesso!', 'success');
+        pushIfNecessary(
+          2,
+          (link) => history.push(link),
+        );
+      })
+      .catch(() => {
+        enqueue('Não foi possível editar, tente novamente.');
+      }).finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleImage = () => {
@@ -168,7 +211,7 @@ function CadastroMentorado() {
       {isEditing ? (
         <>
           <Container>
-            <RedeButton descricao="Salvar alterações" onClick={handleEdit} />
+            <RedeButton descricao="Salvar alterações" onClick={handleEdit} loading={loading} />
           </Container>
         </>
       )
@@ -202,7 +245,7 @@ function CadastroMentorado() {
             </Container.FlexContainer>
 
             <Container>
-              <RedeButton descricao="Cadastrar" onClick={attemptRegister} />
+              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={((!senha && !confirmarSenha) || (senha !== confirmarSenha)) || !acceptTerms} loading={loading} />
             </Container>
           </>
         )}
