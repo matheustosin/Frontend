@@ -114,7 +114,7 @@ function CadastroMentor() {
       enqueue('Senhas não são iguais.');
     } else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
-    } else if (! validateEmail(data.get('email'))) {
+    } else if (!validateEmail(data.get('email'))) {
       enqueue('Fomato incorreto de e-mail.');
     } else {
       setLoading(true);

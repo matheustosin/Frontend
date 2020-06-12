@@ -98,7 +98,7 @@ function CadastroMentorado() {
       enqueue('Preencha todos os campos.');
     } else if (!data.get('image')) {
       enqueue('Insira uma foto de perfil.');
-    } else if (! validateEmail(data.get('email'))) {
+    } else if (!validateEmail(data.get('email'))) {
       enqueue('Fomato incorreto de e-mail.');
     } else if (
       data.get('password')
@@ -162,7 +162,7 @@ function CadastroMentorado() {
   const handleImage = () => {
     let url;
     document.getElementById('fileButton').click();
-    document.getElementById('fileButton').onchange = (event) => {
+    document.getElementById('fileButton').onchange = (evenft) => {
       const imageType = (event.target.files[0]) ? event.target.files[0].type : null;
 
       if (!['image/jpg', 'image/jpeg'].includes(imageType)) {
