@@ -114,7 +114,7 @@ function CadastroMentor() {
       enqueue('Senhas não são iguais.');
     } else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
-    } else if (! validateEmail(data.get('email'))) {
+    } else if (!validateEmail(data.get('email'))) {
       enqueue('Fomato incorreto de e-mail.');
     } else {
       setLoading(true);
@@ -168,6 +168,12 @@ function CadastroMentor() {
     let url;
     document.getElementById('fileButton').click();
     document.getElementById('fileButton').onchange = (event) => {
+      const imageType = (event.target.files[0]) ? event.target.files[0].type : null;
+
+      if (!['image/jpg', 'image/jpeg'].includes(imageType)) {
+        return enqueue('A imagem precisa ser JPG/JPEG');
+      }
+
       try {
         url = URL.createObjectURL(event.target.files[0]);
       } catch (e) {
