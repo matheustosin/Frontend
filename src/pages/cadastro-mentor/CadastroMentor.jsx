@@ -12,6 +12,7 @@ import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
 import { urlFiles } from '../../services/http';
 import pushIfNecessary from '../../utils/HTMLUtils';
 import { userTypes } from '../../utils/userType.constants';
+import { validateEmail } from '../../utils/validationUtils';
 
 function CadastroMentor() {
   const history = useHistory();
@@ -101,6 +102,8 @@ function CadastroMentor() {
       enqueue('Senhas não são iguais.');
     } else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
+    } else if (! validateEmail(data.get('email'))) {
+      enqueue('Fomato incorreto de e-mail.');
     } else {
       setLoading(true);
       cadastrarUsuario(data)
