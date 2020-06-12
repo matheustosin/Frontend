@@ -123,18 +123,18 @@ function CadastroMentoria() {
     let url = '';
     document.getElementById('fileButton').click();
     document.getElementById('fileButton').onchange = (event) => {
-      const imageType = event.target.files[0].type;
+      const imageType = (event.target.files[0]) ? event.target.files[0].type : null;
 
       if (!['image/jpg', 'image/jpeg'].includes(imageType)) {
         return enqueue('A imagem precisa ser JPG/JPEG');
       }
       try {
         url = URL.createObjectURL(event.target.files[0]);
+        setImageUrl(url);
+        setImage(event.target.files[0]);
       } catch (e) {
         url = '';
       }
-      setImageUrl(url);
-      setImage(event.target.files[0]);
     };
   }
 
