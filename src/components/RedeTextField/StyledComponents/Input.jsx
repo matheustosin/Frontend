@@ -12,6 +12,7 @@ const Input = styled.input`
   padding-left: 10px;
   border-radius: 5px;
   border: 1px solid ${COLOR.AZUL};
+  background: ${(props) => (props.disabled ? '#e9ecef' : '#ffffff')}
 `;
 
 export default Input;
