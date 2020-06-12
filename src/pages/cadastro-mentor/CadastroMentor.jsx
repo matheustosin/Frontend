@@ -8,10 +8,13 @@ import Container from './StyledComponents';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
+import RedeSelect from '../../components/RedeSelect/RedeSelect';
 import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
 import { urlFiles } from '../../services/http';
+import { availableAreas as getAvailableAreas } from '../../services/areas';
 import pushIfNecessary from '../../utils/HTMLUtils';
 import { userTypes } from '../../utils/userType.constants';
+import { validateEmail } from '../../utils/validationUtils';
 
 function CadastroMentor() {
   const history = useHistory();
@@ -25,6 +28,7 @@ function CadastroMentor() {
   const [image, setImage] = useState('');
   const [phone, setPhone] = useState('');
   const [areas, setAreas] = useState('');
+  const [availableAreas, setAvailableAreas] = useState([]);
   const [imageurl, setImageurl] = useState(AccountImage);
   const [acceptTerms, setAcceptTerms] = useState('');
   const [loading, setLoading] = useState(false);
@@ -35,6 +39,15 @@ function CadastroMentor() {
   };
 
   useEffect(() => { // ComponentDidMount
+    getAvailableAreas().then((res) => {
+      const arrayAreas = [];
+      res.data.forEach((area) => {
+        arrayAreas.push(area.name);
+      });
+      setAvailableAreas(arrayAreas);
+    });
+
+
     const old = sessionStorage.getItem('oldProfile');
     const tkn = sessionStorage.getItem('token');
     // sessionStorage.setItem('headerTitle', `${old ? 'Edição' : 'Cadastro'} Mentor`);
@@ -101,6 +114,8 @@ function CadastroMentor() {
       enqueue('Senhas não são iguais.');
     } else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
+    } else if (! validateEmail(data.get('email'))) {
+      enqueue('Fomato incorreto de e-mail.');
     } else {
       setLoading(true);
       cadastrarUsuario(data)
@@ -187,9 +202,9 @@ function CadastroMentor() {
         valor={phone}
         onChange={(evt) => setPhone(formatTelefone(evt.target.value))}
       />
-      <RedeTextField
-        descricao="Áreas de Conhecimento"
-        valor={areas}
+      <RedeSelect
+        options={availableAreas}
+        select={areas}
         onChange={(evt) => setAreas(evt.target.value)}
       />
       <RedeTextField
