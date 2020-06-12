@@ -162,7 +162,7 @@ function CadastroMentorado() {
   const handleImage = () => {
     let url;
     document.getElementById('fileButton').click();
-    document.getElementById('fileButton').onchange = (evenft) => {
+    document.getElementById('fileButton').onchange = (event) => {
       const imageType = (event.target.files[0]) ? event.target.files[0].type : null;
 
       if (!['image/jpg', 'image/jpeg'].includes(imageType)) {
