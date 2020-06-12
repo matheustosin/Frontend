@@ -153,7 +153,7 @@ function CadastroMentor() {
     let url;
     document.getElementById('fileButton').click();
     document.getElementById('fileButton').onchange = (event) => {
-      const imageType = event.target.files[0].type;
+      const imageType = (event.target.files[0]) ? event.target.files[0].type : null;
 
       if (!['image/jpg', 'image/jpeg'].includes(imageType)) {
         return enqueue('A imagem precisa ser JPG/JPEG');
