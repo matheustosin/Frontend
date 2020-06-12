@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useSnackbar } from 'notistack';
 import AccountImage from '../../assets/account.png';
-import { cadastrarUsuario, profile } from '../../services/user';
+import { cadastrarUsuario, profile, editarUsuario } from '../../services/user';
 import { formatCPF, formatTelefone } from '../../utils/maskUtils';
 import Container from './StyledComponents';
 import RedeButton from '../../components/RedeButton/RedeButton';
@@ -10,6 +10,8 @@ import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 import RedeCheckbox from '../../components/RedeCheckbox/RedeCheckbox';
 import { urlFiles } from '../../services/http';
+import pushIfNecessary from '../../utils/HTMLUtils';
+import { userTypes } from '../../utils/userType.constants';
 
 function CadastroMentor() {
   const history = useHistory();
@@ -25,6 +27,7 @@ function CadastroMentor() {
   const [areas, setAreas] = useState('');
   const [imageurl, setImageurl] = useState(AccountImage);
   const [acceptTerms, setAcceptTerms] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
@@ -37,13 +40,15 @@ function CadastroMentor() {
     // sessionStorage.setItem('headerTitle', `${old ? 'Edição' : 'Cadastro'} Mentor`);
     if (!old && tkn) {
       profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
-        history.push((resp.data.userType === 1) ? '/mentor' : '/mentorado');
+        pushIfNecessary(
+          resp.data.userType,
+          (link) => history.push(link),
+        );
       });
     }
     if (old) {
       setIsEditing(true);
       const oldProfile = JSON.parse(old);
-      console.log(oldProfile);
       setName(oldProfile.name);
       setCpf(oldProfile.cpf);
       setEmail(oldProfile.email);
@@ -72,8 +77,8 @@ function CadastroMentor() {
     data.append('linkedin', linkedin);
     data.append('cpf', cpf);
     data.append('password', password);
-    data.append('areas', areas);
-    data.append('flag', 1);
+    data.append('areas[]', areas);
+    data.append('userType', 1);
 
     if (
       !data.get('name')
@@ -81,7 +86,7 @@ function CadastroMentor() {
       || !data.get('phone')
       || !data.get('linkedin')
       || !data.get('cpf')
-      || !data.get('areas')
+      || !data.get('areas[]')
       || !data.get('password')
       || !confirmPassword
     ) {
@@ -97,6 +102,7 @@ function CadastroMentor() {
     } else if (!acceptTerms) {
       enqueue('Você precisa aceitar o Termo de Privacidade para efetuar o cadastro.');
     } else {
+      setLoading(true);
       cadastrarUsuario(data)
         .then((res) => {
           if (res.status === 200) {
@@ -106,13 +112,41 @@ function CadastroMentor() {
         })
         .catch(() => {
           enqueue('Não foi possível realizar o cadastro. ');
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
 
   const attemptEdit = () => {
-    enqueue('TODO: EDIT MENTOR', 'info');
-    // THEN => PUSH TO /MENTOR
+    setLoading(true);
+    const oldProfile = JSON.parse(sessionStorage.getItem('oldProfile'));
+    const tkn = sessionStorage.getItem('token');
+    const headers = { headers: { Authorization: `Bearer ${tkn}` } };
+    const data = new FormData();
+    data.append('image', image);
+    data.append('name', name);
+    data.append('email', email);
+    data.append('phone', phone);
+    data.append('linkedin', linkedin);
+    data.append('cpf', cpf);
+    data.append('areas[]', areas);
+    data.append('userType', oldProfile.userType);
+    editarUsuario(data, headers)
+      .then((resp) => {
+        sessionStorage.setItem('token', resp.data.token);
+        enqueue('Usuário alterado com sucesso!', 'success');
+        pushIfNecessary(
+          userTypes.MENTOR,
+          (link) => history.push(link),
+        );
+      })
+      .catch(() => {
+        enqueue('Não foi possível editar, tente novamente.');
+      }).finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleImage = () => {
@@ -170,7 +204,7 @@ function CadastroMentor() {
       {(isEditing) ? (
         <>
           <Container>
-            <RedeButton descricao="Editar perfil" onClick={attemptEdit} />
+            <RedeButton descricao="Editar perfil" onClick={attemptEdit} loading={loading} />
           </Container>
         </>
       )
@@ -204,7 +238,7 @@ function CadastroMentor() {
             </Container.FlexContainer>
 
             <Container>
-              <RedeButton descricao="Cadastrar" onClick={attemptRegister} />
+              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={((!password && !confirmPassword) || (password !== confirmPassword)) || !acceptTerms} loading={loading} />
             </Container>
           </>
         )}
