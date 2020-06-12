@@ -7,27 +7,40 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import RedeTextField from '../../../components/RedeTextField/RedeTextField';
 import RedeButton from '../../../components/RedeButton/RedeButton';
 
-
 const Modal = ({
-  open, handleClose, editFunction, mentoriaTitle, onChange,
+  open,
+  handleClose,
+  editFunction,
+  mentoriaTitle,
+  onChange,
 }) => (
   <div>
-    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="form-dialog-title"
+    >
       <DialogTitle id="form-dialog-title">Edição de Mentoria</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Insira o novo título da mentoria.
-        </DialogContentText>
+        <DialogContentText>Insira o novo título da mentoria.</DialogContentText>
         <RedeTextField
           tipo="text"
           descricao="Título da mentoria"
-          valor={(mentoriaTitle) || ''}
+          valor={mentoriaTitle || ''}
           onChange={onChange}
         />
       </DialogContent>
       <DialogActions>
-        <RedeButton descricao="Cancelar" onClick={handleClose} color="primary" />
-        <RedeButton descricao="Salvar" onClick={editFunction} color="primary" />
+        <RedeButton
+          descricao="Cancelar"
+          onClick={handleClose}
+          color="primary"
+        />
+        <RedeButton
+          descricao="Aprovar"
+          onClick={editFunction}
+          color="primary"
+        />
       </DialogActions>
     </Dialog>
   </div>

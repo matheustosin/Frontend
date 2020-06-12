@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCard/RedeCard';
-import edition from '../../assets/create-new-pencil-button.png';
-import confirm from '../../assets/confirm.png';
-import denied from '../../assets/denied.png';
 import Modal from './StyledComponents/Modal';
-
+import Color from '../../utils/colors.constants';
 import Container from './StyledComponents';
-import RedeIcon from '../../components/RedeIcon/RedeIcon';
 import Title2 from './StyledComponents/Title2';
 import ContainerIcon from './StyledComponents/ContainerIcon';
 import ContainerCards from './StyledComponents/ContainerCards';
@@ -25,28 +22,36 @@ function Administrador() {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
 
+    // eslint-disable-next-line no-use-before-define
     getMentorias(headers);
   }, []);
 
-  function evaluateMentoring(mentoria) {
+  function evaluateMentoring(mentoria, flag) {
     const { id } = mentoria;
     const token = sessionStorage.getItem('token');
-    const body = {
-      title: mentoria.data.title,
-      approved: mentoria.data.mentoringApproved,
-    };
+    const body = {};
+    if (flag === 1) {
+      body.title = newTitle;
+      body.approved = true;
+    }
+    if (flag === 2) {
+      body.title = mentoria.data.title;
+      body.approved = false;
+    }
+
     const config = {
       param: id,
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log(config);
     mentoringEvaluation(body, config)
       .then((res) => {
         if (res.status === 200) {
-          alert('SUCESSO!');
+          getMentorias(config);
+          setFlagModal(false);
         }
       })
       .catch((err) => {
+        console.log(err);
         alert('A mentoria não pôde ser aprovada!');
       });
   }
@@ -55,13 +60,13 @@ function Administrador() {
     pendingMentorings(headers)
       .then((res) => {
         if (res.status === 200) {
-          // console.log(res);
+          // eslint-disable-next-line no-use-before-define
           generateCards(res.data);
         }
       })
       .catch((err) => {
         setCards('Nenhuma mentoria encontrada para ser aprovada.');
-        // console.error(err);
+        console.error(err);
       });
   }
 
@@ -75,16 +80,10 @@ function Administrador() {
     setFlagModal(false);
   }
 
-  function atualizaMentoria(mentoria) {
-    console.log(mentoria);
-  }
-
   function generateCards(mentorias) {
-    console.log(mentorias);
     const cardsMentorias = mentorias.map((mentoria) => (
-      <ContainerCards>
+      <ContainerCards key={mentoria.id}>
         <Card
-          key={mentoria.id}
           title={mentoria.data.title}
           description={mentoria.data.description}
           image={`${urlFiles}/${mentoria.data.image}`}
@@ -94,23 +93,18 @@ function Administrador() {
         />
         <div>
           <ContainerIcon>
-            <div>
-              <RedeIcon
-                class="icon"
-                imageUrl={confirm}
-                onClick={() => evaluateMentoring(mentoria)}
-              />
-            </div>
-            <div>
-              <RedeIcon name="imag" imageUrl={denied} />
-            </div>
-            <div>
-              <RedeIcon
-                name="imag"
-                imageUrl={edition}
-                onClick={() => abreModal(mentoria)}
-              />
-            </div>
+            <AiOutlineCheckCircle
+              size={45}
+              color={Color.VERDE_ESCURO}
+              class="icon"
+              onClick={() => abreModal(mentoria)}
+            />
+            <AiOutlineCloseCircle
+              size={45}
+              color={Color.VERMELHO}
+              class="icon"
+              onClick={() => evaluateMentoring(mentoria, 2)}
+            />
           </ContainerIcon>
         </div>
       </ContainerCards>
@@ -123,18 +117,16 @@ function Administrador() {
       <RedeHeader />
       <Container.Title>APROVAÇÕES PENDENTES</Container.Title>
       <Title2>
-        Você tem
-        {' '}
-        {cards.length}
-        {' '}
-        mentorias para aprovar
+        {`Você tem ${cards.length} mentoria${
+          cards.length !== 1 ? 's' : ''
+        } para aprovar`}
       </Title2>
       <br />
       {cards}
       <Modal
         open={flagModal}
         handleClose={() => fechaModal()}
-        editFunction={() => atualizaMentoria(mentoria)}
+        editFunction={() => evaluateMentoring(mentoria, 1)}
         mentoriaTitle={newTitle}
         onChange={(e) => setNewTitle(e.target.value)}
       />

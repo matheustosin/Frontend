@@ -3,8 +3,16 @@ import styled from 'styled-components';
 const ContainerIcon = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 50px;
 
+  .icon {
+    padding: 0px;
+    margin-bottom: 50px;
+    border-radius: 50%;
+
+    :hover {
+      cursor: pointer;
+    }
+  }
   div {
     box-sizing: border-box;
     padding: 10px;
