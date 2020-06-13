@@ -85,11 +85,13 @@ function Administrador() {
 
   function generateCards(mentorias) {
     const dataHoras = mentorias[0].data.dateTime;
-
+    console.log(dataHoras);
     dataHoras.sort((a, b) => {
-      if (a.dayOfTheMonth > b.dayOfTheMonth) {
+      const first = Date.parse(a.dayOfTheMonth);
+      const second = Date.parse(b.dayOfTheMonth);
+      if (first > second) {
         return 1;
-      } if (b.dayOfTheMonth > a.dayOfTheMonth) {
+      } if (second > first) {
         return -1;
       }
       return 0;
@@ -104,6 +106,7 @@ function Administrador() {
           image={`${urlFiles}/${mentoria.data.image}`}
           mentorName={mentoria.mentorInfo.name}
           mentorImage={`${urlFiles}/${mentoria.mentorInfo.image}`}
+          timeSlots
           mentorias
         />
 
