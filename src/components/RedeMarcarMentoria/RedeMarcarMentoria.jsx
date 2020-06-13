@@ -12,17 +12,26 @@ const RedeMarcarMentoria = ({
 }) => {
   const [descricao, setDescricao] = useState('');
   const [tipoMentoria, setTipoMentoria] = useState('');
+  const handleClose = () => {
+    onClose();
+    setTimeout(() => {
+      setDescricao('');
+      setTipoMentoria('');
+    }, 400);
+  };
+
   const confirm = () => {
     console.log('confirmou');
-    onClose();
+    handleClose();
     onConfirm();
-  }
+  };
+
   return (
-    <Dialog open={opened} onClose={onClose} className="rede-marcar-mentoria">
+    <Dialog open={opened} onClose={handleClose} className="rede-marcar-mentoria">
       <div className="content">
-        <div className="close-icon" onClick={onClose}>
+        <button type="button" className="close-icon" onClick={handleClose}>
           <img src={plus} alt="fechar" />
-        </div>
+        </button>
         <div className="bloco info">
           <div className="foto-mentoria">
             <img src={image} alt="mentoria" />
