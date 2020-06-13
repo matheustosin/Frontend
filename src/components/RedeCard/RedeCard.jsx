@@ -18,7 +18,10 @@ import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 import MentorName from './StyledComponents/mentor-name';
 import MentorImage from './StyledComponents/mentor-image';
 import MentorContent from './StyledComponents/mentor-content';
+<<<<<<< HEAD
 import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
+=======
+>>>>>>> origin/marcarMentoria
 
 const Card = ({
   title,

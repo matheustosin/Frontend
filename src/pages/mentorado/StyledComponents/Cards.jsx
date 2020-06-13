@@ -9,13 +9,13 @@ import ContainerCard from './ContainerCards';
 import Img from './Img';
 
 const cards = ({ color, description, onClick }) => (
-  <Border>
+  <Border onClick={onClick}>
     <Span style={{ background: `${color}` }} />
     <ContainerCard>
       <TituloCard>
         {description}
       </TituloCard>
-      <Img src={expand} alt="Button" onClick={onClick} />
+      <Img src={expand} alt="Button" />
     </ContainerCard>
   </Border>
 );
@@ -27,8 +27,7 @@ cards.propTypes = {
 };
 
 cards.defaultProps = {
-  descricao: string,
-  tipo: string,
+  onClick: () => { },
 };
 
 export default cards;

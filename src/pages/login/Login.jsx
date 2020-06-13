@@ -1,20 +1,37 @@
-import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import logo from '../../assets/logo.png';
 import Container from './StyledComponents';
-import { login } from '../../services/user';
+import { login, profile } from '../../services/user';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeSeparator from '../../components/RedeSeparator/RedeSeparator';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
+import pushIfNecessary from '../../utils/HTMLUtils';
 
-function Login(props) {
+function Login() {
+  const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const { enqueueSnackbar } = useSnackbar();
 
+  useEffect(() => { // componentDidMount
+    sessionStorage.removeItem('headerTitle');
+    const tkn = sessionStorage.getItem('token');
+    if (tkn) {
+      profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
+        pushIfNecessary(
+          resp.data.userType,
+          (link) => history.push(link),
+        );
+      });
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const attemptLogin = (event) => {
+    setLoading(true);
     event.preventDefault();
     const data = {
       email,
@@ -28,15 +45,18 @@ function Login(props) {
         .then((res) => {
           if (res.status === 200) {
             sessionStorage.setItem('token', res.data.token);
-            const page = (res.data.result.userType === 1) ? '/mentor' : '/aprendiz';
-            props.history.push({
-              pathname: page,
-            });
+            pushIfNecessary(
+              res.data.result.userType,
+              (link) => history.push(link),
+            );
           }
         })
         .catch((err) => {
           enqueueSnackbar('Acesso não autorizado. Verifique seu email e sua senha.', { variant: 'error', autoHideDuration: 2500 });
           console.error(err);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
@@ -55,7 +75,7 @@ function Login(props) {
             onChange={(evt) => setPassword(evt.target.value)}
           />
           <Container.ForgotPassword> Esqueci minha senha </Container.ForgotPassword>
-          <RedeButton descricao="Entrar" onClick={attemptLogin} />
+          <RedeButton descricao="Entrar" onClick={attemptLogin} loading={loading} />
           <RedeSeparator descricao="Novo na Rede ?"> </RedeSeparator>
           <Link to="/register">
             <RedeButton descricao="Cadastrar" />
@@ -66,4 +86,4 @@ function Login(props) {
   );
 }
 
-export default withRouter(Login);
+export default Login;

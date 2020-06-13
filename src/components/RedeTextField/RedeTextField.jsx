@@ -9,10 +9,11 @@ const RedeTextField = ({
   onChange,
   erro,
   msgAjuda,
+  disabled,
 }) => (
   <TextField erro={erro}>
     <TextField.Label>{descricao}</TextField.Label>
-    <TextField.Input type={tipo} value={valor} onChange={onChange} />
+    <TextField.Input type={tipo} value={valor} onChange={onChange} disabled={disabled} />
     <TextField.MsgAjuda>{msgAjuda}</TextField.MsgAjuda>
   </TextField>
 );
@@ -20,7 +21,7 @@ const RedeTextField = ({
 RedeTextField.propTypes = {
   descricao: string,
   tipo: string,
-  valor: string.isRequired,
+  valor: string,
   erro: bool,
   msgAjuda: string,
   onChange: func,
@@ -29,6 +30,7 @@ RedeTextField.propTypes = {
 RedeTextField.defaultProps = {
   descricao: '',
   tipo: '',
+  valor: '',
   erro: false,
   msgAjuda: '',
   onChange: () => { },

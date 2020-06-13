@@ -3,22 +3,22 @@ import searchImage from '../../../assets/search.png';
 import COLOR from '../../../utils/colors.constants';
 
 const Input = styled.input`
-    padding: 5px 20px;
-    border: 1px solid ${COLOR.AZUL};
-    border-radius: 10px;
-    opacity: 1;
-    margin: 10px auto;
-    background-image: url(${searchImage});
-    background-position: 99% 50%;   
-    background-repeat: no-repeat;
-    width: 600px;
-    height: 30px;
-    font-size: 1rem;
+  width: 600px;
+  height: 30px;
+  outline: none;
+  font-size: 1rem;
+  margin: 10px auto;
+  padding: 5px 20px;
+  border-radius: 10px;
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: 98% 50%;
+  border: 2px solid ${COLOR.AZUL};
+  background-image: url(${searchImage});
 
-    @media only screen and (max-width: 768px) {
-        width: 80%;
-    }
-   
+  @media only screen and (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 export default Input;

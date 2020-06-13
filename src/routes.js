@@ -9,7 +9,8 @@ import Mentor from './pages/mentor/Mentor';
 import CadastroMentorado from './pages/cadastro-mentorado/CadastroMentorado';
 import CadastroMentoria from './pages/cadastro-mentoria/CadastroMentoria';
 import MentoriasDisponiveis from './pages/mentorias/MentoriasDisponiveis';
-import Aprendiz from './pages/aprendiz/Aprendiz';
+import Mentorado from './pages/mentorado/Mentorado';
+import RedeHeader from './components/RedeHeader/RedeHeader';
 
 
 export default function Routes() {
@@ -17,6 +18,9 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Logon} />
+        <Route path="/" component={RedeHeader} />
+      </Switch>
+      <Switch>
         <Route path="/cadastro-mentor" component={CadastroMentor} />
         <Route path="/cadastro-mentorado" component={CadastroMentorado} />
         <Route path="/cadastro-mentoria" component={CadastroMentoria} />
@@ -24,7 +28,7 @@ export default function Routes() {
         <Route path="/register" component={Register} />
         <Route path="/mentor" component={Mentor} />
         <Route path="/mentorias-disponiveis" component={MentoriasDisponiveis} />
-        <Route path="/aprendiz" component={Aprendiz} />
+        <Route path="/mentorado" component={Mentorado} />
       </Switch>
     </BrowserRouter>
   );
