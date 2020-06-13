@@ -18,7 +18,7 @@ const RedeSelect = ({
       {
           options.map((element) => ((select === element)
             ? <option value={element} selected>{element}</option>
-            : <option value={element}>{element}</option>))
+            : <option value={element} disabled={((element === ''))}>{element}</option>))
       }
 
     </Select>
