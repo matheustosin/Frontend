@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCard/RedeCard';
+import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
 import Modal from './StyledComponents/Modal';
 import Container from './StyledComponents';
 import Title2 from './StyledComponents/Title2';
@@ -84,19 +85,23 @@ function Administrador() {
   }
 
   function generateCards(mentorias) {
-    const dataHoras = mentorias[0].data.dateTime;
-    console.log(dataHoras);
-    dataHoras.sort((a, b) => {
-      const first = Date.parse(a.dayOfTheMonth);
-      const second = Date.parse(b.dayOfTheMonth);
-      if (first > second) {
-        return 1;
-      } if (second > first) {
-        return -1;
-      }
-      return 0;
-    });
-    console.log(dataHoras);
+    for (let i = 0; i < mentorias.length; i += 1) {
+      mentorias[i].data.dateTime.sort((a, b) => {
+        const firstSplitDate = a.dayOfTheMonth.split('/');
+        const secondSplitDate = b.dayOfTheMonth.split('/');
+        const firstSplitHour = a.times[0].hour.split(':');
+        const secondSplitHour = b.times[0].hour.split(':');
+        const first = new Date(firstSplitDate[2], firstSplitDate[1], firstSplitDate[0], firstSplitHour[0], firstSplitHour[1]);
+        const second = new Date(secondSplitDate[2], secondSplitDate[1], secondSplitDate[0], secondSplitHour[0], secondSplitHour[1]);
+        if (first > second) {
+          return 1;
+        } if (second > first) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+
     // eslint-disable-next-line no-shadow
     const cardsMentorias = mentorias.map((mentoria) => (
       <ContainerCards key={mentoria.id}>
@@ -106,7 +111,7 @@ function Administrador() {
           image={`${urlFiles}/${mentoria.data.image}`}
           mentorName={mentoria.mentorInfo.name}
           mentorImage={`${urlFiles}/${mentoria.mentorInfo.image}`}
-          timeSlots
+          timeSlots={<RedeTimeSlot descricao="SEGUNDA" />}
           mentorias
         />
 
