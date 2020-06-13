@@ -20,9 +20,9 @@ const Modal = ({
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Edição de Mentoria</DialogTitle>
+      <DialogTitle id="form-dialog-title">Edição de Título da Mentoria</DialogTitle>
       <DialogContent>
-        <DialogContentText>Insira o novo título da mentoria.</DialogContentText>
+        <DialogContentText>Insira o novo título da mentoria, se desejar.</DialogContentText>
         <RedeTextField
           tipo="text"
           descricao="Título da mentoria"

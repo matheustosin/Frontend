@@ -3,14 +3,16 @@ import styled from 'styled-components';
 const ContainerIcon = styled.div`
   display: flex;
   flex-direction: column;
-
+  margin-left: 10px;
   .icon {
     padding: 0px;
     margin-bottom: 50px;
     border-radius: 50%;
+    transition: color 0.2s;
 
-    :hover {
+    &:hover {
       cursor: pointer;
+      color: #000;
     }
   }
   div {

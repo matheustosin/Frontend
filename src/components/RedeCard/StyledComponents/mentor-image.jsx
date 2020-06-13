@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 const MentorImage = styled.img`
-  width: 130px;
-  height: 130px;
+  width: 110px;
+  height: 110px;
   margin-bottom: 20px;
   border-radius: 4px;
-  border-radius: 0px 0px 0px 8px;
 
   @media only screen and (max-width: 768px) {
     width: 80px;

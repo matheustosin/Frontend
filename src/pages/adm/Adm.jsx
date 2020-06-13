@@ -26,6 +26,7 @@ function Administrador() {
     getMentorias(headers);
   }, []);
 
+  // eslint-disable-next-line no-shadow
   function evaluateMentoring(mentoria, flag) {
     const { id } = mentoria;
     const token = sessionStorage.getItem('token');
@@ -36,6 +37,7 @@ function Administrador() {
     }
     if (flag === 2) {
       body.title = mentoria.data.title;
+      body.mentorEmail = mentoria.mentorInfo.email;
       body.approved = false;
     }
 
@@ -46,6 +48,7 @@ function Administrador() {
     mentoringEvaluation(body, config)
       .then((res) => {
         if (res.status === 200) {
+          // eslint-disable-next-line no-use-before-define
           getMentorias(config);
           setFlagModal(false);
         }
@@ -70,6 +73,7 @@ function Administrador() {
       });
   }
 
+  // eslint-disable-next-line no-shadow
   function abreModal(mentoria) {
     setMentoria(mentoria);
     setNewTitle(mentoria.data.title);
@@ -81,16 +85,16 @@ function Administrador() {
   }
 
   function generateCards(mentorias) {
-    console.log(mentorias);
+    // console.log(mentorias);
+    // eslint-disable-next-line no-shadow
     const cardsMentorias = mentorias.map((mentoria) => (
       <ContainerCards key={mentoria.id}>
         <Card
           title={mentoria.data.title}
           description={mentoria.data.description}
           image={`${urlFiles}/${mentoria.data.image}`}
-          mentorName={mentoria.mentorInfos.name}
-          mentorImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
-          mentorias
+          mentorName={mentoria.mentorInfo.name}
+          mentorImage={`${urlFiles}/${mentoria.mentorInfo.image}`}
         />
         <div>
           <ContainerIcon>

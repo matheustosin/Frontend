@@ -5,7 +5,8 @@ import CardDescription from './card-description';
 import CardContent from './card-content';
 import SubTitle from './subtitle';
 import TimeSlotWrapper from './timeslot-wrapper';
-import Color from '../../../utils/colors.constants'
+import Color from '../../../utils/colors.constants';
+
 const Container = styled.div`
     border: 3px solid ${Color.AZUL};
     border-radius: 10px;
@@ -17,8 +18,6 @@ const Container = styled.div`
     height:auto;
     margin-bottom: 50px;
     flex-direction:row;
-    justify-content:center;
-    align-items:center;
     font-family : Roboto, sans-serif;
     @media screen and (max-width:1000px){
         flex-direction:column;
