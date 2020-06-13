@@ -6,43 +6,77 @@ import { cadastrarMentoria, atualizarMentoria } from '../../services/mentoria';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeTextArea from '../../components/RedeTextArea/RedeTextArea';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
-import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 import RedeInputRadio from '../../components/RedeInputRadio/RedeInputRadio';
+import RedeFormLabel from '../../components/RedeFormLabel/RedeFormLabel';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
+
+import plusButton from '../../assets/plus-circle.png';
 
 import './style.css';
 
+
 function CadastroMentoria() {
+
   const oldMentoria = JSON.parse(sessionStorage.getItem('oldMentoria'));
+  
   const PageTitle = oldMentoria ? 'Atualização de Mentoria' : 'Nova Mentoria';
   const ActionButtonTitle = oldMentoria ? 'Atualizar Mentoria' : 'Criar Mentoria';
   const [title, setTitle] = useState(oldMentoria ? oldMentoria.data.title : '');
   const [description, setDescription] = useState(oldMentoria ? oldMentoria.data.description : '');
   const [knowledgeArea, setKnowledgeArea] = useState(oldMentoria ? oldMentoria.data.knowledgeArea : '');
   const [mentoringOption, setMentoringOption] = useState(oldMentoria ? oldMentoria.data.mentoringOption : '');
-  const [dateTime, setDateTime] = useState(oldMentoria ? new Date(oldMentoria.data.dateTime).getHours() : '12');
-  const [dayOfWeek, setDayOfWeek] = useState(oldMentoria ? String(oldMentoria.data.dayOfWeek).toLowerCase() : '');
+  const [time, setTime] = useState(oldMentoria ? new Date(oldMentoria.data.dateTime).getHours() : []);
+  const [dayOfWeek, setDayOfWeek] = useState(oldMentoria ? String(oldMentoria.data.dayOfWeek).toLowerCase() : []);
   const [image, setImage] = useState(oldMentoria ? oldMentoria.data.image : '');
+  const [maxAddHour, setMaxAddHour] = useState(5);
 
+  
   const history = useHistory();
 
-  function attempMentoria(event) {
+  function getSelectsValues() {
+    const hours = [];
+    const dates = [];
+    document.querySelectorAll('select')
+      .forEach(
+        (select, index) => {
+          if (select.value !== '') {
+            if (index % 2 === 0) {
+              // eh data
+              dates.push(select.value);
+            } else {
+              hours.push(select.value);
+            }
+          }
+        },
+      );
+
+    setTime(hours);
+    setDayOfWeek(dates);
+  }
+
+  function handleAddMentoria(event) {
     event.preventDefault();
     const token = sessionStorage.getItem('token');
-    const headers = { headers: { Authorization: `Bearer ${token}` } };
     const data = new FormData();
+
     data.append('title', title);
     data.append('description', description);
     data.append('knowledgeArea', knowledgeArea);
     data.append('mentoringOption', mentoringOption);
-    data.append('time', dateTime);
-    data.append('dayOfWeek', dayOfWeek);
     data.append('image', image);
-    // /*|| !data.get('dateTime') || !data.get('dayOfWeek')*/
+
+    time.forEach((t, index) => {
+      data.append('time', t);
+      data.append('dayOfWeek', dayOfWeek[index]);
+    });
+
+
     if (!data.get('title') || !data.get('description') || !data.get('knowledgeArea') || !data.get('mentoringOption') || !data.get('time') || !data.get('dayOfWeek')) {
       alert('Preencha todos os campos.');
     } else if (!data.get('image')) {
       alert('Insira uma foto para a mentoria.');
+    } else if (time.length !== dayOfWeek.length) {
+      alert('Deve ser ser selecionado a mesma quantidade de horarios e datas');
     } else if (oldMentoria) {
       if (
         typeof image === 'string'
@@ -84,10 +118,25 @@ function CadastroMentoria() {
     setKnowledgeArea('');
     setMentoringOption('');
     setDayOfWeek('');
-    setDateTime('');
+    setTime('');
     setImage('');
     history.push('/mentor');
     sessionStorage.removeItem('oldMentoria');
+  }
+
+  // eslint-disable-next-line consistent-return
+  function addHour() {
+    console.log(maxAddHour);
+    if (maxAddHour < 1) {
+      return alert('Não pode mais adicionar horarios');
+    }
+    const elementDuplicate = document.querySelector('.data-hora').cloneNode(true);
+    const parentElement = document.querySelector('.select-data-horarios');
+    elementDuplicate.lastChild.src = '';
+    elementDuplicate.children[0].addEventListener('change', getSelectsValues);
+    elementDuplicate.children[1].addEventListener('change', getSelectsValues);
+    parentElement.appendChild(elementDuplicate);
+    setMaxAddHour(maxAddHour - 1);
   }
 
   return (
@@ -113,63 +162,65 @@ function CadastroMentoria() {
           <input id="fileButton" type="file" hidden />
           <RedeButton descricao="Adicionar Foto" claro onClick={handleImage} />
         </Container.Options>
-
-        <RedeHorizontalSeparator size="300" />
-
-        <Container.Options style={{ 'margin-bottom': '12rem' }}>
+        <RedeHorizontalSeparator />
+        <Container.SecondOption>
           <RedeInputRadio
             descricao="Opções de Mentoria"
             tipo="radio"
             nome="optmentorias"
+            checked="1"
             onChange={(e) => setMentoringOption(e.target.value)}
           />
           <RedeFormLabel descricao="Datas e Horários Disponíveis" />
 
-          <div>
-            <label className="label-class" htmlFor="data">
-              Data
-            </label>
-            <label className="label-class" htmlFor="hora">
-              Hora
-            </label>
-          </div>
-          <div>
-            <select className="select-class" id="data" name="data" value={dayOfWeek} onChange={(e) => setDayOfWeek(e.target.value)}>
-              <option value="Segunda" selected>Segunda</option>
-              <option value="Terça">Terça</option>
-              <option value="Quarta">Quarta</option>
-              <option value="Quinta">Quinta</option>
-              <option value="Sexta">Sexta</option>
-              <option value="Sabado">Sabado</option>
-            </select>
+          <div className="select-data-horarios">
+            <div className="labels">
+              <p>Data</p>
+              <p>Horários</p>
+            </div>
+            <div className="data-hora">
+              <select className="select-class" onChange={getSelectsValues}>
+                <option value="" selected />
+                <option value="Segunda">Segunda</option>
+                <option value="Terça">Terça</option>
+                <option value="Quarta">Quarta</option>
+                <option value="Quinta">Quinta</option>
+                <option value="Sexta">Sexta</option>
+                <option value="Sabado">Sabado</option>
+              </select>
 
-            <select className="select-class" id="hora" name="hora" onChange={(e) => setDateTime(e.target.value)} value={dateTime}>
-              <option value="9:00:00">09:00</option>
-              <option value="10:00:00">10:00</option>
-              <option value="11:00:00">11:00</option>
-              <option value="12:00:00">12:00</option>
-              <option value="13:00:00">13:00</option>
-              <option value="14:00:00">14:00</option>
-              <option value="15:00:00">15:00</option>
-              <option value="16:00:00">16:00</option>
-              <option value="17:00:00">17:00</option>
-              <option value="18:00:00" selected>18:00</option>
-              <option value="19:00:00">19:00</option>
-              <option value="20:00:00">20:00</option>
-              <option value="21:00:00">21:00</option>
-              <option value="21:00:00">22:00</option>
-            </select>
+              <select className="select-class" onChange={getSelectsValues}>
+                <option value="" selected />
+                <option value="9:00:00">09:00</option>
+                <option value="10:00:00">10:00</option>
+                <option value="11:00:00">11:00</option>
+                <option value="12:00:00">12:00</option>
+                <option value="13:00:00">13:00</option>
+                <option value="14:00:00">14:00</option>
+                <option value="15:00:00">15:00</option>
+                <option value="16:00:00">16:00</option>
+                <option value="17:00:00">17:00</option>
+                <option value="18:00:00">18:00</option>
+                <option value="19:00:00">19:00</option>
+                <option value="20:00:00">20:00</option>
+                <option value="21:00:00">21:00</option>
+                <option value="21:00:00">22:00</option>
+              </select>
+
+              <img src={plusButton} onClick={addHour} />
+            </div>
           </div>
-        </Container.Options>
+        </Container.SecondOption>
       </Container.Form>
 
       <Container.Submit>
         <RedeButton descricao="Cancelar" cancelar onClick={cleanForm} />
-        <RedeButton descricao={ActionButtonTitle} onClick={attempMentoria} />
+        <RedeButton descricao={ActionButtonTitle} onClick={handleAddMentoria} />
 
       </Container.Submit>
     </Container>
   );
 }
+
 
 export default CadastroMentoria;

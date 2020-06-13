@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Link, withRouter, useHistory } from 'react-router-dom';
 import Container from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
@@ -7,131 +7,155 @@ import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import { mentoriasByMentor, desativarMentoria } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
-import Subtitle from './StyledComponents/subtitle';
 import Title from './StyledComponents/title';
 import HeaderPage from './StyledComponents/header-page';
+import Subtitle from './StyledComponents/subtitle';
 import RedeButton from '../../components/RedeButton/RedeButton';
-import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
+import { useSnackbar } from 'notistack';
 
-class Mentor extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: null,
-      linkedin: null,
-      image: null,
-      mentorias: [],
-      mentoriasVisibility: [],
-    };
-  }
+function Mentor(props) {
+  const [name, setName] = useState();
+  const [image, setImage] = useState();
+  const [mentorias, setMentorias] = useState([]);
+  const [linkedin, setLinkedin] = useState();
+  const [profileInfos, setProfileInfos] = useState();
+  const { enqueueSnackbar } = useSnackbar()
 
-  async componentDidMount() {
+  const changeAvalibility = (index) => {
     const token = sessionStorage.getItem('token');
-    const headers = { headers: { Authorization: `Bearer ${token}` } };
-
-    profile(headers).then(
-      (res) => {
-        if (res.status === 200) {
-          const {
-            name, linkedin, image,
-          } = res.data;
-          const urlImage = `${urlFiles}/${image}`;
-          this.setState({
-            name,
-            linkedin,
-            image: urlImage,
-          });
-          console.log(res);
-        }
-      },
-    ).catch((err) => {
-      alert('Problema ao buscar informações. Tente novamente.');
-      console.error(err);
-    });
-
-    mentoriasByMentor(headers).then(
-      (res) => {
-        if (res.data.length === 0) {
-          this.setState({
-            mentorias: <Subtitle> Nenhuma mentoria encontrada!</Subtitle>,
-          });
-        } else {
-          const mentorias = [];
-          console.table(res.data[1]);
-          for (let i = 0; i < res.data.length; i += 1) {
-            const mentoria = res.data[i];
-            mentorias.push(<Card
-              key={mentoria.id}
-              title={mentoria.data.title}
-              description={mentoria.data.description}
-              image={`${urlFiles}/${mentoria.data.image}`}
-              removeFunction={() => this.changeAvalibility(mentoria)}
-              editFunction={() => this.editPage(mentoria)}
-            />);
-          }
-
-          this.setState({
-            mentorias,
-          });
-        }
-      },
-    ).catch((err) => {
-      console.error(err);
-      this.setState({
-        mentorias: <Subtitle> Nenhuma mentoria encontrada!</Subtitle>,
-      });
-    });
-  }
-
-  changeAvalibility = (mentoria) => {
-    const { id } = mentoria;
-    const token = sessionStorage.getItem('token');
+    const { id }= mentorias[index];
     const config = {
-      param: { id },
+      params: { id },
       headers: { Authorization: `Bearer ${token}` },
     };
-    desativarMentoria(config);
+
+    if (global.confirm('Você deseja realmente deletar essa mentoria ?')) {
+      desativarMentoria(config).then(
+        () => {
+          const allMentorias = []
+          for (let i = 0; i < mentorias.length; i++) {
+            if (i === index) continue
+            allMentorias.push(mentorias[i]);
+          }
+          setMentorias(allMentorias)
+          enqueueSnackbar('Mentoria deletada!', { variant: "success", autoHideDuration: 2500 });
+        },
+      ).catch(() => {
+        enqueueSnackbar('Falha ao deletar essa mentoria. Verifique sua conexão e tente novamente.', { variant: 'error', autoHideDuration: 2500 });
+      });
+    }
   };
 
-  editPage = (mentoria) => {
+  const changeVisibility = (index) => {
+
+    const allMentorias = []
+    for (let i = 0; i < mentorias.length; i++) {
+      allMentorias[i] = mentorias[i]
+      if (i === index) allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible
+    }
+    setMentorias(allMentorias);
+    // mudarVisibilidadeMentoria(config); ROUTE NEED TO BE BUILT
+  };
+
+  const editPage = (mentoria) => {
     sessionStorage.setItem('oldMentoria', JSON.stringify(mentoria));
-    this.props.history.push({
+    props.history.push({
       pathname: '/cadastro-mentoria',
     });
   }
 
-  editProfilePage = () => {
-    // console.log(profileInfo)
-    // // sessionStorage.setItem('oldProfile', JSON.stringify(profileInfo));
-    // this.props.history.push({
-    //   pathname: '/cadastro-mentor',
-    // });
+  const routeCadastro = () =>{
+    sessionStorage.removeItem('oldMentoria')
+    props.history.push({
+      pathname: '/cadastro-mentoria',
+    });
+  }
+  const editProfilePage = () => {
+    sessionStorage.setItem('oldProfile', JSON.stringify(profileInfos));
+    console.log(profileInfos);
+    props.history.push({
+      pathname: '/cadastro-mentor',
+    });
   }
 
-  render() {
-    return (
-      <>
-        <RedeHeader descricao="Página do mentor" />
-        <Container>
-          <ProfileInfo
-            name={this.state.name}
-            linkedinProfile={this.state.linkedin}
-            image={this.state.image}
-            editFunction={this.editProfilePage}
-          />
-          <HeaderPage>
-            <Title>
-              MINHAS MENTORIAS
+  useEffect(() => {
+    async function fetchData() {
+      const token = sessionStorage.getItem('token');
+      const headers = { headers: { Authorization: `Bearer ${token}` } };
+
+      await profile(headers).then(
+        (res) => {
+          if (res.status === 200) {
+            const {
+              name, linkedin, image,
+            } = res.data;
+            const urlImage = `${urlFiles}/${image}`;
+            setProfileInfos(res.data)
+            setName(name)
+            setLinkedin(linkedin)
+            setImage(urlImage)
+          }
+        },
+      ).catch((err) => {
+        enqueueSnackbar('Problema ao buscar informações do usuário. Verifique sua conexão e tente novamente.', { variant: "error", autoHideDuration: 2500 } );
+      });
+    }
+
+    async function fetchCards() {
+      const token = sessionStorage.getItem('token');
+      const headers = { headers: { Authorization: `Bearer ${token}` } };
+
+      await mentoriasByMentor(headers).then(
+        (res) => {
+          if (res.data.length === 0) {
+            setMentorias(<Subtitle> Nenhuma mentoria encontrada!</Subtitle>);
+          } else {
+            setMentorias(res.data);
+          }
+        },
+      ).catch((err) => {
+        enqueueSnackbar("Erro ao buscar as mentorias. Verifique sua conexão e tente novamente", { variant: "error", autoHideDuration: 2500 })
+        setMentorias(<Subtitle> Nenhuma mentoria encontrada!</Subtitle>);
+      });
+    }
+    fetchData();
+    fetchCards();
+  }, []);
+
+  return (
+    <>
+      <RedeHeader descricao="Página do mentor" />
+      <Container>
+        <ProfileInfo
+          name={name}
+          linkedin={linkedin}
+          image={image}
+          editFunction={editProfilePage}
+        />
+        <HeaderPage>
+          <Title>
+            MINHAS MENTORIAS
             </Title>
-            <Link to="/cadastro-mentoria">
-              <RedeButton descricao="+ NOVA MENTORIA" />
-            </Link>
-          </HeaderPage>
-          {this.state.mentorias}
-        </Container>
-      </>
-    );
-  }
+            <RedeButton onClick={routeCadastro} descricao="+ NOVA MENTORIA" />
+        </HeaderPage>
+        {mentorias.length > 0 ? mentorias.map(
+          (mentoria, i) => (
+            <Card
+              key={mentoria.id}
+              title={mentoria.data.title}
+              description={mentoria.data.description}
+              image={`${urlFiles}/${mentoria.data.image}`}
+              removeFunction={() => changeAvalibility(i)}
+              visibleFunction={() => changeVisibility(i)}
+              editFunction={() => editPage(mentoria)}
+              isVisible={mentoria.data.isVisible}
+            />
+          )
+        ):<Subtitle> Nenhuma mentoria encontrada!</Subtitle>
+        }
+      </Container>
+    </>
+  );
 }
 
 export default withRouter(Mentor);

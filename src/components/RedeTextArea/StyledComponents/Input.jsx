@@ -4,10 +4,10 @@ import COLOR from '../../../utils/colors.constants';
 
 const Input = styled.textarea`
   outline: 0;
-  width: 300px;
+  width: 294px;
   font-size: 1rem;
   resize: vertical;
-  padding: 4px 10px;
+  padding: 4px 4px;
   border-radius: 5px;
   color: ${COLOR.AZUL};
   border: 1px solid ${COLOR.AZUL};

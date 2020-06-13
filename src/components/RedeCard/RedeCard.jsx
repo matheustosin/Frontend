@@ -73,8 +73,8 @@ const Card = ({
               {
                 mentorias && (
                   <MentorContent>
-                    <MentorName>{mentorName.split(" ").join("\n")}</MentorName>
-                    <MentorImage src={mentorImage}/>
+                    <MentorName>{mentorName.split(' ').join('\n')}</MentorName>
+                    <MentorImage src={mentorImage} />
                   </MentorContent>
                 )
               }

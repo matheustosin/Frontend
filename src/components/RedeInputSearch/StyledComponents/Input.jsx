@@ -11,8 +11,8 @@ const Input = styled.input`
     background-image: url(${searchImage});
     background-position: 99% 50%;   
     background-repeat: no-repeat;
-    width: 800px;
-    height: 40px;
+    width: 600px;
+    height: 30px;
     font-size: 1rem;
 
     @media only screen and (max-width: 768px) {

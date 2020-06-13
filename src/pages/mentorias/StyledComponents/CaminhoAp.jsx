@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import React from 'react';
-
 const CaminhoAp = styled.div`
   display: flex;
   justify-content: flex-start;

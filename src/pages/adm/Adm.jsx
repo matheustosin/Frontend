@@ -81,6 +81,7 @@ function Administrador() {
   }
 
   function generateCards(mentorias) {
+    console.log(mentorias);
     const cardsMentorias = mentorias.map((mentoria) => (
       <ContainerCards key={mentoria.id}>
         <Card
@@ -118,7 +119,7 @@ function Administrador() {
       <Container.Title>APROVAÇÕES PENDENTES</Container.Title>
       <Title2>
         {`Você tem ${cards.length} mentoria${
-          cards.length !== 1 ? 's' : ''
+          cards.length > 1 ? 's' : ''
         } para aprovar`}
       </Title2>
       <br />

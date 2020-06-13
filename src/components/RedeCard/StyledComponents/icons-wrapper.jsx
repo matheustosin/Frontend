@@ -9,26 +9,27 @@ const IconsWrapper = styled.div`
   button {
     display: none;
   }
-  @media screen and (max-width: 1000px) and (min-width: 500px) {
-    button {
-      display: inline-block;
+  @media screen and (max-width:1000px) and (min-width:500px){
+    button{
+      display:inline-block;
     }
-    width: 100%;
-    align-items: center;
+    width:100%;
+    align-items:center;
   }
-  @media screen and (max-width: 499px) {
-    flex-direction: row;
-    align-items: center;
-    button {
-      display: inline-block;
-      align-items: center;
+  @media screen and (max-width:499px){
+    flex-direction:column;
+    align-items:center;
+    button{
+      display:inline-block;
+      align-items:center;
     }
-    div {
-      display: flex;
-      width: 100%;
-      justify-content: center;
+    div{
+      display:flex;
+      width:100%;
+      justify-content:center;
     }
-    width: 100%;
+    width:100%;
+
   }
 `;
 

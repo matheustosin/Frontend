@@ -11,79 +11,76 @@ import { mentoriasByMentorado } from '../../services/mentorado';
 import RedeInputSearch from '../../components/RedeInputSearch/RedeInputSearch';
 
 function MentoriasDisponiveis() {
-    
-    const [cards, setCards] = useState('');
-    const [areaConhecimento, setAreaConhecimento] = useState(sessionStorage.getItem('areaSelected'));
-    const [mentorias, setMentorias] = useState([]);
 
-    useEffect(()=>{
-        const token = sessionStorage.getItem('token');
-        const headers = { headers: { Authorization: `Bearer ${token}` } };
-        
-        getMentorias(headers);
-    }, [])
+  const [cards, setCards] = useState('');
+  const [areaConhecimento, setAreaConhecimento] = useState(sessionStorage.getItem('areaSelected'));
+  const [mentorias, setMentorias] = useState([]);
 
-    function attemptSearch(event) { 
-        const searchCards = mentorias.filter(function (e) {
-            return e.title.toLowerCase().indexOf(event.toLowerCase()) !== -1;
-        });
-        generateCards(searchCards);
-    }
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+  
+    getMentorias(headers);
+  }, [])
 
-    function getMentorias(headers) {
-        
-        mentoriasByMentorado(headers) 
-        .then((res) => {
-            if (res.status === 200) {
-                    filterMentorias(res.data);
-                }
-            })
-            .catch((err) => {
-                setCards('Nenhuma mentoria encontrada para a Área de Conhecimento selecionada.');
-                console.error(err);
-            });
-    }
+  function attemptSearch(event) {
+    const searchCards = mentorias.filter(function (e) {
+        return e.title.toLowerCase().indexOf(event.toLowerCase()) !== -1;
+    });
+    generateCards(searchCards);
+  }
 
-    function filterMentorias(arrayMentoriasAll) {
+  function getMentorias(headers) {
+    mentoriasByMentorado(headers)
+    .then((res) => {
+        if (res.status === 200) {
+            filterMentorias(res.data);
+        }
+    })
+    .catch((err) => {
+        setCards('Nenhuma mentoria encontrada para a Área de Conhecimento selecionada.');
+        console.error(err);
+    });
+  }
 
-        const mentoriasAreaConhecimento = arrayMentoriasAll
-        .filter(function (e) {
-            return e.knowledgeArea == areaConhecimento;
-        });
-        setMentorias(mentoriasAreaConhecimento);
-        generateCards(mentoriasAreaConhecimento);
-    }
+  function filterMentorias(arrayMentoriasAll) {
+    const mentoriasAreaConhecimento = arrayMentoriasAll
+    .filter(function (e) {
+        return e.knowledgeArea == areaConhecimento;
+    });
+    setMentorias(mentoriasAreaConhecimento);
+    generateCards(mentoriasAreaConhecimento);
+  }
+   
+  function generateCards(mentoriasAreaConhecimento) {
+    const cardsMentorias = mentoriasAreaConhecimento
+    .map((mentoria) => (
+        <Card
+            title={mentoria.title}
+            description={mentoria.description}
+            image={`${urlFiles}/${mentoria.image}`}
+            mentorias={true}
+        />
+    ));
+    setCards(cardsMentorias);
+  }
 
-    function generateCards(mentoriasAreaConhecimento) {
-
-        const cardsMentorias = mentoriasAreaConhecimento
-        .map((mentoria) => (  
-            <Card 
-                title={mentoria.title}
-                description={mentoria.description}
-                image={`${urlFiles}/${mentoria.image}`}
-                mentorias={true}
-            />
-        ));
-        setCards(cardsMentorias);
-    }
-    
-    return (
-        <Container>
-            <RedeHeader />
-            <CaminhoAp>
-                <CaminhoTitleDesabilitado>
-                <a href="../aprendiz/Aprendiz.jsx">Home</a> 
-                </CaminhoTitleDesabilitado> 
-                <Caminho />
-                <CaminhoTitle>{areaConhecimento}</CaminhoTitle>
-            </CaminhoAp>
-            <RedeInputSearch placeholder="Procurar por Mentoria" onChange={(e) => attemptSearch(e.target.value)} />
-            <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
-            <br/>
-            {cards}
-        </Container>
-    );  
+  return (
+    <Container>
+      <RedeHeader />
+      <CaminhoAp>
+      <CaminhoTitleDesabilitado>
+        <a href="../aprendiz/Aprendiz.jsx">Home</a>
+      </CaminhoTitleDesabilitado>
+      <Caminho />
+      <CaminhoTitle>{areaConhecimento}</CaminhoTitle>
+      </CaminhoAp>
+      <RedeInputSearch placeholder="Procurar por Mentoria" onChange={(e) => attemptSearch(e.target.value)} />
+      <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
+      <br />
+      {cards}
+    </Container>
+  );
 }
 
 export default MentoriasDisponiveis;

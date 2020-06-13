@@ -8,6 +8,9 @@ const Container = styled.div`
     align-items: center;
     flex-direction:column;
     margin-top: 33px;
+    @media screen and (max-width: 1000px){    
+        width:100%;
+}
 `;
 
 Container.Title = Title;
