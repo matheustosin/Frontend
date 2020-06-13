@@ -3,7 +3,6 @@ import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCard/RedeCard';
 import Modal from './StyledComponents/Modal';
-import Color from '../../utils/colors.constants';
 import Container from './StyledComponents';
 import Title2 from './StyledComponents/Title2';
 import ContainerIcon from './StyledComponents/ContainerIcon';
@@ -112,13 +111,11 @@ function Administrador() {
           <ContainerIcon>
             <AiOutlineCheckCircle
               size={45}
-              color={Color.VERDE_ESCURO}
               class="icon"
               onClick={() => abreModal(mentoria)}
             />
             <AiOutlineCloseCircle
               size={45}
-              color={Color.VERMELHO}
               class="icon"
               onClick={() => evaluateMentoring(mentoria, 2)}
             />

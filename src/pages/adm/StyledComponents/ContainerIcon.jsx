@@ -1,4 +1,8 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
+
+import COLOR from '../../../utils/colors.constants';
+
 
 const ContainerIcon = styled.div`
   display: flex;
@@ -8,13 +12,32 @@ const ContainerIcon = styled.div`
     padding: 0px;
     margin-bottom: 50px;
     border-radius: 50%;
-    transition: color 0.2s;
-
+    transition: 0.4s;
+    cursor: pointer;
     &:hover {
-      cursor: pointer;
-      color: #000;
+      transform: translateX(2px);
     }
   }
+  
+  
+  svg{
+    color: ${COLOR.VERDE_ESCURO};
+    &:hover {
+      color: ${shade(0.2, COLOR.VERDE_ESCURO)};
+    }
+  }
+  
+  svg + svg {
+    color: ${COLOR.VERMELHO};
+    &:hover {
+      color: ${shade(0.2, COLOR.VERMELHO)};
+    }
+  }
+  
+  svg{
+     cursor: pointer;  
+  }
+  
   div {
     box-sizing: border-box;
     padding: 10px;
