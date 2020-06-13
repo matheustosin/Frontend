@@ -1,0 +1,109 @@
+.rede-marcar-mentoria .content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.rede-marcar-mentoria .content * {
+  color: #00273F;
+}
+
+.rede-marcar-mentoria .content>.close-icon {
+  transform: rotateZ(45deg);
+  position: absolute;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  top: 10px;
+  right: 10px;
+}
+
+.rede-marcar-mentoria .content>.bloco {
+  border: 2px solid #00273F;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rede-marcar-mentoria .content>.bloco.info {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.rede-marcar-mentoria .content>.bloco.info>.foto-mentoria {
+  display: flex;
+}
+
+.rede-marcar-mentoria .content>.bloco.info>.foto-mentoria img {
+  width: 200px;
+  height: 140px;
+}
+
+.rede-marcar-mentoria .content>.bloco.info>.informacao {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.titulo {}
+
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.mentor {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.mentor>.mentor-foto {}
+
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.mentor>.mentor-foto img {
+  border-radius: 100%;
+  width: 70px;
+  height: 70px;
+}
+
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.mentor>.mentor-nome {}
+
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.data-hora {
+  display: flex;
+}
+
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.data-hora>.data {}
+
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.data-hora>.hora {}
+
+.rede-marcar-mentoria .content>.subtitulo {
+  margin-top: 10px;
+  width: 100%;
+  text-align: left;
+}
+
+.rede-marcar-mentoria .content>.bloco.descricao {
+  width: 100%;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.rede-marcar-mentoria .content>.bloco.descricao>* {
+  width: 100%;
+}
+
+.rede-marcar-mentoria .content>.bloco.descricao textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.rede-marcar-mentoria .content>.bloco.descricao label {
+  margin: 0;
+  display: none;
+}
