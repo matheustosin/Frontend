@@ -42,8 +42,8 @@
 }
 
 .rede-marcar-mentoria .content>.bloco.info>.foto-mentoria img {
-  width: 200px;
-  height: 140px;
+  width: 260px;
+  height: 100%;
 }
 
 .rede-marcar-mentoria .content>.bloco.info>.informacao {
@@ -54,7 +54,10 @@
   align-items: center;
 }
 
-.rede-marcar-mentoria .content>.bloco.info>.informacao>.titulo {}
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.titulo {
+  padding: 5px;
+  font-weight: 700;
+}
 
 .rede-marcar-mentoria .content>.bloco.info>.informacao>.mentor {
   display: flex;
@@ -71,15 +74,31 @@
   height: 70px;
 }
 
-.rede-marcar-mentoria .content>.bloco.info>.informacao>.mentor>.mentor-nome {}
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.mentor>.mentor-nome {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px 10px;
+}
 
 .rede-marcar-mentoria .content>.bloco.info>.informacao>.data-hora {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.rede-marcar-mentoria .content>.bloco.info>.informacao>.data-hora>.data {}
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.data-hora>.data {
+  padding: 5px;
+}
 
-.rede-marcar-mentoria .content>.bloco.info>.informacao>.data-hora>.hora {}
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.data-hora>.traco {
+  padding: 5px;
+}
+
+.rede-marcar-mentoria .content>.bloco.info>.informacao>.data-hora>.hora {
+  border-radius: 5px;
+  background-color: #97C0E2;
+  padding: 5px 15px;
+}
 
 .rede-marcar-mentoria .content>.subtitulo {
   margin-top: 10px;
@@ -106,4 +125,10 @@
 .rede-marcar-mentoria .content>.bloco.descricao label {
   margin: 0;
   display: none;
+}
+.rede-marcar-mentoria .content>.radios {
+  padding: 10px;
+}
+.rede-marcar-mentoria .content>.radios>label {
+  padding: 5px;
 }

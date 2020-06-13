@@ -4,13 +4,19 @@ import { Dialog } from '@material-ui/core';
 import './RedeMarcarMentoria.css';
 import plus from '../../assets/plus.png';
 import RedeTextArea from '../RedeTextArea/RedeTextArea';
+import RedeButton from '../RedeButton/RedeButton';
 
-const RedeButton = ({
+const RedeMarcarMentoria = ({
   image, title, userImage, userName, date, hour, onConfirm, opened, onClose,
   // descricao, onClick, desabilitado, cancelar, claro, loading,
 }) => {
   const [descricao, setDescricao] = useState('');
   const [tipoMentoria, setTipoMentoria] = useState('');
+  const confirm = () => {
+    console.log('confirmou');
+    onClose();
+    onConfirm();
+  }
   return (
     <Dialog open={opened} onClose={onClose} className="rede-marcar-mentoria">
       <div className="content">
@@ -33,7 +39,7 @@ const RedeButton = ({
             </div>
             <div className="data-hora">
               <div className="data">{date}</div>
-              -
+              <div className="traco">-</div>
               <div className="hora">{hour}</div>
             </div>
           </div>
@@ -45,13 +51,30 @@ const RedeButton = ({
             onChange={(evt) => setDescricao(evt.target.value)}
           />
         </div>
+        <div className="radios">
+          <label htmlFor="online">
+            <input type="radio" id="online" name="tipo" value="Online" checked={tipoMentoria === 'Online'} onChange={(evt) => setTipoMentoria(evt.target.value)} />
+            Online
+          </label>
+          <label htmlFor="presencial">
+            <input type="radio" id="presencial" name="tipo" value="Presencial" checked={tipoMentoria === 'Presencial'} onChange={(evt) => setTipoMentoria(evt.target.value)} />
+            Presencial
+          </label>
+        </div>
+        <div className="botao">
+          <RedeButton
+            descricao="MARCAR MENTORIA"
+            onClick={confirm}
+            desabilitado={!tipoMentoria || !descricao}
+          />
+        </div>
 
       </div>
     </Dialog>
   );
 };
 
-RedeButton.propTypes = {
+RedeMarcarMentoria.propTypes = {
   opened: bool.isRequired,
   onClose: func.isRequired,
   image: string,
@@ -63,7 +86,7 @@ RedeButton.propTypes = {
   onConfirm: func,
 };
 
-RedeButton.defaultProps = {
+RedeMarcarMentoria.defaultProps = {
   image: '',
   title: '',
   userImage: '',
@@ -73,7 +96,7 @@ RedeButton.defaultProps = {
   onConfirm: () => { },
 };
 
-export default RedeButton;
+export default RedeMarcarMentoria;
 
 // <Button
 //   onClick={onClick}
