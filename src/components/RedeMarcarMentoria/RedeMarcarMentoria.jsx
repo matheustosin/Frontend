@@ -21,9 +21,13 @@ const RedeMarcarMentoria = ({
   };
 
   const confirm = () => {
-    console.log('confirmou');
     handleClose();
-    onConfirm();
+    onConfirm({
+      typeMentoring: tipoMentoria,
+      descProject: descricao,
+      date,
+      hour,
+    });
   };
 
   return (
