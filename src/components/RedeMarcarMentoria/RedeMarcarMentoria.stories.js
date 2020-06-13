@@ -23,6 +23,7 @@ export const Default = () => {
         date="29/03/2020"
         hour="19:00"
         onClose={() => setOpen(false)}
+        onConfirm={(evt) => console.log('Mentoria: ', evt)}
       />
     </>
   );
