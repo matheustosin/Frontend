@@ -3,8 +3,7 @@ import COLORS from '../../../utils/colors.constants';
 
 const MentorName = styled.p`
   text-align: center;
-  font-size: 1.3em;
-  padding: 30px 5px 0 5px;
+  font-size: 1.0em;
   color: ${COLORS.AZUL};
   white-space: pre;
 

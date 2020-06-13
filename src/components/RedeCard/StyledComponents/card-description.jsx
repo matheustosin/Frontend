@@ -16,12 +16,12 @@ const CardDescription = styled.p`
   @media screen and (min-width: 499px) and (max-width: 1000px) {
     height: auto;
     max-height: 120px;
-    overflow: initial;
+    overflow: hidden;
   }
   @media screen and (max-width: 499px) {
     height: auto;
     max-height: 120px;
-    overflow: initial;
+    overflow: hidden;
   }
 `;
 

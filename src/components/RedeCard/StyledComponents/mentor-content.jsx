@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const MentorContent = styled.div`
   display:flex;
-  justify-content: space-between;
-  align-items:center;
+  align-content:center;
+  flex-direction: column;
 `;
 
 export default MentorContent;

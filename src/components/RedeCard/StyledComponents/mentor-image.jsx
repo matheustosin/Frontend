@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 
 const MentorImage = styled.img`
-  width: 110px;
-  height: 110px;
-  margin-bottom: 20px;
-  border-radius: 4px;
+  width: 45px;
+  height: 45px;
+  margin-bottom: 3px;
+  border-radius: 50%;
+  border: 1px solid #000;
 
   @media only screen and (max-width: 768px) {
-    width: 80px;
-    height: 80px;
+    width: 45px;
+    height: 45px;
   }
 
 `;

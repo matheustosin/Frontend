@@ -13,7 +13,7 @@ const Container = styled.div`
     opacity: 1;
     overflow: hidden;
     display: flex;
-    width: 90%;
+    width: 1024px;
     min-height: 210px;
     height:auto;
     margin-bottom: 50px;

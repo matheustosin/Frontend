@@ -85,7 +85,17 @@ function Administrador() {
   }
 
   function generateCards(mentorias) {
-    // console.log(mentorias);
+    const dataHoras = mentorias[0].data.dateTime;
+
+    dataHoras.sort((a, b) => {
+      if (a.dayOfTheMonth > b.dayOfTheMonth) {
+        return 1;
+      } if (b.dayOfTheMonth > a.dayOfTheMonth) {
+        return -1;
+      }
+      return 0;
+    });
+    console.log(dataHoras);
     // eslint-disable-next-line no-shadow
     const cardsMentorias = mentorias.map((mentoria) => (
       <ContainerCards key={mentoria.id}>
@@ -95,7 +105,9 @@ function Administrador() {
           image={`${urlFiles}/${mentoria.data.image}`}
           mentorName={mentoria.mentorInfo.name}
           mentorImage={`${urlFiles}/${mentoria.mentorInfo.image}`}
+          mentorias
         />
+
         <div>
           <ContainerIcon>
             <AiOutlineCheckCircle

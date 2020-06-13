@@ -5,7 +5,6 @@ const IconsWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-self: flex-end;
-  width: 50%;
   button {
     display: none;
   }
@@ -13,8 +12,9 @@ const IconsWrapper = styled.div`
     button{
       display:inline-block;
     }
-    width:100%;
     align-items:center;
+    width: 100%;
+    justify-content: space-around;
   }
   @media screen and (max-width:499px){
     flex-direction:row;
@@ -25,10 +25,8 @@ const IconsWrapper = styled.div`
     }
     div{
       display:flex;
-      width:100%;
-      justify-content:center;
+      margin-left: 10px;
     }
-    width:100%;
 
   }
 `;
