@@ -5,6 +5,8 @@ const MentorImage = styled.img`
   height: 130px;
   margin-bottom: 20px;
   border-radius: 4px;
+  border-radius: 0px 0px 0px 8px;
+
   @media only screen and (max-width: 768px) {
     width: 80px;
     height: 80px;

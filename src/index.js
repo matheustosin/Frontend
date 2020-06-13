@@ -8,7 +8,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <SnackbarProvider
-    style={{ margin: '0' }}
+    style={{ margin: '70px 0' }}
     maxSnack={3}
     preventDuplicate
     anchorOrigin={{

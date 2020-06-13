@@ -4,7 +4,6 @@ import teacher from '../../assets/teacher.png';
 import interview from '../../assets/interview.png';
 
 import Container from './StyledComponents';
-import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeHorizontalSeparator from '../../components/RedeHorizontalSeparator/RedeHorizontalSeparator';
 
@@ -12,7 +11,6 @@ class Register extends PureComponent {
   render() {
     return (
       <Container>
-        <RedeHeader />
         <Container.Title>COMO DESEJA SE CADASTRAR NA REDE?</Container.Title>
         <Container.Form>
           <Container.Option>

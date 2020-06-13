@@ -9,7 +9,7 @@ const RedeCheckbox = styled(Checkbox)`
   width: 25px;
   height: 25px;
   display: flex;
-  font-size: 1rem;
+  font-size: 1.6rem;
   cursor: pointer;
   appearance: none;
   border-radius: 4px;

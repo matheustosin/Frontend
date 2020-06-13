@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
 import React from 'react';
-import COLOR from '../../../utils/colors.constants';
 import CAMINHO_ICON from '../../../assets/caminho.png';
 
 const StyledCaminho = styled.img`
-  backgrund-color: ${COLOR.AZUL};
   background-repeat: no-repeat;
   width: 20px;
   height: 20px;
@@ -16,9 +14,6 @@ const StyledCaminho = styled.img`
   margin-left: 15px;
 `;
 
-const Caminho = () => {
-    return <StyledCaminho src={CAMINHO_ICON} />
-}
+const Caminho = () => <StyledCaminho src={CAMINHO_ICON} />;
 
 export default Caminho;
-

@@ -8,4 +8,4 @@ export default {
   decorators: [withInfo],
 };
 
-export const Input = () => <RedeInputSearch placeholder="Procurar por area" />;
+export const Input = () => <RedeInputSearch placeholder="Procurar por área" />;

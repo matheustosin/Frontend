@@ -1,29 +1,39 @@
 import styled from 'styled-components';
 import COLORS from '../../../utils/colors.constants';
-import Icon from '../../RedeIcon/RedeIcon';
+
+import Logo from './Logo';
+import Bottom from './Bottom';
+import UserName from './UserName';
+import UserInformations from './UserInformations';
 
 const Container = styled.div`
   display: flex;
-  border: 3px solid #00273f;
-  border-radius: 10px;
-  max-width: 755px;
   width: 755px;
+  height: auto;
+  max-width: 755px;
   min-height: 165px;
-  height:auto;
+  padding-left: 35px;
+  border-radius: 10px;
   color: ${COLORS.AZUL};
-  padding-left:35px;
-  img{
-    align-self:center;
-  }
-  @media screen and (max-width: 1000px) {
-    width: 80%;
-    flex-direction:column;
-    height: 220px;
-    padding-left:0px;
-    height:auto;
-    padding-top:20px;
+  border: 3px solid ${COLORS.AZUL};
+
+  img {
+    align-self: center;
   }
 
+  @media screen and (max-width: 1024px) {
+    width: 80%;
+    height: auto;
+    height: 220px;
+    padding-left: 0px;
+    padding-top: 20px;
+    flex-direction: column;
+  }
 `;
+
+Container.Logo = Logo;
+Container.Bottom = Bottom;
+Container.UserName = UserName;
+Container.UserInformations = UserInformations;
 
 export default Container;

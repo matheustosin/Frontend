@@ -17,7 +17,7 @@ const IconsWrapper = styled.div`
     align-items:center;
   }
   @media screen and (max-width:499px){
-    flex-direction:column;
+    flex-direction:row;
     align-items:center;
     button{
       display:inline-block;
