@@ -20,8 +20,12 @@ const HorarioButton = styled.button`
   }
 
   :focus{
-    border: 1px solid ${COLOR.AZUL};
+    border: 1px solid #83a8c7;
     outline: none;
+  }
+
+  :active{
+    background-color: #83a8c7;
   }
 
   ${({ disabled }) => disabled && Desabilitado}

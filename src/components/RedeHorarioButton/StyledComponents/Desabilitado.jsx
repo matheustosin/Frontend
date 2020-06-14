@@ -7,14 +7,14 @@ const Desabilitado = css`
   color: ${COLOR.CINZA_ESCURO};
   border-color: ${COLOR.CINZA};
 
-  &:hover {
+  :hover {
     cursor: default !important;
     background-color: ${COLOR.CINZA};
     border-color: ${COLOR.CINZA};
     box-shadow: none !important;
   }
 
-  &:focus{
+  :focus{
     border: 1px solid ${COLOR.CINZA};
     outline: none;
   }

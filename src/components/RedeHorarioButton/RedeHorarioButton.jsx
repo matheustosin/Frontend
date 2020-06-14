@@ -19,7 +19,7 @@ const RedeHorarioButton = ({
     >
       {horario}
     </HorarioButton>
-  )
+  );
 };
 
 RedeHorarioButton.propTypes = {

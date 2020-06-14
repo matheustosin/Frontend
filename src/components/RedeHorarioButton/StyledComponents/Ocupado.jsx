@@ -7,14 +7,14 @@ const Ocupado = css`
   color: ${COLOR.AZUL};
   border-color: ${COLOR.CINZA_ESCURO};
 
-  &:hover {
+  :hover {
     cursor: default !important;
     background-color: ${COLOR.CINZA_ESCURO};
     border-color: ${COLOR.CINZA_ESCURO};
     box-shadow: none !important;
   }
 
-  &:focus{
+  :focus{
     border: 1px solid ${COLOR.CINZA_ESCURO};
     outline: none;
   }
