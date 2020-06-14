@@ -44,7 +44,7 @@ const Card = ({
             {title}
           </CardHeader.Title>
 
-          { !mentorias && <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} /> }
+          <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
 
         </CardHeader>
         <CardDescription>
@@ -61,7 +61,7 @@ const Card = ({
               <RedeButton claro descricao="QUA - 12:00" onClick={ () => {} } />
             </TimeSlotWrapper>
             <IconsWrapper>
-              { !mentorias && <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} /> }
+              <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
               {
                 !mentorias && (
                   <>
