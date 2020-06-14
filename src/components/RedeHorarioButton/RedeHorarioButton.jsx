@@ -4,15 +4,23 @@ import HorarioButton from './StyledComponents';
 
 const RedeHorarioButton = ({
   horario, onClick, ocupado, desabilitado,
-}) => (
-  <HorarioButton
-    onClick={onClick}
-    ocupado={ocupado}
-    disabled={desabilitado}
-  >
-    {horario}
-  </HorarioButton>
-);
+}) => {
+  const click = () => {
+    if (!ocupado && !desabilitado && typeof onClick === 'function') {
+      onClick();
+    }
+  };
+
+  return (
+    <HorarioButton
+      onClick={click}
+      ocupado={ocupado}
+      disabled={desabilitado}
+    >
+      {horario}
+    </HorarioButton>
+  )
+};
 
 RedeHorarioButton.propTypes = {
   horario: string,
