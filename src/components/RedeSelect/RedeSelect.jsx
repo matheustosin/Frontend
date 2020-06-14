@@ -15,6 +15,7 @@ const RedeSelect = ({
   <Container>
     <TextField.Label>Áreas de Conhecimento</TextField.Label>
     <Select onChange={onChange}>
+      <option value="" disabled selected={(!select)}>Selecione...</option>
       {
           options.map((element) => ((select === element)
             ? <option value={element} selected>{element}</option>

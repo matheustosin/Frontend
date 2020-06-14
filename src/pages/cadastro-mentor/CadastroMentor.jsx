@@ -44,7 +44,7 @@ function CadastroMentor() {
       res.data.forEach((area) => {
         arrayAreas.push(area.name);
       });
-      setAvailableAreas(['', ...arrayAreas]);
+      setAvailableAreas(arrayAreas);
     });
 
 
