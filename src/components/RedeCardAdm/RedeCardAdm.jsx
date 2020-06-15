@@ -26,7 +26,6 @@ const Card = ({
   removeFunction,
   editFunction,
   isVisible,
-  timeSlots,
   mentorias,
   mentorName,
   mentorImage,
@@ -47,36 +46,13 @@ const Card = ({
           {adjustSizeDescription(description)}
         </CardDescription>
         <CardFooter>
-          <CardFooter.SubTitle>
-            Próximos horários
-          </CardFooter.SubTitle>
           <CardFooter.Content>
-            <TimeSlotWrapper>
-              <RedeTimeSlot descricao="SEGUNDA" />
-              {/* {timeSlots} */}
-            </TimeSlotWrapper>
             <IconsWrapper>
               <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
-              {
-                !mentorias && (
-                  <>
-                    <RedeIcon imageUrl={remove} onClick={removeFunction} />
-                    <RedeIcon
-                      imageUrl={isVisible ? visible : notVisible}
-                      onClick={visibleFunction}
-                    />
-                    <RedeIcon imageUrl={edition} onClick={editFunction} />
-                  </>
-                )
-              }
-              {
-                mentorias && (
-                  <MentorContent>
-                    <MentorImage src={mentorImage} />
-                    <MentorName>{mentorName.split(' ').shift()}</MentorName>
-                  </MentorContent>
-                )
-              }
+              <MentorContent>
+                <MentorImage src={mentorImage} />
+                <MentorName>{mentorName.split(' ').shift()}</MentorName>
+              </MentorContent>
             </IconsWrapper>
           </CardFooter.Content>
         </CardFooter>
