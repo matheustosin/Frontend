@@ -16,11 +16,6 @@ const Card = ({
   title,
   description,
   image,
-  visibleFunction,
-  removeFunction,
-  editFunction,
-  isVisible,
-  mentorias,
   mentorName,
   mentorImage,
 }) => {
@@ -62,22 +57,12 @@ const Card = ({
 Card.propTypes = {
   description: string,
   title: string,
-  isVisible: bool,
-  visibleFunction: func,
-  removeFunction: func,
-  editFunction: func,
-  mentorias: bool,
   mentorName: string,
 };
 
 Card.defaultProps = {
   description: '',
   title: '',
-  isVisible: true,
-  visibleFunction: null,
-  removeFunction: null,
-  editFunction: null,
-  mentorias: false,
   mentorName: '',
 };
 
