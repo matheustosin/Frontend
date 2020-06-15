@@ -7,7 +7,9 @@ const Container = styled.div`
     opacity: 1;
     overflow: hidden;
     display: flex;
-    width: 90%;
+    width: 80%;
+    padding-left: 5%;
+    padding-right: 5%;
     min-height: 210px;
     height:auto;
     margin-bottom: 50px;
@@ -32,28 +34,26 @@ const Container = styled.div`
 
 const Label = styled.h2`
     margin: 0;
-    font-size: 1.2em;
-    width: 35%;
-    align-self: center;
-
+    display: flex;
+    font-size: 2vh;
+    justify-content: space-around;
+    width: 25%;
+    align-items: center;
 `;
 
 const Details = styled.div`
-    width: 90%;
-    min-width: 400px;
+    width: 100%;
     display:flex;
-    margin-top: 5px;
-    padding-bottom: 2px;
-    justify-content: space-evenly;
+    justify-content: left;
     border-bottom: 2px solid ${Color.AZUL_CLARO};
 `;
 
 const Hours = styled.div`
-    width: 80%;
+    width: 75%;
     display:flex;
-
+    flex-wrap: wrap;
     > button{
-        margin-left: 5px;
+        margin: 5px;
     }
 `;
 

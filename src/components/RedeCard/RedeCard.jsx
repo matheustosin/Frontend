@@ -5,7 +5,7 @@ import visible from '../../assets/visibility-button.png';
 import remove from '../../assets/rubbish-bin-delete-button.png';
 import edition from '../../assets/create-new-pencil-button.png';
 import notVisible from '../../assets/invisible-button.png';
-import RedeTimeSlot from '../RedeTimeSlot/RedeTimeSlot';
+//  import RedeTimeSlot from '../RedeTimeSlot/RedeTimeSlot';
 import RedeButton from '../RedeButton/RedeButton';
 import RedeIcon from '../RedeIcon/RedeIcon';
 import CardDescription from './StyledComponents/card-description';
@@ -18,7 +18,7 @@ import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 import MentorName from './StyledComponents/mentor-name';
 import MentorImage from './StyledComponents/mentor-image';
 import MentorContent from './StyledComponents/mentor-content';
-import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
+//  import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
 
 const Card = ({
   title,
@@ -77,8 +77,8 @@ const Card = ({
               {
                 mentorias && (
                   <MentorContent>
-                    <MentorName>{mentorName.split(" ").join("\n")}</MentorName>
-                    <MentorImage src={mentorImage}/>
+                    <MentorName>{mentorName.split(' ').join('\n')}</MentorName>
+                    <MentorImage src={mentorImage} />
                   </MentorContent>
                 )
               }
