@@ -17,7 +17,7 @@ import {
 import { urlFiles } from '../../services/http';
 import pushIfNecessary from '../../utils/HTMLUtils';
 import { userTypes } from '../../utils/userType.constants';
-import { validateEmail } from '../../utils/validationUtils';
+import validateEmail from '../../utils/validationUtils';
 
 function CadastroMentorado() {
   const history = useHistory();
