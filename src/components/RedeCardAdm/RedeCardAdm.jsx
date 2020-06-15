@@ -1,19 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { string, func, bool } from 'prop-types';
 import Container from './StyledComponents';
-import visible from '../../assets/visibility-button.png';
-import remove from '../../assets/rubbish-bin-delete-button.png';
-import edition from '../../assets/create-new-pencil-button.png';
-import notVisible from '../../assets/invisible-button.png';
-import RedeTimeSlot from '../RedeTimeSlot/RedeTimeSlot';
-import RedeIcon from '../RedeIcon/RedeIcon';
 import CardDescription from './StyledComponents/card-description';
 import CardHeader from './StyledComponents/card-header';
 import CardLogo from './StyledComponents/card-logo';
 import CardFooter from './StyledComponents/card-footer';
 import CardContent from './StyledComponents/card-content';
 import IconsWrapper from './StyledComponents/icons-wrapper';
-import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 import MentorName from './StyledComponents/mentor-name';
 import MentorImage from './StyledComponents/mentor-image';
 import MentorContent from './StyledComponents/mentor-content';
@@ -40,7 +34,9 @@ const Card = ({
           <CardHeader.Title>
             {title}
           </CardHeader.Title>
-          <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
+          <Link to="/mentoria">
+            <CardHeader.Button descricao="TODOS HORÁRIOS" />
+          </Link>
         </CardHeader>
         <CardDescription>
           {adjustSizeDescription(description)}
@@ -48,7 +44,9 @@ const Card = ({
         <CardFooter>
           <CardFooter.Content>
             <IconsWrapper>
-              <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
+              <Link to="/mentoria">
+                <CardHeader.Button descricao="TODOS HORÁRIOS" />
+              </Link>
               <MentorContent>
                 <MentorImage src={mentorImage} />
                 <MentorName>{mentorName.split(' ').shift()}</MentorName>
