@@ -1,6 +1,7 @@
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { withInfo } from '@storybook/addon-info';
-import RedeCard from './RedeCard';
+import RedeCard from './RedeCardAdm';
 import imagem from '../../assets/teacher.png';
 
 export default {
