@@ -11,8 +11,8 @@ export default {
 
 export const Default = () => (
   <RedeCard
-    description="Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando Testando "
-    title="Testando"
+    description="Descrição da mentoria"
+    title="Tíitulo da mentoria"
   />
 );
 export const NotVisible = () => (
