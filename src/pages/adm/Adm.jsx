@@ -69,7 +69,6 @@ function Administrador() {
     pendingMentorings(headers)
       .then((res) => {
         if (res.status === 200) {
-          console.lgo(res.data);
           // eslint-disable-next-line no-use-before-define
           generateCards(res.data);
         }
