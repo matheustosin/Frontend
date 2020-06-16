@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
+import { useSnackBar } from 'notistack';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCardAdm/RedeCardAdm';
-import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
+// import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
 import Modal from './StyledComponents/Modal';
 import Container from './StyledComponents';
 import Title2 from './StyledComponents/Title2';
@@ -17,11 +18,11 @@ function Administrador() {
   const [flagModal, setFlagModal] = useState(false);
   const [mentoria, setMentoria] = useState(null);
   const [newTitle, setNewTitle] = useState('');
+  const { enqueueSnackbar } = useSnackBar();
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
-    console.log(sessionStorage);
 
     // eslint-disable-next-line no-use-before-define
     getMentorias(headers);
@@ -55,8 +56,8 @@ function Administrador() {
         }
       })
       .catch((err) => {
+        enqueueSnackbar('A mentoria não pôde ser aprovada!', { variant: 'error', autoHideDuration: 2500 });
         console.log(err);
-        alert('A mentoria não pôde ser aprovada!');
       });
   }
 
