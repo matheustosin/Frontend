@@ -9,8 +9,10 @@ import CaminhoTitle from './StyledComponents/CaminhoTitle';
 import CaminhoTitleDesabilitado from './StyledComponents/CaminhoTitleDesabilitado';
 import CaminhoAp from './StyledComponents/CaminhoAp';
 import { mentoriasByMentorado } from '../../services/mentorado';
+import { marcarMentoria } from '../../services/mentoria';
 import RedeInputSearch from '../../components/RedeInputSearch/RedeInputSearch';
 import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
+import RedeMarcarMentoria from '../../components/RedeMarcarMentoria/RedeMarcarMentoria';
 
 function MentoriasDisponiveis() {
   const [cards, setCards] = useState('');
@@ -18,13 +20,30 @@ function MentoriasDisponiveis() {
   const [mentorias, setMentorias] = useState([]);
   const [redirectTo, setRedirectTo] = useState('');
   const history = useHistory();
+  const [modalFlag, setModalFlag] = useState(false);
+  const [mentoriaSelecionada, setMentoriaSelecionada] = useState(undefined);
 
   function mentoriaSelected(mentoria, e) {
     e.preventDefault();
     sessionStorage.setItem('mentoriaSelected', JSON.stringify(mentoria));
     history.push('/mentoria');
   }
-
+  function openModal(mentoria, dateTime) {
+    const bkp = mentoria;
+    bkp.dateTime = dateTime;
+    setMentoriaSelecionada(bkp);
+    setModalFlag(true);
+  }
+  function agendarMentoria(mentoriaInfo) {
+    const token = sessionStorage.getItem('token');
+    const { idMentoria } = mentoriaSelecionada;
+    const config = {
+      params: { id: idMentoria },
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    
+    marcarMentoria(config, mentoriaInfo);
+  }
   function sortMentoriasHours(mentoriasAreaConhecimento) {
     for (let i = 0; i < mentoriasAreaConhecimento.length; i += 1) {
       mentoriasAreaConhecimento[i].dateTime.sort((a, b) => {
@@ -61,6 +80,7 @@ function MentoriasDisponiveis() {
           <RedeTimeSlot
             descricao={`${description} - ${dateTime.times[0].hour}`}
             disponivel={!dateTime.times[0].flagBusy}
+            onClick={() => openModal(backup[i], dateTime)}
           />
         );
       });
@@ -87,8 +107,6 @@ function MentoriasDisponiveis() {
       ));
     setCards(cardsMentorias);
   }
-
-
   function filterMentorias(arrayMentoriasAll) {
     const mentoriasAreaConhecimento = arrayMentoriasAll
       .filter((e) => e.knowledgeArea === areaConhecimento);
@@ -133,6 +151,17 @@ function MentoriasDisponiveis() {
       <Container.Title>MENTORIAS DISPONÍVEIS</Container.Title>
       <br />
       {cards}
+      <RedeMarcarMentoria
+        opened={modalFlag}
+        onClose={() => { setModalFlag(false); }}
+        title={mentoriaSelecionada ? mentoriaSelecionada.title : 'TITULO'}
+        date={mentoriaSelecionada ? mentoriaSelecionada.dateTime.dayOfTheMonth : 'TITULO'}
+        hour={mentoriaSelecionada ? mentoriaSelecionada.dateTime.times[0].hour : 'TITULO'}
+        image={mentoriaSelecionada ? `${urlFiles}/${mentoriaSelecionada.image}` : 'TITULO'}
+        userImage={mentoriaSelecionada ? `${urlFiles}/${mentoriaSelecionada.mentorInfos.image}` : 'TITULO'}
+        userName={mentoriaSelecionada ? mentoriaSelecionada.mentorInfos.name.split(/(\s).+\s/).join('') : 'TITULO'}
+        onConfirm={agendarMentoria}
+      />
     </Container>
   );
 }

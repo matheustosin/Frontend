@@ -5,3 +5,4 @@ export const atualizarMentoria = (headers, data) => Http.put(`/mentoria/alter/${
 export const mentoriasByMentor = (headers) => Http.get('/mentoriaSession', headers);
 export const cadastrarMentoria = (headers, data) => Http.post('/cadastroMentoria', data, headers);
 export const mudarVisibilidade = (headers) => Http.put('/mentoria/changeVisibility/', null, headers);
+export const marcarMentoria = (headers,body) => Http.put(`/mentoria/choice/${headers.params.id}`, body, headers);
