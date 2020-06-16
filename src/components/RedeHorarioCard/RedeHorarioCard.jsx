@@ -1,11 +1,14 @@
 import React from 'react';
 import Container from './StyledComponents';
+import Hours from './StyledComponents/Hours';
+import Label from './StyledComponents/Label';
+import Details from './StyledComponents/Details';
+
 import RedeHorarioButton from '../RedeHorarioButton/RedeHorarioButton';
 import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
 
 function RedeHorarioCard() {
   const [open, setOpen] = React.useState(false);
-
   return (
     <Container>
       <>
@@ -21,37 +24,37 @@ function RedeHorarioCard() {
           onConfirm={(evt) => console.log('Mentoria: ', evt)}
         />
       </>
-      <Container.Details>
-        <Container.Label>Data</Container.Label>
-        <Container.Label>Hora</Container.Label>
-      </Container.Details>
-      <Container.Details>
-        <Container.Label>20/04/2020</Container.Label>
-        <Container.Hours>
+      <Details style={{ borderBottom: 'none' }}>
+        <Label>Data</Label>
+        <Label>Hora</Label>
+      </Details>
+      <Details>
+        <Label>20/04/2020</Label>
+        <Hours>
           <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
           <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
           <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-        </Container.Hours>
-      </Container.Details>
-      <Container.Details>
-        <Container.Label>20/04/2020</Container.Label>
-        <Container.Hours>
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-        </Container.Hours>
-      </Container.Details>
-      <Container.Details>
-        <Container.Label>20/04/2020</Container.Label>
-        <Container.Hours>
+        </Hours>
+      </Details>
+      <Details>
+        <Label>20/04/2020</Label>
+        <Hours>
           <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
           <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
           <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
           <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-        </Container.Hours>
-      </Container.Details>
+          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
+        </Hours>
+      </Details>
+      <Details>
+        <Label>20/04/2020</Label>
+        <Hours>
+          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
+          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
+          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
+          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
+        </Hours>
+      </Details>
     </Container>
   );
 }

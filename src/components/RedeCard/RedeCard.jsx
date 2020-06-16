@@ -24,9 +24,10 @@ const Card = ({
   title,
   description,
   image,
-  visibleFunction,
-  removeFunction,
-  editFunction,
+  onClickSchedule,
+  onClickVisible,
+  onClickRemove,
+  onClickEdit,
   isVisible,
   timeSlots,
   mentorias,
@@ -43,9 +44,7 @@ const Card = ({
           <CardHeader.Title>
             {title}
           </CardHeader.Title>
-
-          <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
-
+          { !mentorias && <RedeButton claro descricao="TODOS HORÁRIOS" onClick={onClickSchedule} /> }
         </CardHeader>
         <CardDescription>
           {description}
@@ -56,21 +55,21 @@ const Card = ({
           </CardFooter.SubTitle>
           <CardFooter.Content>
             <TimeSlotWrapper>
-              <RedeButton claro descricao="SEG - 12:00" onClick={ () => {} } />
-              <RedeButton claro descricao="TER - 12:00" onClick={ () => {} } />
-              <RedeButton claro descricao="QUA - 12:00" onClick={ () => {} } />
+              <RedeButton claro descricao="SEG - 12:00" onClick={() => {}} />
+              <RedeButton claro descricao="TER - 12:00" onClick={() => {}} />
+              <RedeButton claro descricao="QUA - 12:00" onClick={() => {}} />
             </TimeSlotWrapper>
             <IconsWrapper>
-              <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
+              { !mentorias && <RedeButton claro descricao="TODOS HORÁRIOS" onClick={onClickSchedule} /> }
               {
                 !mentorias && (
                   <>
-                    <RedeIcon imageUrl={remove} onClick={removeFunction} />
+                    <RedeIcon imageUrl={remove} onClick={onClickRemove} />
                     <RedeIcon
                       imageUrl={isVisible ? visible : notVisible}
-                      onClick={visibleFunction}
+                      onClick={onClickVisible}
                     />
-                    <RedeIcon imageUrl={edition} onClick={editFunction} />
+                    <RedeIcon imageUrl={edition} onClick={onClickEdit} />
                   </>
                 )
               }
@@ -94,9 +93,10 @@ Card.propTypes = {
   description: string,
   title: string,
   isVisible: bool,
-  visibleFunction: func,
-  removeFunction: func,
-  editFunction: func,
+  onClickSchedule: func,
+  onClickVisible: func,
+  onClickRemove: func,
+  onClickEdit: func,
   mentorias: bool,
   mentorName: string,
 };
@@ -105,9 +105,10 @@ Card.defaultProps = {
   description: '',
   title: '',
   isVisible: true,
-  visibleFunction: null,
-  removeFunction: null,
-  editFunction: null,
+  onClickSchedule: null,
+  onClickVisible: null,
+  onClickRemove: null,
+  onClickEdit: null,
   mentorias: false,
   mentorName: '',
 };

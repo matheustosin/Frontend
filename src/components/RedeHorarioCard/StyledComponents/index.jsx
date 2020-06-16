@@ -32,33 +32,4 @@ const Container = styled.div`
 }
 `;
 
-const Label = styled.h2`
-    margin: 0;
-    display: flex;
-    font-size: 2vh;
-    justify-content: space-around;
-    width: 25%;
-    align-items: center;
-`;
-
-const Details = styled.div`
-    width: 100%;
-    display:flex;
-    justify-content: left;
-    border-bottom: 2px solid ${Color.AZUL_CLARO};
-`;
-
-const Hours = styled.div`
-    width: 75%;
-    display:flex;
-    flex-wrap: wrap;
-    > button{
-        margin: 5px;
-    }
-`;
-
-Container.Details = Details;
-Container.Hours = Hours;
-Container.Label = Label;
-
 export default Container;
