@@ -52,9 +52,9 @@ const Card = ({
           </CardFooter.SubTitle>
           <CardFooter.Content>
             <TimeSlotWrapper>
-              <RedeTimeSlot descricao="SEG - 12:00" />
-              <RedeTimeSlot descricao="TER - 12:00" />
-              <RedeTimeSlot descricao="QUA - 12:00" />
+              {
+                timeSlots
+              }
             </TimeSlotWrapper>
             <IconsWrapper>
               <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />

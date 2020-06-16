@@ -9,6 +9,7 @@ import CaminhoTitleDesabilitado from './StyledComponents/CaminhoTitleDesabilitad
 import CaminhoAp from './StyledComponents/CaminhoAp';
 import { mentoriasByMentorado } from '../../services/mentorado';
 import RedeInputSearch from '../../components/RedeInputSearch/RedeInputSearch';
+import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
 
 function MentoriasDisponiveis() {
   const [cards, setCards] = useState('');
@@ -16,20 +17,64 @@ function MentoriasDisponiveis() {
   const [mentorias, setMentorias] = useState([]);
   const [redirectTo, setRedirectTo] = useState('');
 
+  function sortMentoriasHours(mentoriasAreaConhecimento) {
+    for (let i = 0; i < mentoriasAreaConhecimento.length; i += 1) {
+      mentoriasAreaConhecimento[i].dateTime.sort((a, b) => {
+        const firstSplitDate = a.dayOfTheMonth.split('/');
+        const secondSplitDate = b.dayOfTheMonth.split('/');
+        const firstSplitHour = a.times[0].hour.split(':');
+        const secondSplitHour = b.times[0].hour.split(':');
+        const first = new Date(firstSplitDate[2], firstSplitDate[1],
+          firstSplitDate[0], firstSplitHour[0], firstSplitHour[1]);
+        const second = new Date(secondSplitDate[2], secondSplitDate[1],
+          secondSplitDate[0], secondSplitHour[0], secondSplitHour[1]);
+        if (first > second) {
+          return 1;
+        } if (second > first) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+    setMentorias(mentoriasAreaConhecimento);
+  }
+  function transformMentoriasHours(mentoriasAreaConhecimento) {
+    const backup = mentoriasAreaConhecimento;
+    for (let i = 0; i < mentoriasAreaConhecimento.length; i += 1) {
+      const max = mentoriasAreaConhecimento[i].dateTime.length;
+      if (max >= 3) mentoriasAreaConhecimento[i].dateTime.splice(3);
+      else mentoriasAreaConhecimento[i].dateTime.splice(max);
+
+
+      backup[i].dateTime = mentoriasAreaConhecimento[i].dateTime.map((dateTime) => (
+        <RedeTimeSlot
+          descricao={`${dateTime.day.substring(0, 3)} - ${dateTime.times[0].hour}`}
+          selecionado={true}
+        />
+      ));
+    }
+    setMentorias(backup);
+  }
+
   function generateCards(mentoriasAreaConhecimento) {
+    sortMentoriasHours(mentoriasAreaConhecimento);
+    transformMentoriasHours(mentoriasAreaConhecimento);
     const cardsMentorias = mentoriasAreaConhecimento
       .map((mentoria) => (
         <Card
+          key={mentoria.idMentoria}
           title={mentoria.title}
           description={mentoria.description}
           image={`${urlFiles}/${mentoria.image}`}
           mentorias
-          mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join("")}
+          mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join('')}
           mentorImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
+          timeSlots={mentoria.dateTime}
         />
       ));
     setCards(cardsMentorias);
   }
+
 
   function filterMentorias(arrayMentoriasAll) {
     const mentoriasAreaConhecimento = arrayMentoriasAll

@@ -3,9 +3,9 @@ import { string, func, bool } from 'prop-types';
 import TimeSlot from './StyledComponents'
 
 const RedeTimeSlot = ({
-  descricao, onClick, selecionado,deselecionado
+  descricao, onClick, selecionado
 }) => (
-  <TimeSlot deselecionado={deselecionado} selecionado={selecionado}>
+  <TimeSlot  selecionado={selecionado}>
     {descricao}
   </TimeSlot>
 );

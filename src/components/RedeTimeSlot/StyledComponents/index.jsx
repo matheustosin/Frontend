@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
-import Selecionado from  './Selecionado' 
-import Deselecionado from './Deselecionado' 
+import Selecionado from './Selecionado';
+import Deselecionado from './Deselecionado';
+import COLOR from '../../../utils/colors.constants';
+
 
 const TimeSlot = styled.button`
   min-width: 110px;
@@ -14,8 +16,9 @@ const TimeSlot = styled.button`
     cursor:pointer;
   }
   ${({ selecionado }) => selecionado && Selecionado}
-  ${({ deselecionado }) => deselecionado && Deselecionado}
-
+  ${({ selecionado }) => !selecionado && Deselecionado}
+  
+  background-color: ${COLOR.VERDE};
   `;
 
 TimeSlot.displayName = 'TimeSlot';
