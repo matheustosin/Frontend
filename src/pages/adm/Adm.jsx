@@ -3,7 +3,6 @@ import { useSnackbar } from 'notistack';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCardAdm/RedeCardAdm';
-// import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
 import Modal from './StyledComponents/Modal';
 import Container from './StyledComponents';
 import Title2 from './StyledComponents/Title2';
@@ -47,6 +46,7 @@ function Administrador() {
       param: id,
       headers: { Authorization: `Bearer ${token}` },
     };
+    console.log(flag);
     mentoringEvaluation(body, config)
       .then((res) => {
         if (res.status === 200) {
@@ -56,7 +56,12 @@ function Administrador() {
         }
       })
       .catch((err) => {
-        enqueueSnackbar('A mentoria não pôde ser aprovada!', { variant: 'error', autoHideDuration: 2500 });
+        if (flag === 1) {
+          enqueueSnackbar('A mentoria não pôde ser aprovada!', { variant: 'error', autoHideDuration: 2500 });
+        }
+        if (flag === 2) {
+          enqueueSnackbar('A mentoria não pôde ser reprovada!', { variant: 'error', autoHideDuration: 2500 });
+        }
         console.log(err);
       });
   }
@@ -65,6 +70,7 @@ function Administrador() {
     pendingMentorings(headers)
       .then((res) => {
         if (res.status === 200) {
+          console.lgo(res.data);
           // eslint-disable-next-line no-use-before-define
           generateCards(res.data);
         }
