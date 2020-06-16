@@ -31,7 +31,7 @@ const Card = ({
   mentorName,
   mentorImage,
 }) => {
-  console.log('TODO: TimeSlots: ', timeSlots);
+  const adjustSizeDescription = () => ((description.length >= 114) ? `${description.substr(0, 111)}...` : description);
 
   return (
     <Container>
@@ -44,7 +44,7 @@ const Card = ({
           <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
         </CardHeader>
         <CardDescription>
-          {description}
+          {adjustSizeDescription(description)}
         </CardDescription>
         <CardFooter>
           <CardFooter.SubTitle>
@@ -52,9 +52,8 @@ const Card = ({
           </CardFooter.SubTitle>
           <CardFooter.Content>
             <TimeSlotWrapper>
-              <RedeTimeSlot descricao="SEG - 12:00" />
-              <RedeTimeSlot descricao="TER - 12:00" />
-              <RedeTimeSlot descricao="QUA - 12:00" />
+              <RedeTimeSlot descricao="SEGUNDA" />
+              {/* {timeSlots} */}
             </TimeSlotWrapper>
             <IconsWrapper>
               <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
@@ -73,8 +72,8 @@ const Card = ({
               {
                 mentorias && (
                   <MentorContent>
-                    <MentorName>{mentorName.split(" ").join("\n")}</MentorName>
-                    <MentorImage src={mentorImage}/>
+                    <MentorImage src={mentorImage} />
+                    <MentorName>{mentorName.split(' ').shift()}</MentorName>
                   </MentorContent>
                 )
               }
