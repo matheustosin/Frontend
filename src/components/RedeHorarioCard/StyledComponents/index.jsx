@@ -7,12 +7,14 @@ const Container = styled.div`
     opacity: 1;
     overflow: hidden;
     display: flex;
-    width: 95%;
+    width: 80%;
+    padding-left: 5%;
+    padding-right: 5%;
     min-height: 210px;
     height:auto;
     margin-bottom: 50px;
-    flex-direction:row;
-    justify-content:space-between;
+    flex-direction:column;
+    justify-content:center;
     align-items:center;
     font-family : Roboto, sans-serif;
     @media screen and (max-width:1000px){

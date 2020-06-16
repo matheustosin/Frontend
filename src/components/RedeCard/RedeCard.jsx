@@ -5,7 +5,8 @@ import visible from '../../assets/visibility-button.png';
 import remove from '../../assets/rubbish-bin-delete-button.png';
 import edition from '../../assets/create-new-pencil-button.png';
 import notVisible from '../../assets/invisible-button.png';
-import RedeTimeSlot from '../RedeTimeSlot/RedeTimeSlot';
+//  import RedeTimeSlot from '../RedeTimeSlot/RedeTimeSlot';
+import RedeButton from '../RedeButton/RedeButton';
 import RedeIcon from '../RedeIcon/RedeIcon';
 import CardDescription from './StyledComponents/card-description';
 import CardHeader from './StyledComponents/card-header';
@@ -17,14 +18,16 @@ import TimeSlotWrapper from './StyledComponents/timeslot-wrapper';
 import MentorName from './StyledComponents/mentor-name';
 import MentorImage from './StyledComponents/mentor-image';
 import MentorContent from './StyledComponents/mentor-content';
+//  import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
 
 const Card = ({
   title,
   description,
   image,
-  visibleFunction,
-  removeFunction,
-  editFunction,
+  onClickSchedule,
+  onClickVisible,
+  onClickRemove,
+  onClickEdit,
   isVisible,
   timeSlots,
   mentorias,
@@ -41,7 +44,7 @@ const Card = ({
           <CardHeader.Title>
             {title}
           </CardHeader.Title>
-          <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
+          { !mentorias && <RedeButton claro descricao="TODOS HORÁRIOS" onClick={onClickSchedule} /> }
         </CardHeader>
         <CardDescription>
           {description}
@@ -57,24 +60,24 @@ const Card = ({
               }
             </TimeSlotWrapper>
             <IconsWrapper>
-              <CardHeader.Button descricao="TODOS HORÁRIOS" onClick={() => { }} />
+              { !mentorias && <RedeButton claro descricao="TODOS HORÁRIOS" onClick={onClickSchedule} /> }
               {
                 !mentorias && (
                   <>
-                    <RedeIcon imageUrl={remove} onClick={removeFunction} />
+                    <RedeIcon imageUrl={remove} onClick={onClickRemove} />
                     <RedeIcon
                       imageUrl={isVisible ? visible : notVisible}
-                      onClick={visibleFunction}
+                      onClick={onClickVisible}
                     />
-                    <RedeIcon imageUrl={edition} onClick={editFunction} />
+                    <RedeIcon imageUrl={edition} onClick={onClickEdit} />
                   </>
                 )
               }
               {
                 mentorias && (
                   <MentorContent>
-                    <MentorName>{mentorName.split(" ").join("\n")}</MentorName>
-                    <MentorImage src={mentorImage}/>
+                    <MentorName>{mentorName.split(' ').join('\n')}</MentorName>
+                    <MentorImage src={mentorImage} />
                   </MentorContent>
                 )
               }
@@ -90,9 +93,10 @@ Card.propTypes = {
   description: string,
   title: string,
   isVisible: bool,
-  visibleFunction: func,
-  removeFunction: func,
-  editFunction: func,
+  onClickSchedule: func,
+  onClickVisible: func,
+  onClickRemove: func,
+  onClickEdit: func,
   mentorias: bool,
   mentorName: string,
 };
@@ -101,9 +105,10 @@ Card.defaultProps = {
   description: '',
   title: '',
   isVisible: true,
-  visibleFunction: null,
-  removeFunction: null,
-  editFunction: null,
+  onClickSchedule: null,
+  onClickVisible: null,
+  onClickRemove: null,
+  onClickEdit: null,
   mentorias: false,
   mentorName: '',
 };

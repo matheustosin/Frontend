@@ -12,7 +12,7 @@ const Button = styled.button`
   height: 40px;
   margin: 10px 0;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition: 0.3s;
   font-weight: 600;
   border-radius: 10px;
