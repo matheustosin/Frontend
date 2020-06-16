@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSnackbar } from 'notistack';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
-import { useSnackBar } from 'notistack';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCardAdm/RedeCardAdm';
 // import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
@@ -18,7 +18,7 @@ function Administrador() {
   const [flagModal, setFlagModal] = useState(false);
   const [mentoria, setMentoria] = useState(null);
   const [newTitle, setNewTitle] = useState('');
-  const { enqueueSnackbar } = useSnackBar();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
