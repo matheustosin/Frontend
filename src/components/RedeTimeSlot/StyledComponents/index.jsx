@@ -11,9 +11,13 @@ const TimeSlot = styled.button`
   font-size: 1em;
   border-radius: 10px;
   font-weight: 600;
+
   :hover{
     cursor:pointer;
   }
+  
+  ${({ notHoverable }) => notHoverable && `:hover{cursor:initial;}`
+}
   ${({ disponivel }) => disponivel && Disponivel}
   ${({ disponivel }) => !disponivel && Indisponivel}
   `;

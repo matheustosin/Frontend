@@ -41,8 +41,9 @@ function MentoriasDisponiveis() {
       params: { id: idMentoria },
       headers: { Authorization: `Bearer ${token}` },
     };
-    
-    marcarMentoria(config, mentoriaInfo);
+    console.log(mentoriaSelecionada.dateTime)
+    console.log(mentorias);
+    // marcarMentoria(config, mentoriaInfo);
   }
   function sortMentoriasHours(mentoriasAreaConhecimento) {
     for (let i = 0; i < mentoriasAreaConhecimento.length; i += 1) {

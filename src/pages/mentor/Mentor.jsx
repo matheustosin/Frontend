@@ -11,10 +11,13 @@ import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import { userTypes } from '../../utils/userType.constants';
+import RedeMarcarMentoria from '../../components/RedeMarcarMentoria/RedeMarcarMentoria';
 
 function Mentor() {
   const history = useHistory();
   const [mentorias, setMentorias] = useState([]);
+  const [modalFlag, setModalFlag] = useState(false);
+  const [mentoriaSelecionada, setMentoriaSelecionada] = useState(undefined);
   const { enqueueSnackbar } = useSnackbar();
 
   const sortMentoriasHours = (mentoriasMentor) => {
@@ -54,6 +57,7 @@ function Mentor() {
           <RedeTimeSlot
             descricao={`${description} - ${dateTime.times[0].hour}`}
             disponivel={!dateTime.times[0].flagBusy}
+            notHoverable
           />
         );
       });
