@@ -46,7 +46,6 @@ function Administrador() {
       param: id,
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log(flag);
     mentoringEvaluation(body, config)
       .then((res) => {
         if (res.status === 200) {
