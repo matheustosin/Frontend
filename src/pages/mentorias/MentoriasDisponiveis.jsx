@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import Card from '../../components/RedeCard/RedeCard';
 import Caminho from './StyledComponents/Caminho';
 import Container from './StyledComponents';
@@ -22,6 +23,8 @@ function MentoriasDisponiveis() {
   const history = useHistory();
   const [modalFlag, setModalFlag] = useState(false);
   const [mentoriaSelecionada, setMentoriaSelecionada] = useState(undefined);
+  const { enqueueSnackbar } = useSnackbar();
+
 
   function mentoriaSelected(mentoria, e) {
     e.preventDefault();
@@ -41,9 +44,12 @@ function MentoriasDisponiveis() {
       params: { id: idMentoria },
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log(mentoriaSelecionada.dateTime)
-    console.log(mentorias);
-    // marcarMentoria(config, mentoriaInfo);
+    marcarMentoria(config, mentoriaInfo).then(() => {
+      enqueueSnackbar('Mentoria marcada!', { variant: 'success', autoHideDuration: 2500 });
+      history.push('/mentorado');
+    }).catch((err) =>{
+      enqueueSnackbar('Não foi possível marcar essa mentoria.Verifique sua conexão com a rede.', { variant: 'error', autoHideDuration: 2500 });
+    });
   }
   function sortMentoriasHours(mentoriasAreaConhecimento) {
     for (let i = 0; i < mentoriasAreaConhecimento.length; i += 1) {
