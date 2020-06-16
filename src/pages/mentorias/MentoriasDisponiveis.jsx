@@ -45,16 +45,17 @@ function MentoriasDisponiveis() {
       if (max >= 3) mentoriasAreaConhecimento[i].dateTime.splice(3);
       else mentoriasAreaConhecimento[i].dateTime.splice(max);
 
-      const firstSplitDate = mentoriasAreaConhecimento[i].dateTime.dayOfTheMonth.split('/');
-      const firstDate = new Date(firstSplitDate[2], firstSplitDate[1], firstSplitDate[0]);
-      const description = `${firstDate.getDate()} / ${firstDate.getMonth()}`;
-
-      backup[i].dateTime = mentoriasAreaConhecimento[i].dateTime.map((dateTime) => (
-        <RedeTimeSlot
-          descricao={`${description} - ${dateTime.times[0].hour}`}
-          disponivel={!dateTime.times[0].flagBusy}
-        />
-      ));
+      backup[i].dateTime = mentoriasAreaConhecimento[i].dateTime.map((dateTime) => {
+        const firstSplitDate = dateTime.dayOfTheMonth.split('/');
+        const firstDate = new Date(firstSplitDate[2], firstSplitDate[1], firstSplitDate[0]);
+        const description = `${firstDate.getDate()} / ${firstDate.getMonth()}`;
+        return (
+          <RedeTimeSlot
+            descricao={`${description} - ${dateTime.times[0].hour}`}
+            disponivel={!dateTime.times[0].flagBusy}
+          />
+        );
+      });
     }
     setMentorias(backup);
   }
@@ -70,8 +71,8 @@ function MentoriasDisponiveis() {
           description={mentoria.description}
           image={`${urlFiles}/${mentoria.image}`}
           mentorias
-          mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join('')}
-          mentorImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
+          // mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join('')}
+          // mentorImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
           timeSlots={mentoria.dateTime}
         />
       ));

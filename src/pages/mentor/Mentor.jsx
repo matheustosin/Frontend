@@ -51,12 +51,10 @@ function Mentor() {
         const firstDate = new Date(firstSplitDate[2], firstSplitDate[1], firstSplitDate[0]);
         const description = `${firstDate.getDate()} / ${firstDate.getMonth()}`;
         return (
-
           <RedeTimeSlot
             descricao={`${description} - ${dateTime.times[0].hour}`}
             disponivel={!dateTime.times[0].flagBusy}
           />
-
         );
       });
     }
