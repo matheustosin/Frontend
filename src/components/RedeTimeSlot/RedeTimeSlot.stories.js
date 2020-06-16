@@ -8,5 +8,5 @@ export default {
   decorators: [withInfo],
 };
 
-export const Default = () => <RedeTimeSlot descricao="SEG - 10:30" deselecionado = 'true'/>;
-export const Enabled = () => <RedeTimeSlot descricao="SEG - 10:30" selecionado = 'true'/>;
+export const Default = () => <RedeTimeSlot descricao="SEG - 10:30" selecionado />;
+export const Enabled = () => <RedeTimeSlot descricao="SEG - 10:30" selecionado={false}/>;

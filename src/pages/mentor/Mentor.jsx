@@ -4,6 +4,7 @@ import { Container } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import StyledContainer from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
+import RedeTimeSlot from '../../components/RedeTimeSlot/RedeTimeSlot';
 // import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
 import { mentoriasByMentor, desativarMentoria, mudarVisibilidade } from '../../services/mentoria';
 import { profile } from '../../services/user';
@@ -15,6 +16,57 @@ function Mentor() {
   const history = useHistory();
   const [mentorias, setMentorias] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
+
+  const sortMentoriasHours = (mentoriasMentor) => {
+    for (let i = 0; i < mentoriasMentor.length; i += 1) {
+      mentoriasMentor[i].data.dateTime.sort((a, b) => {
+        const firstSplitDate = a.dayOfTheMonth.split('/');
+        const secondSplitDate = b.dayOfTheMonth.split('/');
+        const firstSplitHour = a.times[0].hour.split(':');
+        const secondSplitHour = b.times[0].hour.split(':');
+        const first = new Date(firstSplitDate[2], firstSplitDate[1],
+          firstSplitDate[0], firstSplitHour[0], firstSplitHour[1]);
+        const second = new Date(secondSplitDate[2], secondSplitDate[1],
+          secondSplitDate[0], secondSplitHour[0], secondSplitHour[1]);
+        if (first > second) {
+          return 1;
+        } if (second > first) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+    return mentoriasMentor;
+  };
+
+  const transformMentoriasHours = (mentoriasMentor) => {
+    const backup = mentoriasMentor;
+    for (let i = 0; i < mentoriasMentor.length; i += 1) {
+      const max = mentoriasMentor[i].data.dateTime.length;
+      if (max >= 3) mentoriasMentor[i].data.dateTime.splice(3);
+      else mentoriasMentor[i].data.dateTime.splice(max);
+
+      backup[i].data.dateTime = mentoriasMentor[i].data.dateTime.map((dateTime) => {
+        const firstSplitDate = dateTime.dayOfTheMonth.split('/');
+        const firstDate = new Date(firstSplitDate[2], firstSplitDate[1], firstSplitDate[0]);
+        const description = `${firstDate.getDate()} / ${firstDate.getMonth()}`;
+        return (
+
+          <RedeTimeSlot
+            descricao={`${description} - ${dateTime.times[0].hour}`}
+            disponivel={!dateTime.times[0].flagBusy}
+          />
+
+        );
+      });
+    }
+    return backup;
+  };
+
+  const generateCards = (mentoriasMentor) => {
+    const sorted = sortMentoriasHours(mentoriasMentor);
+    return transformMentoriasHours(sorted);
+  };
 
   const changeAvalibility = (index) => {
     const token = sessionStorage.getItem('token');
@@ -95,10 +147,12 @@ function Mentor() {
               <StyledContainer.Subtitle>Nenhuma mentoria encontrada!</StyledContainer.Subtitle>,
             );
           } else {
-            setMentorias(res.data);
+            const mentoriasArray = generateCards(res.data);
+            setMentorias(mentoriasArray);
           }
         })
         .catch((erro) => {
+          console.log(erro);
           enqueueSnackbar(erro.response.data.error, { variant: 'error', autoHideDuration: 3000 });
           setMentorias(
             <StyledContainer.Subtitle>Nenhuma mentoria encontrada!</StyledContainer.Subtitle>,
@@ -134,6 +188,7 @@ function Mentor() {
                 visibleFunction={() => changeVisibility(i)}
                 editFunction={() => editPage(mentoria)}
                 isVisible={mentoria.data.isVisible}
+                timeSlots={mentoria.data.dateTime}
               />
             ))
           ) : (<StyledContainer.Subtitle>Nenhuma mentoria encontrada!</StyledContainer.Subtitle>)}

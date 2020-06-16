@@ -1,26 +1,24 @@
 import React from 'react';
 import { string, func, bool } from 'prop-types';
-import TimeSlot from './StyledComponents'
+import TimeSlot from './StyledComponents';
 
 const RedeTimeSlot = ({
-  descricao, onClick, selecionado
+  descricao, onClick, disponivel,
 }) => (
-  <TimeSlot  selecionado={selecionado}>
+  <TimeSlot disponivel={disponivel} onClick={onClick} disabled={!disponivel}>
     {descricao}
   </TimeSlot>
 );
 
 RedeTimeSlot.propTypes = {
   descricao: string,
-  selecionado: bool,
-  deselecionado: bool,
+  disponivel: bool,
   onChange: func,
 };
 
 RedeTimeSlot.defaultProps = {
   descricao: '',
-  selecionado : true,
-  deselecionado: false,
+  disponivel: true,
   onClick: () => {},
 };
 

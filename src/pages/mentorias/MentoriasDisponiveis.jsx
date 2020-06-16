@@ -45,11 +45,14 @@ function MentoriasDisponiveis() {
       if (max >= 3) mentoriasAreaConhecimento[i].dateTime.splice(3);
       else mentoriasAreaConhecimento[i].dateTime.splice(max);
 
+      const firstSplitDate = mentoriasAreaConhecimento[i].dateTime.dayOfTheMonth.split('/');
+      const firstDate = new Date(firstSplitDate[2], firstSplitDate[1], firstSplitDate[0]);
+      const description = `${firstDate.getDate()} / ${firstDate.getMonth()}`;
 
       backup[i].dateTime = mentoriasAreaConhecimento[i].dateTime.map((dateTime) => (
         <RedeTimeSlot
-          descricao={`${dateTime.day.substring(0, 3)} - ${dateTime.times[0].hour}`}
-          selecionado={true}
+          descricao={`${description} - ${dateTime.times[0].hour}`}
+          disponivel={!dateTime.times[0].flagBusy}
         />
       ));
     }

@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-import Selecionado from './Selecionado';
-import Deselecionado from './Deselecionado';
-import COLOR from '../../../utils/colors.constants';
+import Disponivel from './Disponivel';
+import Indisponivel from './Indisponivel';
 
 
 const TimeSlot = styled.button`
@@ -15,10 +14,8 @@ const TimeSlot = styled.button`
   :hover{
     cursor:pointer;
   }
-  ${({ selecionado }) => selecionado && Selecionado}
-  ${({ selecionado }) => !selecionado && Deselecionado}
-  
-  background-color: ${COLOR.VERDE};
+  ${({ disponivel }) => disponivel && Disponivel}
+  ${({ disponivel }) => !disponivel && Indisponivel}
   `;
 
 TimeSlot.displayName = 'TimeSlot';
