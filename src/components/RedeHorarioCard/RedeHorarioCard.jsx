@@ -12,18 +12,24 @@ function RedeHorarioCard({ mentoria }) {
   const [open, setOpen] = React.useState(false);
   const [timeInfo, setTimeInfo] = React.useState('');
   const [dateInfo, setDateInfo] = React.useState('');
-
+  const [busyInfo, setBusyInfo] = React.useState([]);
+  const [indexBusy, setIndexBusy] = React.useState('');
   const { dateTime } = mentoria;
-  const sortedTimes = dateTime.sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[0] - dateTimeB.dayOfTheMonth.split('/')[0])
+
+  const sortedDates = dateTime
+    .sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[0] - dateTimeB.dayOfTheMonth.split('/')[0])
     .sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[1] - dateTimeB.dayOfTheMonth.split('/')[1]);
 
-  const timeInformation = sortedTimes.map((dt) => {
+  const timeInformation = sortedDates.map((dt, index) => {
+    if (busyInfo[index] !== undefined) busyInfo[index] = dt.times[0].flagBusy;
+    else busyInfo.push(dt.times[0].flagBusy);
     // eslint-disable-next-line max-len
     const hours = dt.times.map((time) => (
       <RedeHorarioButton
-      desabilitado={time.flagBusy}
+        ocupado={busyInfo[index]}
         horario={time.hour}
         onClick={() => {
+          setIndexBusy(index);
           setTimeInfo(time.hour);
           setDateInfo(dt.dayOfTheMonth);
           setOpen(true);
@@ -32,7 +38,7 @@ function RedeHorarioCard({ mentoria }) {
     ));
 
     return (
-      <Details>
+      <Details key={dt.dayOfTheMonth}>
         <Label>{dt.dayOfTheMonth}</Label>
         <Hours>
           {hours}
@@ -45,7 +51,15 @@ function RedeHorarioCard({ mentoria }) {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
     marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
-      .then((res) => (res.status === 200 ? console.log('mentoria marcada') : console.log('Falha ao marcar mentoria. Código: ', res.status)))
+      .then((res) => {
+        if (res.status === 200) {
+          busyInfo[indexBusy] = true;
+          setBusyInfo(busyInfo);
+          console.log('mentoria marcada');
+        } else {
+          console.log('Falha ao marcar mentoria. Código: ', res.status);
+        }
+      })
       .catch((err) => console.error(err));
   }
 
