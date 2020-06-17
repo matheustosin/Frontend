@@ -185,9 +185,9 @@ function Mentor() {
                 title={mentoria.data.title}
                 description={mentoria.data.description}
                 image={`${urlFiles}/${mentoria.data.image}`}
-                removeFunction={() => changeAvalibility(i)}
-                visibleFunction={() => changeVisibility(i)}
-                editFunction={() => editPage(mentoria)}
+                onClickRemove={() => changeAvalibility(i)}
+                onClickVisible={() => changeVisibility(i)}
+                onClickEdit={() => editPage(mentoria)}
                 isVisible={mentoria.data.isVisible}
                 timeSlots={mentoria.data.dateTime}
               />
