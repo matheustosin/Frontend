@@ -4,9 +4,13 @@ import React from 'react';
 import ContainerCheckbox from './ContainerCheckbox';
 
 
-const Checkbox = ({ label, name, value, onChange }) => (
+const Checkbox = ({
+  label, checked, value, onChange,
+}) => (
   <ContainerCheckbox>
-    <input type="checkbox" id={value} value={value} onChange={onChange} />
+    {checked
+      ? <input type="checkbox" id={value} value={value} onChange={onChange} defaultChecked />
+      : <input type="checkbox" id={value} value={value} onChange={onChange} />}
     <ContainerCheckbox.Label htmlFor={value}>{label}</ContainerCheckbox.Label>
   </ContainerCheckbox>
 );
