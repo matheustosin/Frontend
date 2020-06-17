@@ -7,7 +7,6 @@ import Card from '../../components/RedeCard/RedeCard';
 // import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
 import { mentoriasByMentor, desativarMentoria, mudarVisibilidade } from '../../services/mentoria';
 import { profile } from '../../services/user';
-import { urlFiles } from '../../services/http';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import { userTypes } from '../../utils/userType.constants';
 
@@ -113,12 +112,6 @@ function Mentor() {
     <>
       <Container>
         <StyledContainer>
-          {/* <ProfileInfo
-            name={name}
-            linkedin={linkedin}
-            image={image}
-            editFunction={editProfilePage}
-          /> */}
           <StyledContainer.HeaderPage>
             <StyledContainer.Title> MINHAS MENTORIAS </StyledContainer.Title>
             <RedeButton onClick={routeCadastro} descricao="+ NOVA MENTORIA" />
@@ -127,13 +120,10 @@ function Mentor() {
             mentorias.map((mentoria, i) => (
               <Card
                 key={mentoria.id}
-                title={mentoria.data.title}
-                description={mentoria.data.description}
-                image={`${urlFiles}/${mentoria.data.image}`}
-                removeFunction={() => changeAvalibility(i)}
-                visibleFunction={() => changeVisibility(i)}
-                editFunction={() => editPage(mentoria)}
-                isVisible={mentoria.data.isVisible}
+                mentoria={mentoria.data}
+                onClickRemove={() => changeAvalibility(i)}
+                onClickVisible={() => changeVisibility(i)}
+                onClickEdit={() => editPage(mentoria)}
               />
             ))
           ) : (<StyledContainer.Subtitle>Nenhuma mentoria encontrada!</StyledContainer.Subtitle>)}

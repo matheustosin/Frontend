@@ -1,11 +1,12 @@
 import React from 'react';
-import { string, func, bool } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 import Container from './StyledComponents';
-import visible from '../../assets/visibility-button.png';
+// import visible from '../../assets/visibility-button.png';
 import remove from '../../assets/rubbish-bin-delete-button.png';
 import edition from '../../assets/create-new-pencil-button.png';
 import notVisible from '../../assets/invisible-button.png';
 //  import RedeTimeSlot from '../RedeTimeSlot/RedeTimeSlot';
+import { urlFiles } from '../../services/http';
 import RedeButton from '../RedeButton/RedeButton';
 import RedeIcon from '../RedeIcon/RedeIcon';
 import CardDescription from './StyledComponents/card-description';
@@ -21,33 +22,28 @@ import MentorContent from './StyledComponents/mentor-content';
 //  import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
 
 const Card = ({
-  title,
-  description,
-  image,
+  mentoria,
+  mentorias,
   onClickSchedule,
   onClickVisible,
   onClickRemove,
   onClickEdit,
-  isVisible,
-  timeSlots,
-  mentorias,
-  mentorName,
-  mentorImage,
 }) => {
-  console.log('TODO: TimeSlots: ', timeSlots);
+  const nextAvailableHours = mentoria.dateTime.slice(0, 3)
+    .map((day) => <RedeButton claro descricao={`${day.day.slice(0, 3)} - ${day.times[0].hour}`} onClick={onClickSchedule} />);
 
   return (
     <Container>
-      <CardLogo src={image} />
+      <CardLogo src={`${urlFiles}/${mentoria.image}`} />
       <CardContent>
         <CardHeader>
           <CardHeader.Title>
-            {title}
+            {mentoria.title}
           </CardHeader.Title>
           { !mentorias && <RedeButton claro descricao="TODOS HORÁRIOS" onClick={onClickSchedule} /> }
         </CardHeader>
         <CardDescription>
-          {description}
+          {mentoria.description}
         </CardDescription>
         <CardFooter>
           <CardFooter.SubTitle>
@@ -55,9 +51,7 @@ const Card = ({
           </CardFooter.SubTitle>
           <CardFooter.Content>
             <TimeSlotWrapper>
-              <RedeButton claro descricao="SEG - 12:00" onClick={() => {}} />
-              <RedeButton claro descricao="TER - 12:00" onClick={() => {}} />
-              <RedeButton claro descricao="QUA - 12:00" onClick={() => {}} />
+              {nextAvailableHours}
             </TimeSlotWrapper>
             <IconsWrapper>
               { !mentorias && <RedeButton claro descricao="TODOS HORÁRIOS" onClick={onClickSchedule} /> }
@@ -66,7 +60,7 @@ const Card = ({
                   <>
                     <RedeIcon imageUrl={remove} onClick={onClickRemove} />
                     <RedeIcon
-                      imageUrl={isVisible ? visible : notVisible}
+                      imageUrl={mentoria.data ? mentoria.data.isVisible : notVisible}
                       onClick={onClickVisible}
                     />
                     <RedeIcon imageUrl={edition} onClick={onClickEdit} />
@@ -76,8 +70,8 @@ const Card = ({
               {
                 mentorias && (
                   <MentorContent>
-                    <MentorName>{mentorName.split(' ').join('\n')}</MentorName>
-                    <MentorImage src={mentorImage} />
+                    <MentorName>{mentoria.mentorInfos.name.split(/(\s).+\s/).join('')}</MentorName>
+                    <MentorImage src={`${urlFiles}/${mentoria.mentorInfos.image}`} />
                   </MentorContent>
                 )
               }
@@ -90,27 +84,22 @@ const Card = ({
 };
 
 Card.propTypes = {
-  description: string,
-  title: string,
-  isVisible: bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  mentoria: object,
+  mentorias: bool,
   onClickSchedule: func,
   onClickVisible: func,
   onClickRemove: func,
   onClickEdit: func,
-  mentorias: bool,
-  mentorName: string,
 };
 
 Card.defaultProps = {
-  description: '',
-  title: '',
-  isVisible: true,
+  mentoria: null,
+  mentorias: false,
   onClickSchedule: null,
   onClickVisible: null,
   onClickRemove: null,
   onClickEdit: null,
-  mentorias: false,
-  mentorName: '',
 };
 
 export default Card;

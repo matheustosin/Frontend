@@ -95,7 +95,7 @@ function CadastroMentoria() {
       enqueue('Selecione o tipo de mentoria');
     } else if (oldMentoria) {
       if (
-        typeof image === 'string'
+        typeof image === 'string' //!!
       ) data.delete('image');
       const headers = { headers: { param: { id: oldMentoria.id }, Authorization: `Bearer ${token}` } };
       atualizarMentoria(headers, data).then((res) => {
@@ -225,14 +225,16 @@ function CadastroMentoria() {
             </DivSelect.Labels>
             {
               listDataHours.map((select, index) => (
-                <ContainerDataHora>
+                <ContainerDataHora key={select.id}>
                   <>
                     <Select
+                      key={daysSelect}
                       options={daysSelect}
                       select={select.date}
                       onChange={(event) => setValueDate(index, event.target.value)}
                     />
                     <Select
+                      key={hoursSelect}
                       options={hoursSelect}
                       select={select.hour}
                       onChange={(event) => setValueHour(index, event.target.value)}

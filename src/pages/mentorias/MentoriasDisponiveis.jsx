@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Card from '../../components/RedeCard/RedeCard';
 import Caminho from './StyledComponents/Caminho';
 import Container from './StyledComponents';
-import { urlFiles } from '../../services/http';
+//import { urlFiles } from '../../services/http';
 import CaminhoTitle from './StyledComponents/CaminhoTitle';
 import CaminhoTitleDesabilitado from './StyledComponents/CaminhoTitleDesabilitado';
 import CaminhoAp from './StyledComponents/CaminhoAp';
@@ -28,11 +28,8 @@ function MentoriasDisponiveis() {
     const cardsMentorias = mentoriasAreaConhecimento
       .map((mentoria) => (
         <Card
-          title={mentoria.title}
-          description={mentoria.description}
-          image={`${urlFiles}/${mentoria.image}`}
-          mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join('')}
-          mentorImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
+          key={mentoria.idMentoria}
+          mentoria={mentoria}
           onClickSchedule={(e) => mentoriaSelected(mentoria, e)}
         />
       ));
