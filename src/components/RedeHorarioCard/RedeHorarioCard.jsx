@@ -21,6 +21,7 @@ function RedeHorarioCard({ mentoria }) {
     .sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[1] - dateTimeB.dayOfTheMonth.split('/')[1]);
 
   const timeInformation = sortedDates.map((dt, index) => {
+    console.log('hit');
     if (busyInfo[index] !== undefined) busyInfo[index] = dt.times[0].flagBusy;
     else busyInfo.push(dt.times[0].flagBusy);
     // eslint-disable-next-line max-len
@@ -29,6 +30,9 @@ function RedeHorarioCard({ mentoria }) {
         ocupado={busyInfo[index]}
         horario={time.hour}
         onClick={() => {
+          const bkp = busyInfo;
+          bkp[index] = true;
+          setBusyInfo(bkp);
           setIndexBusy(index);
           setTimeInfo(time.hour);
           setDateInfo(dt.dayOfTheMonth);
@@ -47,14 +51,15 @@ function RedeHorarioCard({ mentoria }) {
     );
   });
 
-  function onConfirm(data) {
+  function onConfirm(data) {    
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
     marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
       .then((res) => {
         if (res.status === 200) {
-          busyInfo[indexBusy] = true;
-          setBusyInfo(busyInfo);
+          dateTime.forEach((el, index) => {
+            if (el.dayOfTheMonth === data.date && el.times[0].hour) {sortedDates[index].times[0].flagBusy = true;}
+          });
           console.log('mentoria marcada');
         } else {
           console.log('Falha ao marcar mentoria. Código: ', res.status);
