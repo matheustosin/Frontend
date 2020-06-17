@@ -10,6 +10,7 @@ import { profile } from '../../services/user';
 import { urlFiles } from '../../services/http';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import { userTypes } from '../../utils/userType.constants';
+import mentoringImage from '../../assets/task.png';
 
 function Mentor() {
   const history = useHistory();
@@ -129,7 +130,7 @@ function Mentor() {
                 key={mentoria.id}
                 title={mentoria.data.title}
                 description={mentoria.data.description}
-                image={`${urlFiles}/${mentoria.data.image}`}
+                image={mentoria.data.iamge ? `${urlFiles}/${mentoria.data.image}` : mentoringImage}
                 removeFunction={() => changeAvalibility(i)}
                 visibleFunction={() => changeVisibility(i)}
                 editFunction={() => editPage(mentoria)}

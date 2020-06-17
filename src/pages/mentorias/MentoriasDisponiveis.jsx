@@ -9,6 +9,8 @@ import CaminhoTitleDesabilitado from './StyledComponents/CaminhoTitleDesabilitad
 import CaminhoAp from './StyledComponents/CaminhoAp';
 import { mentoriasByMentorado } from '../../services/mentorado';
 import RedeInputSearch from '../../components/RedeInputSearch/RedeInputSearch';
+import imageDefault from '../../assets/account.png';
+import mentoringImage from '../../assets/task.png';
 
 function MentoriasDisponiveis() {
   const [cards, setCards] = useState('');
@@ -22,10 +24,10 @@ function MentoriasDisponiveis() {
         <Card
           title={mentoria.title}
           description={mentoria.description}
-          image={`${urlFiles}/${mentoria.image}`}
+          image={!mentoria.image ? `${urlFiles}/${mentoria.image}` : mentoringImage}
           mentorias
-          mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join("")}
-          mentorImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
+          mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join('')}
+          mentorImage={!mentoria.mentorInfos.image ? `${urlFiles}/${mentoria.mentorInfos.image}` : imageDefault}
         />
       ));
     setCards(cardsMentorias);

@@ -5,8 +5,8 @@ import logo from '../../assets/logo2.png';
 import { profile as getUser } from '../../services/user';
 import Container from './StyledComponents';
 import { urlFiles } from '../../services/http';
-import standartPhoto from '../../assets/account.png';
 import { userTypes } from '../../utils/userType.constants';
+import imageDefault from '../../assets/account.png';
 
 // const getTitle = () => sessionStorage.getItem('headerTitle');
 const excludedPaths = ['/', '/register', '/cadastro-mentor', '/cadastro-mentorado'];
@@ -115,7 +115,6 @@ const RedeHeader = (props) => {
     history.push(`/${path}`);
     handleMenuClose();
   };
-
   return (
     <>
       <Container>
@@ -125,7 +124,7 @@ const RedeHeader = (props) => {
           profile ? (
             <Container.ImgProfile
               onClick={handleProfileMenuOpen}
-              src={profile ? `${urlFiles}/${profile.image}` : standartPhoto}
+              src={profile && profile.image ? `${urlFiles}/${profile.image}` : imageDefault}
             />
           ) : (<div />)
         }
