@@ -13,11 +13,12 @@ function Mentoria() {
   const [redirectTo, setRedirectTo] = useState('');
   const mentoria = JSON.parse(sessionStorage.getItem('mentoriaSelected'));
   const areaConhecimento = sessionStorage.getItem('areaSelected');
+  
+  //Http.put(`/mentoria/choice/${mentoria.idMentoria}`, data, headers);
 
   console.log(mentoria);
   return (redirectTo) ? <Redirect to={redirectTo} /> : (
     <Container>
-      <RedeHeader />
       <CaminhoAp>
         <CaminhoTitleDesabilitado onClick={() => setRedirectTo('/mentorado')}>Home</CaminhoTitleDesabilitado>
         <Caminho />
@@ -31,7 +32,7 @@ function Mentoria() {
         mentorias
       />
 
-      <RedeHorarioCard mentoria={mentoria}/>
+      <RedeHorarioCard mentoria={mentoria} />
     </Container>
   );
 }

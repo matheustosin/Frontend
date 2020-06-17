@@ -6,6 +6,7 @@ import Details from './StyledComponents/Details';
 import { urlFiles } from '../../services/http';
 import RedeHorarioButton from '../RedeHorarioButton/RedeHorarioButton';
 import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
+import { marcarMentoria } from '../../services/mentoria';
 
 function RedeHorarioCard({ mentoria }) {
   const [open, setOpen] = React.useState(false);
@@ -39,6 +40,14 @@ function RedeHorarioCard({ mentoria }) {
     );
   });
 
+  function onConfirm(data) {
+    const token = sessionStorage.getItem('token');
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
+      .then((res) => (res.status === 200 ? console.log('mentoria marcada') : console.log('Falha ao marcar mentoria. Código: ', res.status)))
+      .catch((err) => console.error(err));
+  }
+
   return (
     <Container>
       <>
@@ -51,7 +60,7 @@ function RedeHorarioCard({ mentoria }) {
           date={dateInfo}
           hour={timeInfo}
           onClose={() => setOpen(false)}
-          onConfirm={(evt) => console.log('Mentoria: ', evt)}
+          onConfirm={(evt) => onConfirm(evt)}
         />
       </>
       <Details style={{ borderBottom: 'none' }}>
