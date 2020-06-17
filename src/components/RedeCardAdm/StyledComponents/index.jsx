@@ -1,13 +1,10 @@
 import styled from 'styled-components';
-<<<<<<< HEAD
-=======
 import CardLogo from './card-logo';
 import CardHeader from './card-header';
 import CardDescription from './card-description';
 import CardContent from './card-content';
 import SubTitle from './subtitle';
 import TimeSlotWrapper from './timeslot-wrapper';
->>>>>>> develop
 import Color from '../../../utils/colors.constants';
 
 const Container = styled.div`
@@ -16,13 +13,11 @@ const Container = styled.div`
     opacity: 1;
     overflow: hidden;
     display: flex;
-    width: 95%;
+    width: 1024px;
     min-height: 210px;
     height:auto;
     margin-bottom: 50px;
     flex-direction:row;
-    justify-content:space-between;
-    align-items:center;
     font-family : Roboto, sans-serif;
     @media screen and (max-width:1000px){
         flex-direction:column;
