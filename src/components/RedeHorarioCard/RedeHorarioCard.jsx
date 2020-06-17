@@ -21,6 +21,7 @@ function RedeHorarioCard({ mentoria }) {
     // eslint-disable-next-line max-len
     const hours = dt.times.map((time) => (
       <RedeHorarioButton
+      desabilitado={time.flagBusy}
         horario={time.hour}
         onClick={() => {
           setTimeInfo(time.hour);
