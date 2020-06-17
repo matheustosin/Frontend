@@ -114,10 +114,7 @@ function CadastroMentorado() {
         .then((res) => {
           if (res.status === 200) {
             enqueue('Usuário cadastrado com sucesso!', 'success');
-            pushIfNecessary(
-              userTypes.MENTORADO,
-              (link) => history.push(link),
-            );
+            history.push('/');
           }
         })
         .catch((err) => {
