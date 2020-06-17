@@ -159,9 +159,7 @@ function Administrador() {
       <RedeHeader />
       <Container.Title>APROVAÇÕES PENDENTES</Container.Title>
       <Title2>
-        {`Você tem ${cards.length} mentoria${
-          cards.length > 1 ? 's' : ''
-          } para aprovar`}
+        {`Você tem ${cards.length} mentoria${cards.length !== 1 ? 's' : ''} para aprovar`}
       </Title2>
       <br />
       {cards}
