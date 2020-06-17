@@ -59,6 +59,7 @@ const RedeHeader = (props) => {
 
   const handleLogOut = () => {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('homeEscolhida');
     logOut();
     handleMenuClose();
   };
@@ -110,8 +111,10 @@ const RedeHeader = (props) => {
     return history.push(to);
   };
 
-  const escolherHome = (path) => {
-    sessionStorage.setItem('homeEscolhida', path);
+  const escolherHome = (path, sessionSave = true) => {
+    if (sessionSave) {
+      sessionStorage.setItem('homeEscolhida', path);
+    }
     history.push(`/${path}`);
     handleMenuClose();
   };
@@ -144,12 +147,11 @@ const RedeHeader = (props) => {
           >
             <MenuItem onClick={() => { }} disabled>{profile ? profile.name : ''}</MenuItem>
             {profile.userType === userTypes.ADMINISTRADOR && props && props.location && props.location.pathname !== ('/administrador')
-              && (<MenuItem onClick={() => escolherHome('administrador')}>Home Administrador</MenuItem>)}
+              && (<MenuItem onClick={() => escolherHome('administrador', false)}>Home Administrador</MenuItem>)}
             {(profile.userType === userTypes.MENTOREMENTORADO
               || profile.userType === userTypes.ADMINISTRADOR)
               && (
-                sessionStorage.getItem('homeEscolhida')
-                && sessionStorage.getItem('homeEscolhida') !== 'mentor'
+                sessionStorage.getItem('homeEscolhida') !== 'mentor'
               )
               && (
                 <MenuItem onClick={() => escolherHome('mentor')}>Home Mentor</MenuItem>
@@ -157,8 +159,7 @@ const RedeHeader = (props) => {
             {(profile.userType === userTypes.MENTOREMENTORADO
               || profile.userType === userTypes.ADMINISTRADOR)
               && (
-                !sessionStorage.getItem('homeEscolhida')
-                || sessionStorage.getItem('homeEscolhida') !== 'mentorado'
+                sessionStorage.getItem('homeEscolhida') !== 'mentorado'
               )
               && (
                 <MenuItem onClick={() => escolherHome('mentorado')}>Home Mentorado</MenuItem>
