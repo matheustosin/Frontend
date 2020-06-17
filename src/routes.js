@@ -9,6 +9,7 @@ import CadastroMentorado from './pages/cadastro-mentorado/CadastroMentorado';
 import CadastroMentoria from './pages/cadastro-mentoria/CadastroMentoria';
 import MentoriasDisponiveis from './pages/mentorias/MentoriasDisponiveis';
 import Mentoria from './pages/mentoria/Mentoria';
+import Administrador from './pages/adm/Adm';
 import Mentorado from './pages/mentorado/Mentorado';
 import RedeHeader from './components/RedeHeader/RedeHeader';
 
@@ -28,6 +29,7 @@ export default function Routes() {
         <Route path="/mentor" component={Mentor} />
         <Route path="/mentoria" component={Mentoria} />
         <Route path="/mentorias-disponiveis" component={MentoriasDisponiveis} />
+        <Route path="/administrador" component={Administrador} />
         <Route path="/mentorado" component={Mentorado} />
       </Switch>
     </BrowserRouter>

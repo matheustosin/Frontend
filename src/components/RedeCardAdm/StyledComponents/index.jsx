@@ -13,15 +13,12 @@ const Container = styled.div`
     opacity: 1;
     overflow: hidden;
     display: flex;
-    width: 95%;
+    width: 1024px;
     min-height: 210px;
     height:auto;
     margin-bottom: 50px;
     flex-direction:row;
-    justify-content:space-between;
-    align-items:center;
     font-family : Roboto, sans-serif;
-    
     @media screen and (max-width:1000px){
         flex-direction:column;
         width:85vw;

@@ -143,7 +143,7 @@ const RedeHeader = (props) => {
             onClose={handleMenuClose}
           >
             <MenuItem onClick={() => { }} disabled>{profile ? profile.name : ''}</MenuItem>
-            {profile.userType === userTypes.ADMINISTRADOR && props.location.pathname !== ('/administrador')
+            {profile.userType === userTypes.ADMINISTRADOR && props && props.location && props.location.pathname !== ('/administrador')
               && (<MenuItem onClick={() => escolherHome('administrador')}>Home Administrador</MenuItem>)}
             {(profile.userType === userTypes.MENTOREMENTORADO
               || profile.userType === userTypes.ADMINISTRADOR)

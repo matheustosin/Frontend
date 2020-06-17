@@ -10,6 +10,7 @@ import ColorsDefault from '../../utils/colors.constants';
 import { profile } from '../../services/user';
 import { userTypes } from '../../utils/userType.constants';
 
+
 function Mentorado() {
   const [areas, setAreas] = useState([]);
   const [showCards, setShowCards] = useState([]);
@@ -51,6 +52,7 @@ function Mentorado() {
         resultAreas.push(element.name);
       }
     });
+    console.log(resultAreas);
     setAreas(resultAreas);
     buildCards(resultAreas);
   }

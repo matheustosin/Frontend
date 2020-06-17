@@ -11,6 +11,6 @@ const MentorName = styled.p`
     padding: 0 5px 0 0;
     font-size: 1em;
   }
-`
+`;
 
 export default MentorName;

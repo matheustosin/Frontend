@@ -31,6 +31,7 @@ function MentoriasDisponiveis() {
           key={mentoria.idMentoria}
           mentoria={mentoria}
           onClickSchedule={(e) => mentoriaSelected(mentoria, e)}
+          mentorias
         />
       ));
     setCards(cardsMentorias);
