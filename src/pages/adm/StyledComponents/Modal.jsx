@@ -34,12 +34,11 @@ const Modal = ({
         <RedeButton
           descricao="Cancelar"
           onClick={handleClose}
-          color="primary"
+          cancelar
         />
         <RedeButton
           descricao="Aprovar"
           onClick={editFunction}
-          color="primary"
         />
       </DialogActions>
     </Dialog>

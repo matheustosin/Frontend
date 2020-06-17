@@ -25,12 +25,11 @@ const ModalReprove = ({
         <RedeButton
           descricao="Não"
           onClick={handleClose}
-          color="primary"
+          cancelar
         />
         <RedeButton
           descricao="Sim"
           onClick={evaluateMentoring}
-          color="primary"
         />
       </DialogActions>
     </Dialog>
