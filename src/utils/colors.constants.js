@@ -4,6 +4,7 @@ export default {
   AZUL_CLARO: '#97C0E2',
   BRANCO: '#FFFFFF',
   CINZA: '#D2D0D0',
+  CINZA_ESCURO: '#ADADAD',
   VERMELHO: '#FF0000',
   VERDE: '#97E298',
   VERDE_ESCURO: '#009900',
