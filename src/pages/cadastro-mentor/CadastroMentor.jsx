@@ -53,6 +53,10 @@ function CadastroMentor() {
     // sessionStorage.setItem('headerTitle', `${old ? 'Edição' : 'Cadastro'} Mentor`);
     if (!old && tkn) {
       profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
+        if (resp.data.userType === userTypes.ADMINISTRADOR) {
+          history.push('/administrador');
+          return;
+        }
         pushIfNecessary(
           resp.data.userType,
           (link) => history.push(link),
@@ -181,6 +185,7 @@ function CadastroMentor() {
       }
       setImage(event.target.files[0]);
       setImageurl(url);
+      return '';
     };
   };
 

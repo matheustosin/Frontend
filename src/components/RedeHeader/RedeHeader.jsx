@@ -163,7 +163,10 @@ const RedeHeader = (props) => {
               && (
                 <MenuItem onClick={() => escolherHome('mentorado')}>Home Mentorado</MenuItem>
               )}
-            <MenuItem onClick={handleEditProfile}>Editar perfil</MenuItem>
+            {
+              (profile.userType !== userTypes.ADMINISTRADOR)
+              && <MenuItem onClick={handleEditProfile}>Editar perfil</MenuItem>
+            }
             <MenuItem onClick={handleLogOut}>Sair</MenuItem>
           </Menu>
 
