@@ -24,10 +24,10 @@ function MentoriasDisponiveis() {
         <Card
           title={mentoria.title}
           description={mentoria.description}
-          image={!mentoria.image ? `${urlFiles}/${mentoria.image}` : mentoringImage}
+          image={mentoria.image ? `${urlFiles}/${mentoria.image}` : mentoringImage}
           mentorias
           mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join('')}
-          mentorImage={!mentoria.mentorInfos.image ? `${urlFiles}/${mentoria.mentorInfos.image}` : imageDefault}
+          mentorImage={mentoria.mentorInfos.image ? `${urlFiles}/${mentoria.mentorInfos.image}` : imageDefault}
         />
       ));
     setCards(cardsMentorias);

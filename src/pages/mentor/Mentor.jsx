@@ -109,7 +109,6 @@ function Mentor() {
     fetchData();
     fetchCards();
   }, []);
-
   return (
     <>
       <Container>
@@ -130,7 +129,7 @@ function Mentor() {
                 key={mentoria.id}
                 title={mentoria.data.title}
                 description={mentoria.data.description}
-                image={mentoria.data.iamge ? `${urlFiles}/${mentoria.data.image}` : mentoringImage}
+                image={mentoria.data.image ? `${urlFiles}/${mentoria.data.image}` : mentoringImage}
                 removeFunction={() => changeAvalibility(i)}
                 visibleFunction={() => changeVisibility(i)}
                 editFunction={() => editPage(mentoria)}
