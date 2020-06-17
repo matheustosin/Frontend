@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
 import Container from './StyledComponents';
 import Hours from './StyledComponents/Hours';
 import Label from './StyledComponents/Label';
@@ -12,6 +13,13 @@ function RedeHorarioCard({ mentoria }) {
   const [open, setOpen] = React.useState(false);
   const [timeInfo, setTimeInfo] = React.useState('');
   const [dateInfo, setDateInfo] = React.useState('');
+
+  const { enqueueSnackbar } = useSnackbar();
+
+
+  const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
+    enqueueSnackbar(msg, { variant, autoHideDuration });
+  };
 
   const { dateTime } = mentoria;
   const sortedTimes = dateTime.sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[0] - dateTimeB.dayOfTheMonth.split('/')[0])
@@ -44,8 +52,14 @@ function RedeHorarioCard({ mentoria }) {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
     marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
-      .then((res) => (res.status === 200 ? console.log('mentoria marcada') : console.log('Falha ao marcar mentoria. Código: ', res.status)))
-      .catch((err) => console.error(err));
+      .then((res) => (
+        res.status === 200
+          ? enqueue('Mentoria cadastrada com sucesso', 'success')
+          : console.log('Falha ao marcar mentoria. Código: ', res.status)))
+      .catch((err) => {
+        enqueue('Erro ao marcar mentoria');
+        console.error(err);
+      });
   }
 
   return (
