@@ -4,15 +4,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import RedeTextField from '../../../components/RedeTextField/RedeTextField';
 import RedeButton from '../../../components/RedeButton/RedeButton';
 
-const Modal = ({
+const ModalReprove = ({
   open,
   handleClose,
-  editFunction,
-  mentoriaTitle,
-  onChange,
+  evaluateMentoring,
 }) => (
   <div>
     <Dialog
@@ -20,29 +17,23 @@ const Modal = ({
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Edição de Título da Mentoria</DialogTitle>
+      <DialogTitle id="form-dialog-title">Indeferir Mentoria</DialogTitle>
       <DialogContent>
-        <DialogContentText>Insira o novo título da mentoria, se desejar.</DialogContentText>
-        <RedeTextField
-          tipo="text"
-          descricao="Título da mentoria"
-          valor={mentoriaTitle || ''}
-          onChange={onChange}
-        />
+        <DialogContentText>Tem certeza que deseja indeferir esta mentoria?</DialogContentText>
       </DialogContent>
       <DialogActions>
         <RedeButton
-          descricao="Cancelar"
+          descricao="Não"
           onClick={handleClose}
           cancelar
         />
         <RedeButton
-          descricao="Aprovar"
-          onClick={editFunction}
+          descricao="Sim"
+          onClick={evaluateMentoring}
         />
       </DialogActions>
     </Dialog>
   </div>
 );
 
-export default Modal;
+export default ModalReprove;

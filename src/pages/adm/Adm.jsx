@@ -4,6 +4,7 @@ import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCardAdm/RedeCardAdm';
 import Modal from './StyledComponents/Modal';
+import ModalRep from './StyledComponents/ModalReprove';
 import Container from './StyledComponents';
 import Title2 from './StyledComponents/Title2';
 import ContainerIcon from './StyledComponents/ContainerIcon';
@@ -15,6 +16,7 @@ import { pendingMentorings, mentoringEvaluation } from '../../services/adm';
 function Administrador() {
   const [cards, setCards] = useState('');
   const [flagModal, setFlagModal] = useState(false);
+  const [flagModalRep, setFlagModalRep] = useState(false);
   const [mentoria, setMentoria] = useState(null);
   const [newTitle, setNewTitle] = useState('');
   const { enqueueSnackbar } = useSnackbar();
@@ -52,6 +54,7 @@ function Administrador() {
           // eslint-disable-next-line no-use-before-define
           getMentorias(config);
           setFlagModal(false);
+          setFlagModalRep(false);
         }
       })
       .catch((err) => {
@@ -90,6 +93,16 @@ function Administrador() {
     setFlagModal(false);
   }
 
+  // eslint-disable-next-line no-shadow
+  function abreModalRep(mentoria) {
+    setMentoria(mentoria);
+    setFlagModalRep(true);
+  }
+
+  function fechaModalRep() {
+    setFlagModalRep(false);
+  }
+
   function generateCards(mentorias) {
     // eslint-disable-next-line no-shadow
     const cardsMentorias = mentorias.map((mentoria) => (
@@ -101,18 +114,17 @@ function Administrador() {
           mentorName={mentoria.mentorInfo.name}
           mentorImage={`${urlFiles}/${mentoria.mentorInfo.image}`}
         />
-
         <div>
           <ContainerIcon>
             <AiOutlineCheckCircle
               size={45}
-              class="icon"
+              className="icon"
               onClick={() => abreModal(mentoria)}
             />
             <AiOutlineCloseCircle
               size={45}
-              class="icon"
-              onClick={() => evaluateMentoring(mentoria, 2)}
+              className="icon"
+              onClick={() => abreModalRep(mentoria)}
             />
           </ContainerIcon>
         </div>
@@ -138,6 +150,11 @@ function Administrador() {
         editFunction={() => evaluateMentoring(mentoria, 1)}
         mentoriaTitle={newTitle}
         onChange={(e) => setNewTitle(e.target.value)}
+      />
+      <ModalRep
+        open={flagModalRep}
+        handleClose={() => fechaModalRep()}
+        evaluateMentoring={() => evaluateMentoring(mentoria, 2)}
       />
     </Container>
   );
