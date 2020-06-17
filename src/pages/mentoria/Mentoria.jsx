@@ -30,6 +30,7 @@ function Mentoria() {
       <Card
         mentoria={mentoria}
         mentorias
+        todosHorarios
       />
 
       <RedeHorarioCard mentoria={mentoria} />

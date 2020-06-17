@@ -28,6 +28,7 @@ const Card = ({
   onClickVisible,
   onClickRemove,
   onClickEdit,
+  todosHorarios,
 }) => {
   const nextAvailableHours = mentoria.dateTime.slice(0, 3)
     .map((day) => <RedeButton claro descricao={`${day.day.slice(0, 3)} - ${day.times[0].hour}`} onClick={onClickSchedule} />);
@@ -40,7 +41,7 @@ const Card = ({
           <CardHeader.Title>
             {mentoria.title}
           </CardHeader.Title>
-          { !mentorias && <RedeButton claro descricao="TODOS HORÁRIOS" onClick={onClickSchedule} /> }
+          { !todosHorarios && <RedeButton claro descricao="TODOS HORÁRIOS" onClick={onClickSchedule} /> }
         </CardHeader>
         <CardDescription>
           {mentoria.description}

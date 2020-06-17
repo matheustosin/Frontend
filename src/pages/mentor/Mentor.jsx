@@ -124,6 +124,7 @@ function Mentor() {
                 onClickRemove={() => changeAvalibility(i)}
                 onClickVisible={() => changeVisibility(i)}
                 onClickEdit={() => editPage(mentoria)}
+                todosHorarios
               />
             ))
           ) : (<StyledContainer.Subtitle>Nenhuma mentoria encontrada!</StyledContainer.Subtitle>)}
