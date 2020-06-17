@@ -1,13 +1,10 @@
 import styled from 'styled-components';
-<<<<<<< HEAD
-=======
 import CardLogo from './card-logo';
 import CardHeader from './card-header';
 import CardDescription from './card-description';
 import CardContent from './card-content';
 import SubTitle from './subtitle';
 import TimeSlotWrapper from './timeslot-wrapper';
->>>>>>> develop
 import Color from '../../../utils/colors.constants';
 
 const Container = styled.div`
