@@ -9,6 +9,7 @@ const Border = styled.div`
     height: 40px;
     align-items: center;
     margin: 10px 20px;
+    cursor:pointer;
 `;
 
 

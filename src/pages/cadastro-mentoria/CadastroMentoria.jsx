@@ -20,6 +20,8 @@ import DivImage from './StyledComponents/DivImage';
 import Espaco from './StyledComponents/Espaco';
 import { profile } from '../../services/user';
 
+import { urlFiles } from '../../services/http';
+
 
 /**
  *
@@ -36,13 +38,14 @@ function CadastroMentoria() {
   const [knowledgeArea, setKnowledgeArea] = useState(oldMentoria ? oldMentoria.data.knowledgeArea : '');
   const [mentoringOption, setMentoringOption] = useState([]);
   const [image, setImage] = useState(oldMentoria ? oldMentoria.data.image : '');
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState(oldMentoria ? `${urlFiles}/${oldMentoria.data.image}` : '');
 
   const [daysSelect] = useState(['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']);
   const [hoursSelect] = useState(['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']);
 
   const [listDataHours, setListDataHours] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
+
 
   const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
     enqueueSnackbar(msg, { variant, autoHideDuration });
@@ -68,7 +71,6 @@ function CadastroMentoria() {
   const handleAddMentoria = (event) => {
     event.preventDefault();
 
-
     const token = sessionStorage.getItem('token');
     const data = new FormData();
     data.append('title', title);
@@ -76,7 +78,9 @@ function CadastroMentoria() {
     data.append('knowledgeArea', knowledgeArea);
 
     mentoringOption.forEach((element) => {
-      data.append('mentoringOption', element);
+      if (element.checked) {
+        data.append('mentoringOption', element.value);
+      }
     });
 
     data.append('image', image);
@@ -95,7 +99,7 @@ function CadastroMentoria() {
       enqueue('Selecione o tipo de mentoria');
     } else if (oldMentoria) {
       if (
-        typeof image === 'string'
+        typeof image === 'string' //!!
       ) data.delete('image');
       const headers = { headers: { param: { id: oldMentoria.id }, Authorization: `Bearer ${token}` } };
       atualizarMentoria(headers, data).then((res) => {
@@ -153,29 +157,82 @@ function CadastroMentoria() {
     setListDataHours(listDataHours.filter((element, index) => id !== index));
   };
 
-  const handleAdd = () => {
+  const handleAdd = (date, hour) => {
     const option = {
-      date: 'Segunda',
-      hour: '09:00',
+      date,
+      hour,
     };
-
     setListDataHours([...listDataHours, option]);
   };
 
   const handleOptionsMentoring = (target) => {
-    if (target.checked) {
-      setMentoringOption([...mentoringOption, target.value]);
-    } else {
-      setMentoringOption(mentoringOption.filter((element) => target.value !== element));
-    }
+    mentoringOption.forEach((option) => {
+      if (target.value === option.value) {
+        // eslint-disable-next-line
+        option.checked = target.checked;
+      }
+    });
+    setMentoringOption(mentoringOption);
   };
+
+  function normalizeDateTime(dateTime) {
+    const uniqueDateTime = [];
+    let alreadyInclude = false;
+    dateTime.forEach((el) => {
+      uniqueDateTime.forEach((unique) => {
+        if (el.day === unique.date && el.times[0].hour === unique.hour) {
+          alreadyInclude = true;
+        }
+      });
+      if (!alreadyInclude) {
+        uniqueDateTime.push({ date: el.day, hour: el.times[0].hour });
+      }
+      alreadyInclude = false;
+    });
+    setListDataHours(uniqueDateTime);
+  }
+
+  function setOptions(elements) {
+    const options = [
+      { name: 'Online', checked: false, value: 'Online' },
+      { name: 'Presencial', checked: false, value: 'Presencial' },
+    ];
+    if (elements !== null) {
+      options.forEach((option) => {
+        if (Array.isArray(elements)) {
+          elements.forEach((el) => {
+            if (el === option.value) {
+              // eslint-disable-next-line
+              option.checked = true;
+            }
+          });
+        } else if (elements === option.value) {
+          // eslint-disable-next-line
+          option.checked = true;
+        }
+      });
+    }
+    setMentoringOption(options);
+  }
 
   useEffect(() => { // did Mount
     const token = sessionStorage.getItem('token');
     profile({ headers: { Authorization: `Bearer ${token}` } }).then((res) => {
       setKnowledgeArea(res.data.areas);
     });
-    handleAdd();
+
+
+    if (oldMentoria && oldMentoria.data.dateTime) {
+      normalizeDateTime(oldMentoria.data.dateTime);
+    } else {
+      handleAdd('Segunda', '09:00');
+    }
+
+    if (oldMentoria && oldMentoria.data.mentoringOption) {
+      setOptions(oldMentoria.data.mentoringOption);
+    } else {
+      setOptions(null);
+    }
   }, []);
 
 
@@ -211,8 +268,16 @@ function CadastroMentoria() {
           <DivCheckbox>
             <RedeFormLabel descricao="Opções de Mentoria" />
             <DivCheckbox.Options>
-              <Checkbox name="mentoring-option" value="Online" label="Online" onChange={(e) => handleOptionsMentoring(e.target)} />
-              <Checkbox name="mentoring-option" value="Presencial" label="Presencial" onChange={(e) => handleOptionsMentoring(e.target)} />
+              {
+                mentoringOption.map((option) => (
+                  <Checkbox
+                    value={option.value}
+                    checked={option.checked}
+                    label={option.name}
+                    onChange={(e) => handleOptionsMentoring(e.target)}
+                  />
+                ))
+              }
             </DivCheckbox.Options>
           </DivCheckbox>
           <Espaco size="12px" />
@@ -225,14 +290,16 @@ function CadastroMentoria() {
             </DivSelect.Labels>
             {
               listDataHours.map((select, index) => (
-                <ContainerDataHora>
+                <ContainerDataHora key={select.id}>
                   <>
                     <Select
+                      key={daysSelect}
                       options={daysSelect}
                       select={select.date}
                       onChange={(event) => setValueDate(index, event.target.value)}
                     />
                     <Select
+                      key={hoursSelect}
                       options={hoursSelect}
                       select={select.hour}
                       onChange={(event) => setValueHour(index, event.target.value)}
@@ -240,7 +307,7 @@ function CadastroMentoria() {
                   </>
                   {index === (listDataHours.length - 1) && listDataHours.length < 6
                     // eslint-disable-next-line
-                    ? <img onClick={() => handleAdd()} src={plusButton} alt="Adicionar" />
+                    ? <img onClick={() => handleAdd('Segunda', '09:00')} src={plusButton} alt="Adicionar" />
                     // eslint-disable-next-line
                     : <img onClick={() => handleRemove(index)} src={removeButton} alt="Remover" />}
                 </ContainerDataHora>

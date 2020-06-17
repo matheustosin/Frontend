@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import Card from '../../components/RedeCard/RedeCard';
 import Caminho from './StyledComponents/Caminho';
 import Container from './StyledComponents';
-import { urlFiles } from '../../services/http';
+//import { urlFiles } from '../../services/http';
 import CaminhoTitle from './StyledComponents/CaminhoTitle';
 import CaminhoTitleDesabilitado from './StyledComponents/CaminhoTitleDesabilitado';
 import CaminhoAp from './StyledComponents/CaminhoAp';
@@ -18,6 +19,13 @@ function MentoriasDisponiveis() {
   const areaConhecimento = sessionStorage.getItem('areaSelected');
   const [mentorias, setMentorias] = useState([]);
   const [redirectTo, setRedirectTo] = useState('');
+  const history = useHistory();
+
+  function mentoriaSelected(mentoria, e) {
+    e.preventDefault();
+    sessionStorage.setItem('mentoriaSelected', JSON.stringify(mentoria));
+    history.push('/mentoria');
+  }
 
   function generateCards(mentoriasAreaConhecimento) {
     const cardsMentorias = mentoriasAreaConhecimento
@@ -29,6 +37,10 @@ function MentoriasDisponiveis() {
           mentorias
           mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join('')}
           mentorImage={validateImage(`${urlFiles}/${mentoria.mentorInfos.image}`) ? `${urlFiles}/${mentoria.mentorInfos.image}` : imageDefault}
+          key={mentoria.idMentoria}
+          mentoria={mentoria}
+          onClickSchedule={(e) => mentoriaSelected(mentoria, e)}
+          mentorias
         />
       ));
     setCards(cardsMentorias);
