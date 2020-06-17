@@ -11,6 +11,7 @@ import ContainerIcon from './StyledComponents/ContainerIcon';
 import ContainerCards from './StyledComponents/ContainerCards';
 import imageDefault from '../../assets/account.png';
 import mentoringImage from '../../assets/task.png';
+import validateImage from '../../utils/validateImage';
 
 import { urlFiles } from '../../services/http';
 import { pendingMentorings, mentoringEvaluation } from '../../services/adm';
@@ -112,9 +113,9 @@ function Administrador() {
         <Card
           title={mentoria.data.title}
           description={mentoria.data.description}
-          image={mentoria.data.image ? `${urlFiles}/${mentoria.data.image}` : mentoringImage}
+          image={validateImage(`${urlFiles}/${mentoria.data.image}`) ? `${urlFiles}/${mentoria.data.image}` : mentoringImage}
           mentorName={mentoria.mentorInfo.name}
-          mentorImage={mentoria.mentorInfo.image ? `${urlFiles}/${mentoria.mentorInfo.image}` : imageDefault}
+          mentorImage={validateImage(`${urlFiles}/${mentoria.data.image}`) ? `${urlFiles}/${mentoria.mentorInfo.image}` : imageDefault}
         />
         <div>
           <ContainerIcon>

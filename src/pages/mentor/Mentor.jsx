@@ -11,6 +11,7 @@ import { urlFiles } from '../../services/http';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import { userTypes } from '../../utils/userType.constants';
 import mentoringImage from '../../assets/task.png';
+import validateImage from '../../utils/validateImage';
 
 function Mentor() {
   const history = useHistory();
@@ -129,7 +130,7 @@ function Mentor() {
                 key={mentoria.id}
                 title={mentoria.data.title}
                 description={mentoria.data.description}
-                image={mentoria.data.image ? `${urlFiles}/${mentoria.data.image}` : mentoringImage}
+                image={validateImage(`${urlFiles}/${mentoria.data.image}`) ? `${urlFiles}/${mentoria.data.image}` : mentoringImage}
                 removeFunction={() => changeAvalibility(i)}
                 visibleFunction={() => changeVisibility(i)}
                 editFunction={() => editPage(mentoria)}

@@ -7,6 +7,7 @@ import Container from './StyledComponents';
 import { urlFiles } from '../../services/http';
 import { userTypes } from '../../utils/userType.constants';
 import imageDefault from '../../assets/account.png';
+import validateImage from '../../utils/validateImage';
 
 // const getTitle = () => sessionStorage.getItem('headerTitle');
 const excludedPaths = ['/', '/register', '/cadastro-mentor', '/cadastro-mentorado'];
@@ -124,7 +125,7 @@ const RedeHeader = (props) => {
           profile ? (
             <Container.ImgProfile
               onClick={handleProfileMenuOpen}
-              src={profile && profile.image ? `${urlFiles}/${profile.image}` : imageDefault}
+              src={profile && validateImage(`${urlFiles}/${profile.image}`) ? `${urlFiles}/${profile.image}` : imageDefault}
             />
           ) : (<div />)
         }

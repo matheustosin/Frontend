@@ -11,6 +11,7 @@ import { mentoriasByMentorado } from '../../services/mentorado';
 import RedeInputSearch from '../../components/RedeInputSearch/RedeInputSearch';
 import imageDefault from '../../assets/account.png';
 import mentoringImage from '../../assets/task.png';
+import validateImage from '../../utils/validateImage';
 
 function MentoriasDisponiveis() {
   const [cards, setCards] = useState('');
@@ -24,10 +25,10 @@ function MentoriasDisponiveis() {
         <Card
           title={mentoria.title}
           description={mentoria.description}
-          image={mentoria.image ? `${urlFiles}/${mentoria.image}` : mentoringImage}
+          image={validateImage(`${urlFiles}/${mentoria.image}`) ? `${urlFiles}/${mentoria.image}` : mentoringImage}
           mentorias
           mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join('')}
-          mentorImage={mentoria.mentorInfos.image ? `${urlFiles}/${mentoria.mentorInfos.image}` : imageDefault}
+          mentorImage={validateImage(`${urlFiles}/${mentoria.mentorInfos.image}`) ? `${urlFiles}/${mentoria.mentorInfos.image}` : imageDefault}
         />
       ));
     setCards(cardsMentorias);
