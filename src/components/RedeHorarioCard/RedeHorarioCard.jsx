@@ -51,14 +51,14 @@ function RedeHorarioCard({ mentoria }) {
     );
   });
 
-  function onConfirm(data) {    
+  function onConfirm(data) {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
     marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
       .then((res) => {
         if (res.status === 200) {
           dateTime.forEach((el, index) => {
-            if (el.dayOfTheMonth === data.date && el.times[0].hour) {sortedDates[index].times[0].flagBusy = true;}
+            if (el.dayOfTheMonth === data.date && el.times[0].hour) { sortedDates[index].times[0].flagBusy = true; }
           });
           console.log('mentoria marcada');
         } else {
