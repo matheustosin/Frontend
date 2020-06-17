@@ -23,7 +23,7 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": ["**/*.stories.*"]
+        "devDependencies": ["*/.stories.*"]
       }
     ],
     "no-alert": 0,
