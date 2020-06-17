@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { urlFiles } from '../../services/http';
+import { Redirect } from 'react-router';
 import Container from './StyledComponents';
 import Caminho from '../mentorias/StyledComponents/Caminho';
 import CaminhoTitle from '../mentorias/StyledComponents/CaminhoTitle';
@@ -10,13 +10,15 @@ import Card from '../../components/RedeCard/RedeCard';
 import RedeHorarioCard from '../../components/RedeHorarioCard/RedeHorarioCard';
 
 function Mentoria() {
-  const [setRedirectTo] = useState('');
+  const [redirectTo, setRedirectTo] = useState('');
   const mentoria = JSON.parse(sessionStorage.getItem('mentoriaSelected'));
   const areaConhecimento = sessionStorage.getItem('areaSelected');
+  
+  //Http.put(`/mentoria/choice/${mentoria.idMentoria}`, data, headers);
 
-  return (
+  console.log(mentoria);
+  return (redirectTo) ? <Redirect to={redirectTo} /> : (
     <Container>
-      <RedeHeader />
       <CaminhoAp>
         <CaminhoTitleDesabilitado onClick={() => setRedirectTo('/mentorado')}>Home</CaminhoTitleDesabilitado>
         <Caminho />
@@ -26,15 +28,11 @@ function Mentoria() {
       </CaminhoAp>
 
       <Card
-        title={mentoria.title}
-        description={mentoria.description}
-        image={`${urlFiles}/${mentoria.image}`}
+        mentoria={mentoria}
         mentorias
-        mentorName={mentoria.mentorInfos.name.split(/(\s).+\s/).join('')}
-        mentorImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
       />
 
-      <RedeHorarioCard />
+      <RedeHorarioCard mentoria={mentoria} />
     </Container>
   );
 }

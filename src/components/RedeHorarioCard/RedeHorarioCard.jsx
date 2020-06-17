@@ -3,58 +3,71 @@ import Container from './StyledComponents';
 import Hours from './StyledComponents/Hours';
 import Label from './StyledComponents/Label';
 import Details from './StyledComponents/Details';
-
+import { urlFiles } from '../../services/http';
 import RedeHorarioButton from '../RedeHorarioButton/RedeHorarioButton';
 import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
+import { marcarMentoria } from '../../services/mentoria';
 
-function RedeHorarioCard() {
+function RedeHorarioCard({ mentoria }) {
   const [open, setOpen] = React.useState(false);
+  const [timeInfo, setTimeInfo] = React.useState('');
+  const [dateInfo, setDateInfo] = React.useState('');
+
+  const { dateTime } = mentoria;
+  const sortedTimes = dateTime.sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[0] - dateTimeB.dayOfTheMonth.split('/')[0])
+    .sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[1] - dateTimeB.dayOfTheMonth.split('/')[1]);
+
+  const timeInformation = sortedTimes.map((dt) => {
+    // eslint-disable-next-line max-len
+    const hours = dt.times.map((time) => (
+      <RedeHorarioButton
+        horario={time.hour}
+        onClick={() => {
+          setTimeInfo(time.hour);
+          setDateInfo(dt.dayOfTheMonth);
+          setOpen(true);
+        }}
+      />
+    ));
+
+    return (
+      <Details>
+        <Label>{dt.dayOfTheMonth}</Label>
+        <Hours>
+          {hours}
+        </Hours>
+      </Details>
+    );
+  });
+
+  function onConfirm(data) {
+    const token = sessionStorage.getItem('token');
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
+      .then((res) => (res.status === 200 ? console.log('mentoria marcada') : console.log('Falha ao marcar mentoria. Código: ', res.status)))
+      .catch((err) => console.error(err));
+  }
+
   return (
     <Container>
       <>
         <RedeMarcarMentoria
           opened={open}
-          image="https://dev.observatoriodocinema.bol.uol.com.br/wp-content/uploads/2020/06/Lucifer-1.jpg"
-          title="MENTORIA DOS DESEJOS"
-          userName="Lucifer Morningstar"
-          userImage="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQfBdI21oSQQ1LqYxuDeprAalebgLjC0LnXrnLRuZ_7yof0Ah7i&usqp=CAU"
-          date="29/03/2020"
-          hour="19:00"
+          image={`${urlFiles}/${mentoria.image}`}
+          title={mentoria.title}
+          userName={mentoria.mentorInfos.name}
+          userImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
+          date={dateInfo}
+          hour={timeInfo}
           onClose={() => setOpen(false)}
-          onConfirm={(evt) => console.log('Mentoria: ', evt)}
+          onConfirm={(evt) => onConfirm(evt)}
         />
       </>
       <Details style={{ borderBottom: 'none' }}>
         <Label>Data</Label>
         <Label>Hora</Label>
       </Details>
-      <Details>
-        <Label>20/04/2020</Label>
-        <Hours>
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-        </Hours>
-      </Details>
-      <Details>
-        <Label>20/04/2020</Label>
-        <Hours>
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-        </Hours>
-      </Details>
-      <Details>
-        <Label>20/04/2020</Label>
-        <Hours>
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-          <RedeHorarioButton horario="22:45" onClick={() => setOpen(true)} />
-        </Hours>
-      </Details>
+      {timeInformation}
     </Container>
   );
 }
