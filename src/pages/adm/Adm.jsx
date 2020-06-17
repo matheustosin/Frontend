@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { useSnackbar } from 'notistack';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import RedeHeader from '../../components/RedeHeader/RedeHeader';
@@ -12,6 +13,9 @@ import ContainerCards from './StyledComponents/ContainerCards';
 
 import { urlFiles } from '../../services/http';
 import { pendingMentorings, mentoringEvaluation } from '../../services/adm';
+import { profile } from '../../services/user';
+import { userTypes } from '../../utils/userType.constants';
+import pushIfNecessary from '../../utils/HTMLUtils';
 
 function Administrador() {
   const [cards, setCards] = useState('');
@@ -20,13 +24,30 @@ function Administrador() {
   const [mentoria, setMentoria] = useState(null);
   const [newTitle, setNewTitle] = useState('');
   const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
 
-    // eslint-disable-next-line no-use-before-define
-    getMentorias(headers);
+    profile(headers)
+      .then((resp) => {
+        if (resp.data.userType !== userTypes.ADMINISTRADOR) {
+          pushIfNecessary(
+            resp.data.userType,
+            (link) => history.push(link),
+          );
+        }
+        // eslint-disable-next-line no-use-before-define
+        getMentorias(headers);
+      })
+      .catch(() => {
+        enqueueSnackbar(
+          'Problema ao buscar informações do usuário. Verifique sua conexão e tente novamente.',
+          { variant: 'error', autoHideDuration: 2500 },
+        );
+        history.push('/');
+      });
   }, []);
 
   // eslint-disable-next-line no-shadow
@@ -140,7 +161,7 @@ function Administrador() {
       <Title2>
         {`Você tem ${cards.length} mentoria${
           cards.length > 1 ? 's' : ''
-        } para aprovar`}
+          } para aprovar`}
       </Title2>
       <br />
       {cards}
