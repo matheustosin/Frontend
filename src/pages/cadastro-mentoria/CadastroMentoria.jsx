@@ -316,7 +316,6 @@ function CadastroMentoria() {
           </DivSelect>
         </Container.SecondOption>
       </Container.Form>
-
       <Container.Submit>
         <RedeButton descricao="Cancelar" cancelar onClick={(e) => cleanForm(e)} />
         <RedeButton descricao={ActionButtonTitle} onClick={handleAddMentoria} />
