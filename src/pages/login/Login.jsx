@@ -3,17 +3,20 @@ import { Link, useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import logo from '../../assets/logo.png';
 import Container from './StyledComponents';
-import { login, profile } from '../../services/user';
+import { login, profile, esqueceuSenha } from '../../services/user';
 import RedeButton from '../../components/RedeButton/RedeButton';
 import RedeSeparator from '../../components/RedeSeparator/RedeSeparator';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import pushIfNecessary from '../../utils/HTMLUtils';
+import RedeForgotEmail from '../../components/RedeForgotEmail/RedeForgotEmail';
 
 function Login() {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [loadingForgot, setLoadingForgot] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [forgotOpen, setForgotOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => { // componentDidMount
@@ -61,8 +64,30 @@ function Login() {
     }
   };
 
+  const sendForgotRequest = (data) => {
+    setLoadingForgot(true);
+    esqueceuSenha(data)
+      .then((resp) => {
+        if (resp.status === 200) {
+          enqueueSnackbar(resp.data, { variant: 'success', autoHideDuration: 3000 });
+        }
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data, { variant: 'error', autoHideDuration: 3000 });
+      }).finally(() => {
+        setLoadingForgot(false);
+      });
+  };
+
   return (
     <Container>
+      <RedeForgotEmail
+        email={email}
+        onChangeEmail={(evt) => setEmail(evt.target.value)}
+        opened={forgotOpen}
+        onClose={() => setForgotOpen(false)}
+        onConfirm={sendForgotRequest}
+      />
       <Container.SideImage />
       <Container.SideLogin>
         <Container.Logo src={logo} />
@@ -74,7 +99,12 @@ function Login() {
             valor={password}
             onChange={(evt) => setPassword(evt.target.value)}
           />
-          <Container.ForgotPassword> Esqueci minha senha </Container.ForgotPassword>
+          <Container.ForgotPassword onClick={() => {
+            if (!loadingForgot) setForgotOpen(true);
+          }}
+          >
+            Esqueci minha senha
+          </Container.ForgotPassword>
           <RedeButton descricao="Entrar" onClick={attemptLogin} loading={loading} />
           <RedeSeparator descricao="Novo na Rede ?"> </RedeSeparator>
           <Link to="/register">

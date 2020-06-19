@@ -9,7 +9,7 @@ import standartPhoto from '../../assets/account.png';
 import { userTypes } from '../../utils/userType.constants';
 
 // const getTitle = () => sessionStorage.getItem('headerTitle');
-const excludedPaths = ['/', '/register', '/cadastro-mentor', '/cadastro-mentorado'];
+const excludedPaths = ['/', '/register', '/cadastro-mentor', '/cadastro-mentorado', '/nova-senha'];
 
 const RedeHeader = (props) => {
   const [tkn, setTkn] = useState(null);
@@ -27,7 +27,9 @@ const RedeHeader = (props) => {
   useEffect(() => { // ComponentDidMount
     setTitle(''); // TODO: Tirar esse setTitle();
     const tknValue = sessionStorage.getItem('token');
-    if (!tknValue && excludedPaths.indexOf(props.location.pathname) === -1) {
+    console.log('aqui>', props);
+    const path = props.location.pathname;
+    if (!tknValue && excludedPaths.indexOf(path) === -1 && !String(path).match(/(nova-senha\/.*)/)) {
       history.push('/');
     }
   }, []);
