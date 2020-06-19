@@ -16,6 +16,7 @@ function Mentor() {
   const { enqueueSnackbar } = useSnackbar();
 
   const changeAvalibility = (index) => {
+
     const token = sessionStorage.getItem('token');
     const { id } = mentorias[index];
     const config = {
@@ -26,8 +27,8 @@ function Mentor() {
     if (global.confirm('Você deseja realmente deletar essa mentoria ?')) {
       desativarMentoria(config)
         .then(() => {
-          const allMentorias = mentorias;
-          mentorias.splice(index, 1);
+          const allMentorias = [...mentorias];
+          allMentorias.splice(index, 1);
           setMentorias(allMentorias);
           enqueueSnackbar('Mentoria deletada!', { variant: 'success', autoHideDuration: 2500 });
         })
@@ -42,7 +43,6 @@ function Mentor() {
 
   const changeVisibility = (i) => {
     const allMentorias = [...mentorias];
-    // return;
     const token = sessionStorage.getItem('token');
     const { id } = mentorias[i];
     const config = {
