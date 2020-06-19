@@ -41,16 +41,20 @@ function Mentor() {
   };
 
   const changeVisibility = (i) => {
-    const allMentorias = mentorias;
-    allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
-    setMentorias(allMentorias);
+    const allMentorias = [...mentorias];
+    // return;
     const token = sessionStorage.getItem('token');
     const { id } = mentorias[i];
     const config = {
       params: { id },
       headers: { Authorization: `Bearer ${token}` },
     };
-    mudarVisibilidade(config);
+    mudarVisibilidade(config).then(
+      (res) => {
+        allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
+        setMentorias(allMentorias);
+      },
+    );
   };
 
   const editPage = (mentoria) => {
@@ -124,6 +128,7 @@ function Mentor() {
                 onClickRemove={() => changeAvalibility(i)}
                 onClickVisible={() => changeVisibility(i)}
                 onClickEdit={() => editPage(mentoria)}
+                isVisible={mentoria.data.isVisible}
                 todosHorarios
               />
             ))
