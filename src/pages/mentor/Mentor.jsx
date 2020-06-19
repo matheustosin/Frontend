@@ -16,7 +16,6 @@ function Mentor() {
   const { enqueueSnackbar } = useSnackbar();
 
   const changeAvalibility = (index) => {
-
     const token = sessionStorage.getItem('token');
     const { id } = mentorias[index];
     const config = {
@@ -50,10 +49,22 @@ function Mentor() {
       headers: { Authorization: `Bearer ${token}` },
     };
     mudarVisibilidade(config).then(
-      (res) => {
+      () => {
         allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
         setMentorias(allMentorias);
+        let message;
+        if (allMentorias[i].data.isVisible) message = 'Mentoria não está mais disponível para os mentorandos!';
+        else message = 'Mentoria está disponível para os mentorandos!';
+        enqueueSnackbar(message, { variant: 'success', autoHideDuration: 2500 });
       },
+    ).catch(
+      () => {
+        enqueueSnackbar(
+          'Falha ao atualizar essa mentoria. Verifique sua conexão e tente novamente.',
+          { variant: 'error', autoHideDuration: 2500 },
+        );
+      },
+
     );
   };
 
