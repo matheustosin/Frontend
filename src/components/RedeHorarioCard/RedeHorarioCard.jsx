@@ -26,6 +26,10 @@ function RedeHorarioCard({ mentoria }) {
     .sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[1] - dateTimeB.dayOfTheMonth.split('/')[1]);
 
   const timeInformation = sortedTimes.map((dt) => {
+    let dayOfTheMonth = dt.dayOfTheMonth.replace(/ /g, '').split('/');
+    for (let i = 0; i < 2; i += 1) if (dayOfTheMonth[i].length === 1) dayOfTheMonth[i] = `0${dayOfTheMonth[i]}`;
+    dayOfTheMonth = dayOfTheMonth.join('/');
+
     // eslint-disable-next-line max-len
     const hours = dt.times.map((time) => (
       <RedeHorarioButton
@@ -40,10 +44,9 @@ function RedeHorarioCard({ mentoria }) {
       />
     ));
 
-
     return (
       <Details>
-        <Label>{dt.dayOfTheMonth}</Label>
+        <Label>{dayOfTheMonth}</Label>
         <Hours>
           {hours}
         </Hours>
@@ -82,7 +85,7 @@ function RedeHorarioCard({ mentoria }) {
       </>
       <Details style={{ borderBottom: 'none', marginBottom: '15px', paddingTop: '10px' }}>
         <Label>Datas</Label>
-        <Label style={{ width:'30%' }}>Horários</Label>
+        <Label style={{ width: '30%' }}>Horários</Label>
       </Details>
       {timeInformation}
     </Container>

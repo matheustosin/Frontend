@@ -5,7 +5,7 @@ const Hours = styled.div`
     display:flex;
     flex-wrap: wrap;
     > button{
-        margin-top: 5px;
+        margin-top: 7px;
         margin-bottom: 2px;
         padding: 7px 30px;
         font-size: 0.8em;
