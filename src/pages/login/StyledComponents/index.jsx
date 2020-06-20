@@ -8,12 +8,13 @@ import ForgotPassword from './ForgotPassword';
 
 const Container = styled.div`
   margin: 0;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   text-align: left;
-  position: relative;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
 `;
 
 Container.Logo = Logo;

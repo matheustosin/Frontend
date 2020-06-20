@@ -27,7 +27,6 @@ const RedeHeader = (props) => {
   useEffect(() => { // ComponentDidMount
     setTitle(''); // TODO: Tirar esse setTitle();
     const tknValue = sessionStorage.getItem('token');
-    console.log('aqui>', props);
     const path = props.location.pathname;
     if (!tknValue && excludedPaths.indexOf(path) === -1 && !String(path).match(/(nova-senha\/.*)/)) {
       history.push('/');
