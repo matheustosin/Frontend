@@ -68,7 +68,7 @@ function RedeHorarioCard({ mentoria }) {
   return (
     <Container>
       <>
-        <RedeMarcarMentoria 
+        <RedeMarcarMentoria
           opened={open}
           image={`${urlFiles}/${mentoria.image}`}
           title={mentoria.title}
@@ -80,9 +80,9 @@ function RedeHorarioCard({ mentoria }) {
           onConfirm={(evt) => onConfirm(evt)}
         />
       </>
-      <Details style={{ borderBottom: 'none' }}>
-        <Label>Data</Label>
-        <Label>Hora</Label>
+      <Details style={{ borderBottom: 'none', marginBottom: '15px', paddingTop: '10px' }}>
+        <Label>Datas</Label>
+        <Label style={{ width:'30%' }}>Horários</Label>
       </Details>
       {timeInformation}
     </Container>

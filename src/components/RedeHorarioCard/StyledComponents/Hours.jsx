@@ -6,7 +6,9 @@ const Hours = styled.div`
     flex-wrap: wrap;
     > button{
         margin-top: 5px;
-        margin-bottom: 5px;
+        margin-bottom: 2px;
+        padding: 7px 30px;
+        font-size: 0.8em;
     }
 `;
 
