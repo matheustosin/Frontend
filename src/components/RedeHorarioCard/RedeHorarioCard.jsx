@@ -68,7 +68,7 @@ function RedeHorarioCard({ mentoria }) {
   return (
     <Container>
       <>
-        <RedeMarcarMentoria
+        <RedeMarcarMentoria 
           opened={open}
           image={`${urlFiles}/${mentoria.image}`}
           title={mentoria.title}

@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 const Hours = styled.div`
-    width: 75%;
+    width: 80%;
     display:flex;
     flex-wrap: wrap;
-    margin-left:12%;
     > button{
-        margin: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 `;
 
