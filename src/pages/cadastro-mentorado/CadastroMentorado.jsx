@@ -21,6 +21,7 @@ import validateEmail from '../../utils/validationUtils';
 
 function CadastroMentorado() {
   const history = useHistory();
+  const [sent, setSent] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [nome, setNome] = useState('');
   const [dataNascimento, setDataNascimento] = useState('');
@@ -40,12 +41,37 @@ function CadastroMentorado() {
     enqueueSnackbar(msg, { variant, autoHideDuration });
   };
 
+  const erroSenha = Boolean(senha && confirmarSenha && senha !== confirmarSenha);
+  const erroCpf = (sent && cpf && !cpf.match(/\d{3}\.\d{3}\.\d{3}-\d{2}/));
+  const erroTelefone = (sent && telefone && !telefone.match(/\(\d{2}\)\s{1}\d{4,5}-\d{4}/));
+  const erroDataNascimento = (sent && dataNascimento && !dataNascimento.match(/\d{2}\/\d{2}\/\d{4}/));
+  const disableButton = (_sent = sent) => (
+    _sent
+    && (!nome
+      || !cpf
+      || !email
+      || !senha
+      || !confirmarSenha
+      // || !imagem
+      || !telefone
+      || !dataNascimento
+      || !acceptTerms
+      || erroDataNascimento
+      || erroCpf
+      || erroTelefone
+      || erroSenha)
+  );
+
   useEffect(() => { // ComponentDidMount
     const old = sessionStorage.getItem('oldProfile');
     const tkn = sessionStorage.getItem('token');
     // sessionStorage.setItem('headerTitle', `${old ? 'Edição' : 'Cadastro'} Mentorado`);
     if (!old && tkn) {
       profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
+        if (resp.data.userType === userTypes.ADMINISTRADOR) {
+          history.push('/administrador');
+          return;
+        }
         pushIfNecessary(
           resp.data.userType,
           (link) => history.push(link),
@@ -72,7 +98,9 @@ function CadastroMentorado() {
   }, []);
 
   const attemptRegister = (event) => {
+    setSent(true);
     event.preventDefault();
+    if (disableButton(true)) return;
 
     const data = new FormData();
     data.append('image', imagem);
@@ -92,7 +120,6 @@ function CadastroMentorado() {
       || !data.get('cpf')
       || !data.get('phone')
       || !data.get('password')
-      || !data.get('registration')
       || !confirmarSenha
     ) {
       enqueue('Preencha todos os campos.');
@@ -132,7 +159,7 @@ function CadastroMentorado() {
     const tkn = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${tkn}` } };
     const data = new FormData();
-    data.append('image', imagem);
+    data.append('image', imagem || oldProfile.image);
     data.append('name', nome);
     data.append('email', email);
     data.append('birthDate', dataNascimento);
@@ -173,30 +200,68 @@ function CadastroMentorado() {
       }
       setImagem(event.target.files[0]);
       setImageurl(url);
+      return '';
     };
   };
 
-  const erroSenha = Boolean(senha && confirmarSenha && senha !== confirmarSenha);
+  const msgDataNascimento = () => {
+    if (sent && !dataNascimento) return 'Data de nascimento é obrigatória!';
+    if (erroDataNascimento) return 'Data inválida';
+    return '';
+  };
+
+  const ajudaCpf = () => {
+    if (sent && !cpf) return 'CPF é obrigatório!';
+    if (erroCpf) return 'CPF inválido!';
+    return '';
+  };
+
+  const ajudaTelefone = () => {
+    if (sent && !telefone) return 'Telefone é obrigatório!';
+    if (erroTelefone) return 'Telefone inválido!';
+    return '';
+  };
+
+  const ajudaEmail = () => {
+    if (sent && !email) return 'Email é obrigatório!';
+    if (!validateEmail(email)) return 'Email inválido!';
+    return '';
+  };
+
+  const confirmSenhaAjuda = () => {
+    if (sent && !confirmarSenha) return 'Confirme sua senha!';
+    if (erroSenha) return 'Senhas não conferem!';
+    return '';
+  };
+
   const leftSide = (
     <>
       <RedeTextField
         descricao="Nome Completo"
         valor={nome}
+        erro={sent && !nome}
+        msgAjuda={sent && !nome ? 'Nome é obrigatório!' : undefined}
         onChange={(evt) => setNome(evt.target.value)}
       />
       <RedeTextField
         descricao="Data de Nascimento"
         valor={dataNascimento}
+        erro={sent && (!dataNascimento || erroDataNascimento)}
+        msgAjuda={msgDataNascimento()}
         onChange={(evt) => setDataNascimento(formatDataNascimento(evt.target.value))}
       />
       <RedeTextField
         descricao="CPF"
         valor={cpf}
+        erro={sent && (!cpf || erroCpf)}
+        msgAjuda={ajudaCpf()}
         onChange={(evt) => setCpf(formatCPF(evt.target.value))}
       />
       <RedeTextField
         descricao="Telefone"
         valor={telefone}
+        erro={sent && (erroTelefone || !telefone)}
+        msgAjuda={ajudaTelefone()}
         onChange={(evt) => setTelefone(formatTelefone(evt.target.value))}
       />
       <RedeTextField
@@ -212,6 +277,8 @@ function CadastroMentorado() {
       <RedeTextField
         descricao="Email"
         valor={email}
+        erro={sent && (!email || !validateEmail(email))}
+        msgAjuda={ajudaEmail()}
         onChange={(evt) => setEmail(evt.target.value)}
       />
       {isEditing ? (
@@ -227,6 +294,8 @@ function CadastroMentorado() {
               descricao="Senha"
               valor={senha}
               tipo="password"
+              erro={sent && !senha}
+              msgAjuda={(sent && !senha) ? 'Senha é obrigatório' : undefined}
               onChange={(evt) => setSenha(evt.target.value)}
             />
             <RedeTextField
@@ -234,8 +303,8 @@ function CadastroMentorado() {
               valor={confirmarSenha}
               tipo="password"
               onChange={(evt) => setConfirmarSenha(evt.target.value)}
-              msgAjuda={erroSenha ? 'Senhas não conferem' : ''}
-              erro={erroSenha}
+              msgAjuda={confirmSenhaAjuda()}
+              erro={sent && (erroSenha || !confirmarSenha)}
             />
 
             <Container.FlexContainer style={{ flexDirection: 'row' }}>
@@ -251,7 +320,7 @@ function CadastroMentorado() {
             </Container.FlexContainer>
 
             <Container>
-              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={((!senha && !confirmarSenha) || (senha !== confirmarSenha)) || !acceptTerms} loading={loading} />
+              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={disableButton()} loading={loading} />
             </Container>
           </>
         )}

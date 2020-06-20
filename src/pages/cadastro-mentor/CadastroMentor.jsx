@@ -18,6 +18,7 @@ import validateEmail from '../../utils/validationUtils';
 
 function CadastroMentor() {
   const history = useHistory();
+  const [sent, setSent] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
@@ -38,6 +39,26 @@ function CadastroMentor() {
     enqueueSnackbar(msg, { variant, autoHideDuration });
   };
 
+  const erroSenha = Boolean(password && confirmPassword && password !== confirmPassword);
+  const erroCpf = (sent && cpf && !cpf.match(/\d{3}\.\d{3}\.\d{3}-\d{2}/));
+  const erroTelefone = (sent && phone && !phone.match(/\(\d{2}\)\s{1}\d{4,5}-\d{4}/));
+  const disableButton = (_sent = sent) => (
+    _sent
+    && (!name
+      || !cpf
+      || !email
+      || !password
+      || !confirmPassword
+      || !linkedin
+      // || !image
+      || !phone
+      || !areas
+      || !acceptTerms
+      || erroCpf
+      || erroTelefone
+      || erroSenha)
+  );
+
   useEffect(() => { // ComponentDidMount
     getAvailableAreas().then((res) => {
       const arrayAreas = [];
@@ -53,6 +74,10 @@ function CadastroMentor() {
     // sessionStorage.setItem('headerTitle', `${old ? 'Edição' : 'Cadastro'} Mentor`);
     if (!old && tkn) {
       profile({ headers: { Authorization: `Bearer ${tkn}` } }).then((resp) => {
+        if (resp.data.userType === userTypes.ADMINISTRADOR) {
+          history.push('/administrador');
+          return;
+        }
         pushIfNecessary(
           resp.data.userType,
           (link) => history.push(link),
@@ -80,7 +105,9 @@ function CadastroMentor() {
   }, []);
 
   const attemptRegister = (event) => {
+    setSent(true);
     event.preventDefault();
+    if (disableButton(true)) return;
 
     const data = new FormData();
     data.append('image', image);
@@ -140,7 +167,7 @@ function CadastroMentor() {
     const tkn = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${tkn}` } };
     const data = new FormData();
-    data.append('image', image);
+    data.append('image', image || oldProfile.image);
     data.append('name', name);
     data.append('email', email);
     data.append('phone', phone);
@@ -181,35 +208,68 @@ function CadastroMentor() {
       }
       setImage(event.target.files[0]);
       setImageurl(url);
+      return '';
     };
   };
+  const ajudaCpf = () => {
+    if (sent && !cpf) return 'CPF é obrigatório!';
+    if (erroCpf) return 'CPF inválido!';
+    return '';
+  };
 
-  const erroSenha = Boolean(password && confirmPassword && password !== confirmPassword);
+  const ajudaTelefone = () => {
+    if (sent && !phone) return 'Telefone é obrigatório!';
+    if (erroTelefone) return 'Telefone inválido!';
+    return '';
+  };
+
+  const ajudaEmail = () => {
+    if (sent && !email) return 'Email é obrigatório!';
+    if (!validateEmail(email)) return 'Email inválido!';
+    return '';
+  };
+
+  const confirmSenhaAjuda = () => {
+    if (sent && !confirmPassword) return 'Confirme sua senha!';
+    if (erroSenha) return 'Senhas não conferem!';
+    return '';
+  };
+
   const leftSide = (
     <>
       <RedeTextField
         descricao="Nome Completo"
         valor={name}
+        erro={sent && !name}
+        msgAjuda={sent && !name ? 'Nome é obrigatório!' : undefined}
         onChange={(evt) => setName(evt.target.value)}
       />
       <RedeTextField
         descricao="CPF"
         valor={cpf}
+        erro={erroCpf || (sent && !cpf)}
+        msgAjuda={ajudaCpf()}
         onChange={(evt) => setCpf(formatCPF(evt.target.value))}
       />
       <RedeTextField
         descricao="Telefone"
         valor={phone}
+        erro={erroTelefone || (sent && !phone)}
+        msgAjuda={ajudaTelefone()}
         onChange={(evt) => setPhone(formatTelefone(evt.target.value))}
       />
       <RedeSelect
         options={availableAreas}
         select={areas}
+        erro={sent && !areas}
+        msgAjuda={sent && !areas ? 'Area é obrigatório!' : ''}
         onChange={(evt) => setAreas(evt.target.value)}
       />
       <RedeTextField
         descricao="LinkedIn"
         valor={linkedin}
+        erro={sent && !linkedin}
+        msgAjuda={sent && !linkedin ? 'LinkedIn é obrigatório' : undefined}
         onChange={(evt) => setLinkedin(evt.target.value)}
       />
     </>
@@ -220,6 +280,8 @@ function CadastroMentor() {
       <RedeTextField
         descricao="Email"
         valor={email}
+        erro={sent && (!email || !validateEmail(email))}
+        msgAjuda={ajudaEmail()}
         onChange={(evt) => setEmail(evt.target.value)}
       />
       {(isEditing) ? (
@@ -235,6 +297,8 @@ function CadastroMentor() {
               descricao="Senha"
               tipo="password"
               valor={password}
+              erro={sent && !password}
+              msgAjuda={(sent && !password) ? 'Senha é obrigatório' : undefined}
               onChange={(evt) => setPassword(evt.target.value)}
             />
             <RedeTextField
@@ -242,8 +306,8 @@ function CadastroMentor() {
               tipo="password"
               valor={confirmPassword}
               onChange={(evt) => setConfirmPassword(evt.target.value)}
-              msgAjuda={erroSenha ? 'Senhas não conferem' : ''}
-              erro={erroSenha}
+              msgAjuda={confirmSenhaAjuda()}
+              erro={sent && (erroSenha || !confirmPassword)}
             />
 
             <Container.FlexContainer style={{ flexDirection: 'row' }}>
@@ -259,7 +323,7 @@ function CadastroMentor() {
             </Container.FlexContainer>
 
             <Container>
-              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={((!password && !confirmPassword) || (password !== confirmPassword)) || !acceptTerms} loading={loading} />
+              <RedeButton descricao="Cadastrar" onClick={attemptRegister} desabilitado={disableButton()} loading={loading} />
             </Container>
           </>
         )}

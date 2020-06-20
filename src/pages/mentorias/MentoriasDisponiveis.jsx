@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Card from '../../components/RedeCard/RedeCard';
 import Caminho from './StyledComponents/Caminho';
 import Container from './StyledComponents';
-//import { urlFiles } from '../../services/http';
+// import { urlFiles } from '../../services/http';
 import CaminhoTitle from './StyledComponents/CaminhoTitle';
 import CaminhoTitleDesabilitado from './StyledComponents/CaminhoTitleDesabilitado';
 import CaminhoAp from './StyledComponents/CaminhoAp';

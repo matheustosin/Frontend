@@ -1,6 +1,7 @@
 import { userTypes } from './userType.constants';
 
 export default function pushIfNecessary(userType = '', callBack) {
+  const escolhida = sessionStorage.getItem('homeEscolhida');
   if (typeof callBack !== 'function') return '';
   switch (userType) {
     case userTypes.ADMINISTRADOR:
@@ -13,7 +14,8 @@ export default function pushIfNecessary(userType = '', callBack) {
       callBack('/mentorado');
       break;
     case userTypes.MENTOREMENTORADO:
-      callBack(`/${sessionStorage.getItem('homeEscolhida') || 'mentor'}`);
+      if (!escolhida) sessionStorage.setItem('homeEscolhida', 'mentor');
+      callBack(`/${escolhida || 'mentor'}`);
       break;
     default:
       return '';

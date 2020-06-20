@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func, bool } from 'prop-types';
+import { string, func, bool, object, objectOf, any } from 'prop-types';
 import TextField from './StyledComponents';
 
 const RedeTextField = ({
@@ -10,10 +10,11 @@ const RedeTextField = ({
   erro,
   msgAjuda,
   disabled,
+  inputProps,
 }) => (
   <TextField erro={erro}>
     <TextField.Label>{descricao}</TextField.Label>
-    <TextField.Input type={tipo} value={valor} onChange={onChange} disabled={disabled} />
+    <TextField.Input type={tipo} value={valor} onChange={onChange} disabled={disabled} {...inputProps} />
     <TextField.MsgAjuda>{msgAjuda}</TextField.MsgAjuda>
   </TextField>
 );
@@ -25,6 +26,7 @@ RedeTextField.propTypes = {
   erro: bool,
   msgAjuda: string,
   onChange: func,
+  inputProps: objectOf(any),
 };
 
 RedeTextField.defaultProps = {
@@ -34,6 +36,7 @@ RedeTextField.defaultProps = {
   erro: false,
   msgAjuda: '',
   onChange: () => { },
+  inputProps: {},
 };
 
 export default RedeTextField;

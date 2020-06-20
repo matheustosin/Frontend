@@ -9,7 +9,7 @@ import standartPhoto from '../../assets/account.png';
 import { userTypes } from '../../utils/userType.constants';
 
 // const getTitle = () => sessionStorage.getItem('headerTitle');
-const excludedPaths = ['/', '/register', '/cadastro-mentor', '/cadastro-mentorado'];
+const excludedPaths = ['/', '/register', '/cadastro-mentor', '/cadastro-mentorado', '/nova-senha'];
 
 const RedeHeader = (props) => {
   const [tkn, setTkn] = useState(null);
@@ -27,7 +27,8 @@ const RedeHeader = (props) => {
   useEffect(() => { // ComponentDidMount
     setTitle(''); // TODO: Tirar esse setTitle();
     const tknValue = sessionStorage.getItem('token');
-    if (!tknValue && excludedPaths.indexOf(props.location.pathname) === -1) {
+    const path = props.location.pathname;
+    if (!tknValue && excludedPaths.indexOf(path) === -1 && !String(path).match(/(nova-senha\/.*)/)) {
       history.push('/');
     }
   }, []);
@@ -59,6 +60,7 @@ const RedeHeader = (props) => {
 
   const handleLogOut = () => {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('homeEscolhida');
     logOut();
     handleMenuClose();
   };
@@ -110,8 +112,10 @@ const RedeHeader = (props) => {
     return history.push(to);
   };
 
-  const escolherHome = (path) => {
-    sessionStorage.setItem('homeEscolhida', path);
+  const escolherHome = (path, sessionSave = true) => {
+    if (sessionSave) {
+      sessionStorage.setItem('homeEscolhida', path);
+    }
     history.push(`/${path}`);
     handleMenuClose();
   };
@@ -144,12 +148,11 @@ const RedeHeader = (props) => {
           >
             <MenuItem onClick={() => { }} disabled>{profile ? profile.name : ''}</MenuItem>
             {profile.userType === userTypes.ADMINISTRADOR && props && props.location && props.location.pathname !== ('/administrador')
-              && (<MenuItem onClick={() => escolherHome('administrador')}>Home Administrador</MenuItem>)}
+              && (<MenuItem onClick={() => escolherHome('administrador', false)}>Home Administrador</MenuItem>)}
             {(profile.userType === userTypes.MENTOREMENTORADO
               || profile.userType === userTypes.ADMINISTRADOR)
               && (
-                sessionStorage.getItem('homeEscolhida')
-                && sessionStorage.getItem('homeEscolhida') !== 'mentor'
+                sessionStorage.getItem('homeEscolhida') !== 'mentor'
               )
               && (
                 <MenuItem onClick={() => escolherHome('mentor')}>Home Mentor</MenuItem>
@@ -157,13 +160,15 @@ const RedeHeader = (props) => {
             {(profile.userType === userTypes.MENTOREMENTORADO
               || profile.userType === userTypes.ADMINISTRADOR)
               && (
-                !sessionStorage.getItem('homeEscolhida')
-                || sessionStorage.getItem('homeEscolhida') !== 'mentorado'
+                sessionStorage.getItem('homeEscolhida') !== 'mentorado'
               )
               && (
                 <MenuItem onClick={() => escolherHome('mentorado')}>Home Mentorado</MenuItem>
               )}
-            <MenuItem onClick={handleEditProfile}>Editar perfil</MenuItem>
+            {
+              (profile.userType !== userTypes.ADMINISTRADOR)
+              && <MenuItem onClick={handleEditProfile}>Editar perfil</MenuItem>
+            }
             <MenuItem onClick={handleLogOut}>Sair</MenuItem>
           </Menu>
 

@@ -5,7 +5,6 @@ import Caminho from '../mentorias/StyledComponents/Caminho';
 import CaminhoTitle from '../mentorias/StyledComponents/CaminhoTitle';
 import CaminhoTitleDesabilitado from '../mentorias/StyledComponents/CaminhoTitleDesabilitado';
 import CaminhoAp from '../mentorias/StyledComponents/CaminhoAp';
-import RedeHeader from '../../components/RedeHeader/RedeHeader';
 import Card from '../../components/RedeCard/RedeCard';
 import RedeHorarioCard from '../../components/RedeHorarioCard/RedeHorarioCard';
 
@@ -13,8 +12,8 @@ function Mentoria() {
   const [redirectTo, setRedirectTo] = useState('');
   const mentoria = JSON.parse(sessionStorage.getItem('mentoriaSelected'));
   const areaConhecimento = sessionStorage.getItem('areaSelected');
-  
-  //Http.put(`/mentoria/choice/${mentoria.idMentoria}`, data, headers);
+
+  // Http.put(`/mentoria/choice/${mentoria.idMentoria}`, data, headers);
 
   console.log(mentoria);
   return (redirectTo) ? <Redirect to={redirectTo} /> : (
