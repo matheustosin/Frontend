@@ -1,24 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import React, { useState } from 'react';
+import { useSnackbar } from 'notistack';
+import { useParams, useHistory } from 'react-router';
 import { Container } from '@material-ui/core';
+import { resetarSenha } from '../../services/user';
 import StyledContainer from './StyledComponents';
 import RedeTextField from '../../components/RedeTextField/RedeTextField';
 import RedeButton from '../../components/RedeButton/RedeButton';
+import Formulario from './StyledComponents/Formulario';
 
 function NovaSenha() {
   const { id } = useParams();
   const [senha, setSenha] = useState();
   const [confirmarSenha, setConfirmarSenha] = useState();
+  const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
+
+  const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
+    enqueueSnackbar(msg, { variant, autoHideDuration });
+  };
 
   const handleNewPassword = (evt) => {
     if (evt) evt.preventDefault();
-    console.log(senha);
+    resetarSenha({
+      id,
+      newPassword: senha,
+    }).then(() => {
+      enqueue('Senha alterada com sucesso!', 'success', 3000);
+      history.push('/');
+    }).catch((err) => {
+      enqueue(err.response.data.message);
+    });
   };
 
   return (
     <Container>
       <StyledContainer>
-        <form onSubmit={handleNewPassword}>
+        <Formulario onSubmit={handleNewPassword}>
           <RedeTextField
             descricao="Nova Senha"
             valor={senha}
@@ -37,7 +54,7 @@ function NovaSenha() {
             descricao="ALTERAR SENHA"
             onClick={handleNewPassword}
           />
-        </form>
+        </Formulario>
 
       </StyledContainer>
     </Container>

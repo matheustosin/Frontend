@@ -8,6 +8,8 @@ const SideImage = styled.div`
   height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center right;
   background-image: url(${logo});
 
   /* @media screen and (max-width: 1200px) { */
