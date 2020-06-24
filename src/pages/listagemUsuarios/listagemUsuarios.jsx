@@ -1,0 +1,340 @@
+import React, { useState, useEffect } from 'react';
+import { useSnackbar } from 'notistack';
+import { Container, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import StyledContainer from './StyledComponents';
+import Titulo from './StyledComponents/Titulo';
+import Tabela from './StyledComponents/Tabela';
+import ControleFlutuante from './StyledComponents/ControleFlutuante';
+import { getAll } from '../../services/user';
+
+function ListagemUsuarios() {
+  const { enqueueSnackbar } = useSnackbar();
+  const [usuarios, setUsuarios] = useState([]);
+  const [tipo, setTipo] = useState(1);
+
+  const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
+    enqueueSnackbar(msg, { variant, autoHideDuration });
+  };
+
+  useEffect(() => {
+    const tkn = sessionStorage.getItem('token');
+    getAll(
+      { headers: { Authorization: `Bearer ${tkn}` } },
+    ).then((resp) => setUsuarios(resp))
+      .catch(() => enqueue('Erro ao pesquisar usuários!'));
+  }, []);
+
+  return (
+    <Container>
+      <StyledContainer>
+        <ControleFlutuante>
+          <FormControl variant="outlined">
+            <Select
+              value={tipo}
+              onChange={(e) => setTipo(e.target.value)}
+            >
+              <MenuItem value={1}>Mentores</MenuItem>
+              <MenuItem value={2}>Mentorados</MenuItem>
+            </Select>
+          </FormControl>
+        </ControleFlutuante>
+        <Titulo>Listagem de Usuários</Titulo>
+        <Tabela>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>CPF</th>
+              <th>Telefone</th>
+              <th>Tipo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+            <tr>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+            </tr>
+            <tr>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Teste</td>
+              <td>Teste</td>
+              <td>Testeeeeeeeeeeee</td>
+              <td>Testeeeeeeeeeeee</td>
+            </tr>
+          </tbody>
+        </Tabela>
+      </StyledContainer>
+    </Container >
+  );
+}
+
+export default ListagemUsuarios;
