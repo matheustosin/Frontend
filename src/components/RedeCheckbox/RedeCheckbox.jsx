@@ -18,6 +18,7 @@ const RedeCheckbox = styled(Checkbox)`
   align-items: center;
   justify-content: center;
   border: 3px solid ${COLOR.AZUL};
+  border: 3px solid ${COLOR.BRANCO};
 
   &:focus {
     outline: none;
@@ -25,6 +26,8 @@ const RedeCheckbox = styled(Checkbox)`
 
   &:checked {
     &:after {
+      color: ${COLOR.AZUL};
+      color: ${COLOR.BRANCO};
       position: absolute;
       content: '✔';
     }
