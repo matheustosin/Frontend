@@ -3,9 +3,9 @@ import styled from 'styled-components';
 const Label = styled.h2`
     margin: 0;
     display: flex;
-    font-size: 2vh;
+    font-size: 1em;
     justify-content: space-around;
-    width: 25%;
+    width: 20%;
     align-items: center;
 `;
 

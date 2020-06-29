@@ -6,7 +6,13 @@ import CaminhoTitle from '../mentorias/StyledComponents/CaminhoTitle';
 import CaminhoTitleDesabilitado from '../mentorias/StyledComponents/CaminhoTitleDesabilitado';
 import CaminhoAp from '../mentorias/StyledComponents/CaminhoAp';
 import Card from '../../components/RedeCard/RedeCard';
+import Title from './StyledComponents/Title';
+import Titles from './StyledComponents/Titles';
+import Subtitle from './StyledComponents/SubTitle';
+import Legend from './StyledComponents/Legend';
+import HeaderCard from './StyledComponents/HeaderCard';
 import RedeHorarioCard from '../../components/RedeHorarioCard/RedeHorarioCard';
+import RedeHorarioButton from '../../components/RedeHorarioButton/RedeHorarioButton';
 
 function Mentoria() {
   const [redirectTo, setRedirectTo] = useState('');
@@ -25,13 +31,21 @@ function Mentoria() {
         <Caminho />
         <CaminhoTitle>{mentoria.title}</CaminhoTitle>
       </CaminhoAp>
-
       <Card
         mentoria={mentoria}
         mentorias
         todosHorarios
       />
-
+      <HeaderCard>
+        <Titles>
+          <Title> Horários e Datas</Title>
+          <Subtitle> Selecione um Horário disponível </Subtitle>
+        </Titles>
+        <Legend>
+          <RedeHorarioButton horario="Disponível"> </RedeHorarioButton>
+          <RedeHorarioButton ocupado desabilitado horario="Indisponível"> </RedeHorarioButton>
+        </Legend>
+      </HeaderCard>
       <RedeHorarioCard mentoria={mentoria} />
     </Container>
   );

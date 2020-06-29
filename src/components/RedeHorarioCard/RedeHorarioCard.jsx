@@ -26,6 +26,14 @@ function RedeHorarioCard({ mentoria }) {
     .sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[1] - dateTimeB.dayOfTheMonth.split('/')[1]);
 
   const timeInformation = sortedTimes.map((dt) => {
+    // Quebra o dia onde tiver a string /, e tira os espaços em branco
+    let dayOfTheMonth = dt.dayOfTheMonth.replace(/ /g, '').split('/');
+    // Loop dentro da data, se encontrar algum numero com tamanho 1, significa que precisa colocar o 0
+    // Por ex, mês 8 tem tamanho 1, precisa ficar 08
+    for (let i = 0; i < 2; i += 1) if (dayOfTheMonth[i].length === 1) dayOfTheMonth[i] = `0${dayOfTheMonth[i]}`;
+    // Junta o array, separando por /
+    dayOfTheMonth = dayOfTheMonth.join('/');
+
     // eslint-disable-next-line max-len
     const hours = dt.times.map((time) => (
       <RedeHorarioButton
@@ -40,10 +48,9 @@ function RedeHorarioCard({ mentoria }) {
       />
     ));
 
-
     return (
       <Details>
-        <Label>{dt.dayOfTheMonth}</Label>
+        <Label>{dayOfTheMonth}</Label>
         <Hours>
           {hours}
         </Hours>
@@ -80,9 +87,9 @@ function RedeHorarioCard({ mentoria }) {
           onConfirm={(evt) => onConfirm(evt)}
         />
       </>
-      <Details style={{ borderBottom: 'none' }}>
-        <Label>Data</Label>
-        <Label>Hora</Label>
+      <Details style={{ borderBottom: 'none', marginBottom: '15px', paddingTop: '10px' }}>
+        <Label>Datas</Label>
+        <Label style={{ width: '30%' }}>Horários</Label>
       </Details>
       {timeInformation}
     </Container>
