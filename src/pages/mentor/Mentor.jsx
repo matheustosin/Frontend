@@ -26,8 +26,8 @@ function Mentor() {
     if (global.confirm('Você deseja realmente deletar essa mentoria ?')) {
       desativarMentoria(config)
         .then(() => {
-          const allMentorias = mentorias;
-          mentorias.splice(index, 1);
+          const allMentorias = [...mentorias];
+          allMentorias.splice(index, 1);
           setMentorias(allMentorias);
           enqueueSnackbar('Mentoria deletada!', { variant: 'success', autoHideDuration: 2500 });
         })
@@ -41,16 +41,31 @@ function Mentor() {
   };
 
   const changeVisibility = (i) => {
-    const allMentorias = mentorias;
-    allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
-    setMentorias(allMentorias);
+    const allMentorias = [...mentorias];
     const token = sessionStorage.getItem('token');
     const { id } = mentorias[i];
     const config = {
       params: { id },
       headers: { Authorization: `Bearer ${token}` },
     };
-    mudarVisibilidade(config);
+    mudarVisibilidade(config).then(
+      () => {
+        allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
+        setMentorias(allMentorias);
+        let message;
+        if (allMentorias[i].data.isVisible) message = 'Mentoria não está mais disponível para os mentorandos!';
+        else message = 'Mentoria está disponível para os mentorandos!';
+        enqueueSnackbar(message, { variant: 'success', autoHideDuration: 2500 });
+      },
+    ).catch(
+      () => {
+        enqueueSnackbar(
+          'Falha ao atualizar essa mentoria. Verifique sua conexão e tente novamente.',
+          { variant: 'error', autoHideDuration: 2500 },
+        );
+      },
+
+    );
   };
 
   const editPage = (mentoria) => {
@@ -124,6 +139,7 @@ function Mentor() {
                 onClickRemove={() => changeAvalibility(i)}
                 onClickVisible={() => changeVisibility(i)}
                 onClickEdit={() => editPage(mentoria)}
+                isVisible={mentoria.data.isVisible}
                 todosHorarios
               />
             ))
