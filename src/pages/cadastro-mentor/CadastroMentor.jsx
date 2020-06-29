@@ -225,7 +225,7 @@ function CadastroMentor() {
 
   const ajudaEmail = () => {
     if (sent && !email) return 'Email é obrigatório!';
-    if (!validateEmail(email)) return 'Email inválido!';
+    if (sent && email && !validateEmail(email)) return 'Email inválido!';
     return '';
   };
 

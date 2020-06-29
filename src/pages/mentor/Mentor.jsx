@@ -5,7 +5,6 @@ import { useSnackbar } from 'notistack';
 import StyledContainer from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
 import ModalRep from '../adm/StyledComponents/ModalReprove';
-// import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
 import { mentoriasByMentor, desativarMentoria, mudarVisibilidade } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import RedeButton from '../../components/RedeButton/RedeButton';
@@ -42,16 +41,31 @@ function Mentor() {
   };
 
   const changeVisibility = (i) => {
-    const allMentorias = mentorias;
-    allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
-    setMentorias(allMentorias);
+    const allMentorias = [...mentorias];
     const token = sessionStorage.getItem('token');
     const { id } = mentorias[i];
     const config = {
       params: { id },
       headers: { Authorization: `Bearer ${token}` },
     };
-    mudarVisibilidade(config);
+    mudarVisibilidade(config).then(
+      () => {
+        allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
+        setMentorias(allMentorias);
+        let message;
+        if (allMentorias[i].data.isVisible) message = 'Mentoria não está mais disponível para os mentorandos!';
+        else message = 'Mentoria está disponível para os mentorandos!';
+        enqueueSnackbar(message, { variant: 'success', autoHideDuration: 2500 });
+      },
+    ).catch(
+      () => {
+        enqueueSnackbar(
+          'Falha ao atualizar essa mentoria. Verifique sua conexão e tente novamente.',
+          { variant: 'error', autoHideDuration: 2500 },
+        );
+      },
+
+    );
   };
 
   const editPage = (mentoria) => {
@@ -135,6 +149,7 @@ function Mentor() {
                 onClickRemove={() => abreModalRep(mentoria.id)}
                 onClickVisible={() => changeVisibility(i)}
                 onClickEdit={() => editPage(mentoria)}
+                isVisible={mentoria.data.isVisible}
                 todosHorarios
               />
             ))
