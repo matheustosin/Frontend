@@ -4,6 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import ButtonWrapper from './ButtonWrapper';
 import RedeTextField from '../../../components/RedeTextField/RedeTextField';
 import RedeButton from '../../../components/RedeButton/RedeButton';
 
@@ -31,15 +32,17 @@ const Modal = ({
         />
       </DialogContent>
       <DialogActions>
-        <RedeButton
-          descricao="Cancelar"
-          onClick={handleClose}
-          cancelar
-        />
-        <RedeButton
-          descricao="Aprovar"
-          onClick={editFunction}
-        />
+        <ButtonWrapper>
+          <RedeButton
+            descricao="Cancelar"
+            onClick={handleClose}
+            cancelar
+          />
+          <RedeButton
+            descricao="Aprovar"
+            onClick={editFunction}
+          />
+        </ButtonWrapper>
       </DialogActions>
     </Dialog>
   </div>

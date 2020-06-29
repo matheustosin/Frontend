@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import COLOR from '../../../utils/colors.constants';
 
-
 const Select = styled.select`
   outline: 0;
   height: 30px;

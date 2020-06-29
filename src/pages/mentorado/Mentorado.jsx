@@ -52,7 +52,6 @@ function Mentorado() {
         resultAreas.push(element.name);
       }
     });
-    console.log(resultAreas);
     setAreas(resultAreas);
     buildCards(resultAreas);
   }

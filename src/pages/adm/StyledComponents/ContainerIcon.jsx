@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { shade } from 'polished';
 
 import COLOR from '../../../utils/colors.constants';

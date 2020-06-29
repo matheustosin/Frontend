@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Color from '../../../utils/colors.constants';
 
 const Container = styled.div`
+    color: ${Color.AZUL};
+    font-size: 1.3em;
     border: 3px solid ${Color.AZUL};
     border-radius: 10px;
     opacity: 1;
@@ -10,6 +12,7 @@ const Container = styled.div`
     width: 80%;
     padding-left: 5%;
     padding-right: 5%;
+    padding-bottom:2%;
     min-height: 210px;
     height:auto;
     margin-bottom: 50px;

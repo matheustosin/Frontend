@@ -4,7 +4,7 @@ import { Container } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import StyledContainer from './StyledComponents';
 import Card from '../../components/RedeCard/RedeCard';
-// import ProfileInfo from '../../components/RedeProfileInfo/RedeProfileInfo';
+import ModalRep from '../adm/StyledComponents/ModalReprove';
 import { mentoriasByMentor, desativarMentoria, mudarVisibilidade } from '../../services/mentoria';
 import { profile } from '../../services/user';
 import RedeButton from '../../components/RedeButton/RedeButton';
@@ -12,45 +12,60 @@ import { userTypes } from '../../utils/userType.constants';
 
 function Mentor() {
   const history = useHistory();
+  const [flagModalRep, setFlagModalRep] = useState(false);
+  const [mentoringId, setMentoringId] = useState('');
   const [mentorias, setMentorias] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
 
-  const changeAvalibility = (index) => {
+  const changeAvailability = () => {
     const token = sessionStorage.getItem('token');
-    const { id } = mentorias[index];
+    const id = mentoringId;
     const config = {
       params: { id },
       headers: { Authorization: `Bearer ${token}` },
     };
 
-    if (global.confirm('Você deseja realmente deletar essa mentoria ?')) {
-      desativarMentoria(config)
-        .then(() => {
-          const allMentorias = mentorias;
-          mentorias.splice(index, 1);
-          setMentorias(allMentorias);
-          enqueueSnackbar('Mentoria deletada!', { variant: 'success', autoHideDuration: 2500 });
-        })
-        .catch(() => {
-          enqueueSnackbar(
-            'Falha ao deletar essa mentoria. Verifique sua conexão e tente novamente.',
-            { variant: 'error', autoHideDuration: 2500 },
-          );
-        });
-    }
+    desativarMentoria(config)
+      .then(() => {
+        setMentorias(mentorias.filter((el) => el.id !== id));
+        enqueueSnackbar('Mentoria deletada!', { variant: 'success', autoHideDuration: 2500 });
+        // eslint-disable-next-line no-use-before-define
+        fechaModalRep();
+      })
+      .catch(() => {
+        enqueueSnackbar(
+          'Falha ao deletar essa mentoria. Verifique sua conexão e tente novamente.',
+          { variant: 'error', autoHideDuration: 2500 },
+        );
+      });
   };
 
   const changeVisibility = (i) => {
-    const allMentorias = mentorias;
-    allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
-    setMentorias(allMentorias);
+    const allMentorias = [...mentorias];
     const token = sessionStorage.getItem('token');
     const { id } = mentorias[i];
     const config = {
       params: { id },
       headers: { Authorization: `Bearer ${token}` },
     };
-    mudarVisibilidade(config);
+    mudarVisibilidade(config).then(
+      () => {
+        allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
+        setMentorias(allMentorias);
+        let message;
+        if (allMentorias[i].data.isVisible) message = 'Mentoria não está mais disponível para os mentorandos!';
+        else message = 'Mentoria está disponível para os mentorandos!';
+        enqueueSnackbar(message, { variant: 'success', autoHideDuration: 2500 });
+      },
+    ).catch(
+      () => {
+        enqueueSnackbar(
+          'Falha ao atualizar essa mentoria. Verifique sua conexão e tente novamente.',
+          { variant: 'error', autoHideDuration: 2500 },
+        );
+      },
+
+    );
   };
 
   const editPage = (mentoria) => {
@@ -108,6 +123,16 @@ function Mentor() {
     fetchCards();
   }, []);
 
+  // eslint-disable-next-line no-shadow
+  function abreModalRep(mentoriaId) {
+    setMentoringId(mentoriaId);
+    setFlagModalRep(true);
+  }
+
+  function fechaModalRep() {
+    setFlagModalRep(false);
+  }
+
   return (
     <>
       <Container>
@@ -121,13 +146,19 @@ function Mentor() {
               <Card
                 key={mentoria.id}
                 mentoria={mentoria.data}
-                onClickRemove={() => changeAvalibility(i)}
+                onClickRemove={() => abreModalRep(mentoria.id)}
                 onClickVisible={() => changeVisibility(i)}
                 onClickEdit={() => editPage(mentoria)}
+                isVisible={mentoria.data.isVisible}
                 todosHorarios
               />
             ))
           ) : (<StyledContainer.Subtitle>Nenhuma mentoria encontrada!</StyledContainer.Subtitle>)}
+          <ModalRep
+            open={flagModalRep}
+            handleClose={() => fechaModalRep()}
+            evaluateMentoring={() => changeAvailability()}
+          />
         </StyledContainer>
       </Container>
     </>

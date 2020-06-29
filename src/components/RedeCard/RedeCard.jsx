@@ -1,7 +1,7 @@
 import React from 'react';
 import { object, func, bool } from 'prop-types';
 import Container from './StyledComponents';
-// import visible from '../../assets/visibility-button.png';
+import visible from '../../assets/visibility-button.png';
 import remove from '../../assets/rubbish-bin-delete-button.png';
 import edition from '../../assets/create-new-pencil-button.png';
 import notVisible from '../../assets/invisible-button.png';
@@ -29,6 +29,7 @@ const Card = ({
   onClickRemove,
   onClickEdit,
   todosHorarios,
+  isVisible,
 }) => {
   const nextAvailableHours = mentoria.dateTime.slice(0, 3)
     .map((day) => <RedeButton claro descricao={`${day.day.slice(0, 3)} - ${day.times[0].hour}`} onClick={onClickSchedule} />);
@@ -61,7 +62,7 @@ const Card = ({
                   <>
                     <RedeIcon imageUrl={remove} onClick={onClickRemove} />
                     <RedeIcon
-                      imageUrl={mentoria.data ? mentoria.data.isVisible : notVisible}
+                      imageUrl={isVisible ? visible : notVisible}
                       onClick={onClickVisible}
                     />
                     <RedeIcon imageUrl={edition} onClick={onClickEdit} />
