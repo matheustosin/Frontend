@@ -13,7 +13,7 @@ function RedeHorarioCard({ mentoria }) {
   const [open, setOpen] = React.useState(false);
   const [timeInfo, setTimeInfo] = React.useState('');
   const [dateInfo, setDateInfo] = React.useState('');
-
+  const [mentoriaSelect, setMentoriaSelect] = React.useState(mentoria);
   const { enqueueSnackbar } = useSnackbar();
 
 
@@ -21,7 +21,7 @@ function RedeHorarioCard({ mentoria }) {
     enqueueSnackbar(msg, { variant, autoHideDuration });
   };
 
-  const { dateTime } = mentoria;
+  const { dateTime } = mentoriaSelect;
   const sortedTimes = dateTime.sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[0] - dateTimeB.dayOfTheMonth.split('/')[0])
     .sort((dateTimeA, dateTimeB) => dateTimeA.dayOfTheMonth.split('/')[1] - dateTimeB.dayOfTheMonth.split('/')[1]);
 
@@ -59,17 +59,23 @@ function RedeHorarioCard({ mentoria }) {
   });
 
   function onConfirm(data) {
+    const newMentoria = { ...mentoriaSelect };
+    newMentoria.datetime.forEach(element => {
+      console.log(element);
+    });
+    console.log(data.date); // DIA DDO MES ANO DIA
+    console.log(data.hour); // HORARIO DO NEGÓCIO AHAAAAAAAAAAAAAAAA
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
-    marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
-      .then((res) => (
-        res.status === 200
-          ? enqueue('Mentoria cadastrada com sucesso', 'success')
-          : console.log('Falha ao marcar mentoria. Código: ', res.status)))
-      .catch((err) => {
-        enqueue('Erro ao marcar mentoria');
-        console.error(err);
-      });
+    // marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
+    //   .then((res) => (
+    //     res.status === 200
+    //       ? enqueue('Mentoria cadastrada com sucesso', 'success')
+    //       : console.log('Falha ao marcar mentoria. Código: ', res.status)))
+    //   .catch((err) => {
+    //     enqueue('Erro ao marcar mentoria');
+    //     console.error(err);
+    //   });
   }
 
   return (
@@ -77,10 +83,10 @@ function RedeHorarioCard({ mentoria }) {
       <>
         <RedeMarcarMentoria
           opened={open}
-          image={`${urlFiles}/${mentoria.image}`}
-          title={mentoria.title}
-          userName={mentoria.mentorInfos.name}
-          userImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
+          image={`${urlFiles}/${mentoriaSelect.image}`}
+          title={mentoriaSelect.title}
+          userName={mentoriaSelect.mentorInfos.name}
+          userImage={`${urlFiles}/${mentoriaSelect.mentorInfos.image}`}
           date={dateInfo}
           hour={timeInfo}
           onClose={() => setOpen(false)}
