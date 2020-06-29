@@ -71,6 +71,7 @@ function ListagemUsuarios() {
                       id="mentores"
                       checked={checkMentor}
                       onChange={(evt) => setCheckMentor(evt.target.checked)}
+                      claro
                     />
                     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                     <label htmlFor="mentores" style={{ marginLeft: '5px' }}>
@@ -82,6 +83,7 @@ function ListagemUsuarios() {
                       id="mentorados"
                       checked={checkMentorado}
                       onChange={(evt) => setCheckMentorado(evt.target.checked)}
+                      claro
                     />
                     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                     <label htmlFor="mentorados" style={{ marginLeft: '5px' }}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import COLOR from '../../utils/colors.constants';
 
@@ -17,8 +17,7 @@ const RedeCheckbox = styled(Checkbox)`
   text-align: center;
   align-items: center;
   justify-content: center;
-  border: 3px solid ${COLOR.AZUL};
-  border: 3px solid ${COLOR.BRANCO};
+  border: 3px solid ${(props) => (props.claro ? COLOR.BRANCO : COLOR.AZUL)};
 
   &:focus {
     outline: none;
@@ -26,8 +25,7 @@ const RedeCheckbox = styled(Checkbox)`
 
   &:checked {
     &:after {
-      color: ${COLOR.AZUL};
-      color: ${COLOR.BRANCO};
+      color: ${(props) => (props.claro ? COLOR.BRANCO : COLOR.AZUL)};
       position: absolute;
       content: '✔';
     }
