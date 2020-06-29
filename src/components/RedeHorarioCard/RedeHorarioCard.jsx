@@ -10,6 +10,11 @@ import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
 import { marcarMentoria } from '../../services/mentoria';
 
 function RedeHorarioCard({ mentoria }) {
+  // eslint-disable-next-line no-prototype-builtins
+  mentoria = JSON.parse(localStorage.getItem('updatedMentoria')) || mentoria;
+  if (localStorage.hasOwnProperty('updatedMentoria')) {
+    localStorage.setItem('updatedMentoria', null);
+  }
   const [open, setOpen] = React.useState(false);
   const [timeInfo, setTimeInfo] = React.useState('');
   const [dateInfo, setDateInfo] = React.useState('');
@@ -60,22 +65,30 @@ function RedeHorarioCard({ mentoria }) {
 
   function onConfirm(data) {
     const newMentoria = { ...mentoriaSelect };
-    newMentoria.datetime.forEach(element => {
-      console.log(element);
-    });
-    console.log(data.date); // DIA DDO MES ANO DIA
-    console.log(data.hour); // HORARIO DO NEGÓCIO AHAAAAAAAAAAAAAAAA
+
+
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
-    // marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
-    //   .then((res) => (
-    //     res.status === 200
-    //       ? enqueue('Mentoria cadastrada com sucesso', 'success')
-    //       : console.log('Falha ao marcar mentoria. Código: ', res.status)))
-    //   .catch((err) => {
-    //     enqueue('Erro ao marcar mentoria');
-    //     console.error(err);
-    //   });
+    marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
+      .then((res) => {
+        if (res.status === 200) {
+          newMentoria.dateTime.forEach((element) => {
+            if (element.dayOfTheMonth === data.date && element.times[0].hour === data.hour) {
+              element.times[0].flagBusy = true;
+            }
+          });
+          setMentoriaSelect(newMentoria);
+
+          localStorage.setItem('updatedMentoria', JSON.stringify(newMentoria));
+          enqueue('Mentoria cadastrada com sucesso', 'success');
+        } else {
+          console.log('Falha ao marcar mentoria. Código: ', res.status);
+        }
+      })
+      .catch((err) => {
+        enqueue('Erro ao marcar mentoria');
+        console.error(err);
+      });
   }
 
   return (
