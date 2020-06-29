@@ -99,7 +99,7 @@ function CadastroMentoria() {
       enqueue('Selecione o tipo de mentoria');
     } else if (oldMentoria) {
       if (
-        typeof image === 'string' //!!
+        typeof image === 'string' //! !
       ) data.delete('image');
       const headers = { headers: { param: { id: oldMentoria.id }, Authorization: `Bearer ${token}` } };
       atualizarMentoria(headers, data).then((res) => {
@@ -244,6 +244,7 @@ function CadastroMentoria() {
             descricao="Título"
             valor={title}
             onChange={(e) => setTitle(e.target.value)}
+            disabled={!!oldMentoria}
           />
           <RedeTextArea
             descricao="Descrição"
