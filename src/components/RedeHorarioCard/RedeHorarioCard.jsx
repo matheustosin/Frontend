@@ -10,17 +10,16 @@ import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
 import { marcarMentoria } from '../../services/mentoria';
 
 function RedeHorarioCard({ mentoria }) {
-  // eslint-disable-next-line no-prototype-builtins
+  // eslint-disable-next-line no-param-reassign
   mentoria = JSON.parse(localStorage.getItem('updatedMentoria')) || mentoria;
-  if (localStorage.hasOwnProperty('updatedMentoria')) {
-    localStorage.setItem('updatedMentoria', null);
-  }
+  // eslint-disable-next-line no-prototype-builtins
+  if (localStorage.hasOwnProperty('updatedMentoria')) { localStorage.setItem('updatedMentoria', null); }
+
   const [open, setOpen] = React.useState(false);
   const [timeInfo, setTimeInfo] = React.useState('');
   const [dateInfo, setDateInfo] = React.useState('');
   const [mentoriaSelect, setMentoriaSelect] = React.useState(mentoria);
   const { enqueueSnackbar } = useSnackbar();
-
 
   const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
     enqueueSnackbar(msg, { variant, autoHideDuration });
@@ -33,7 +32,8 @@ function RedeHorarioCard({ mentoria }) {
   const timeInformation = sortedTimes.map((dt) => {
     // Quebra o dia onde tiver a string /, e tira os espaços em branco
     let dayOfTheMonth = dt.dayOfTheMonth.replace(/ /g, '').split('/');
-    // Loop dentro da data, se encontrar algum numero com tamanho 1, significa que precisa colocar o 0
+    // Loop dentro da data, se encontrar algum numero com tamanho 1,
+    // significa que precisa colocar o 0
     // Por ex, mês 8 tem tamanho 1, precisa ficar 08
     for (let i = 0; i < 2; i += 1) if (dayOfTheMonth[i].length === 1) dayOfTheMonth[i] = `0${dayOfTheMonth[i]}`;
     // Junta o array, separando por /
@@ -74,6 +74,7 @@ function RedeHorarioCard({ mentoria }) {
         if (res.status === 200) {
           newMentoria.dateTime.forEach((element) => {
             if (element.dayOfTheMonth === data.date && element.times[0].hour === data.hour) {
+              // eslint-disable-next-line no-param-reassign
               element.times[0].flagBusy = true;
             }
           });
