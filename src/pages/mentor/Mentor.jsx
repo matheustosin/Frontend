@@ -53,8 +53,8 @@ function Mentor() {
         allMentorias[i].data.isVisible = !allMentorias[i].data.isVisible;
         setMentorias(allMentorias);
         let message;
-        if (allMentorias[i].data.isVisible) message = 'Mentoria não está mais disponível para os mentorandos!';
-        else message = 'Mentoria está disponível para os mentorandos!';
+        if (allMentorias[i].data.isVisible) message = 'Mentoria está disponível para os mentorandos!';
+        else message = 'Mentoria não está mais disponível para os mentorandos!';
         enqueueSnackbar(message, { variant: 'success', autoHideDuration: 2500 });
       },
     ).catch(
