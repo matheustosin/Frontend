@@ -90,7 +90,7 @@ const RedeHeader = (props) => {
 
   const handleLogoClick = () => {
     let to = '/';
-    if (!profile || !profile.userType) return history.push(to);
+    if (!profile || (!profile.userType && profile.userType !== 0)) return history.push(to);
     switch (profile.userType) {
       case userTypes.ADMINISTRADOR:
         to = '/administrador';
@@ -165,6 +165,10 @@ const RedeHeader = (props) => {
               && (
                 <MenuItem onClick={() => escolherHome('mentorado')}>Home Mentorado</MenuItem>
               )}
+            {
+              profile.userType === userTypes.ADMINISTRADOR
+              && <MenuItem onClick={() => history.push('/listagem-usuarios')}>Listagem de Usuários</MenuItem>
+            }
             {
               (profile.userType !== userTypes.ADMINISTRADOR)
               && <MenuItem onClick={handleEditProfile}>Editar perfil</MenuItem>

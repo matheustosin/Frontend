@@ -13,6 +13,7 @@ import Administrador from './pages/adm/Adm';
 import Mentorado from './pages/mentorado/Mentorado';
 import RedeHeader from './components/RedeHeader/RedeHeader';
 import NovaSenha from './pages/novaSenha/novaSenha';
+import ListagemUsuarios from './pages/listagemUsuarios/listagemUsuarios';
 
 export default function Routes() {
   return (
@@ -33,6 +34,7 @@ export default function Routes() {
         <Route path="/administrador" component={Administrador} />
         <Route path="/mentorado" component={Mentorado} />
         <Route path="/nova-senha/:id" component={NovaSenha} />
+        <Route path="/listagem-usuarios" component={ListagemUsuarios} />
       </Switch>
     </BrowserRouter>
   );
