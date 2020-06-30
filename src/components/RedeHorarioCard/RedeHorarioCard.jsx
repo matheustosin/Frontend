@@ -10,10 +10,6 @@ import RedeMarcarMentoria from '../RedeMarcarMentoria/RedeMarcarMentoria';
 import { marcarMentoria } from '../../services/mentoria';
 
 function RedeHorarioCard({ mentoria }) {
-  // eslint-disable-next-line no-param-reassign
-  mentoria = JSON.parse(localStorage.getItem('updatedMentoria')) || mentoria;
-  // eslint-disable-next-line no-prototype-builtins
-  if (localStorage.hasOwnProperty('updatedMentoria')) { localStorage.setItem('updatedMentoria', null); }
 
   const [open, setOpen] = React.useState(false);
   const [timeInfo, setTimeInfo] = React.useState('');
@@ -66,9 +62,9 @@ function RedeHorarioCard({ mentoria }) {
   function onConfirm(data) {
     const newMentoria = { ...mentoriaSelect };
 
-
     const token = sessionStorage.getItem('token');
     const headers = { headers: { Authorization: `Bearer ${token}` } };
+    console.log(mentoria);
     marcarMentoria(headers, { idMentoria: mentoria.idMentoria, choice: data })
       .then((res) => {
         if (res.status === 200) {
@@ -82,8 +78,6 @@ function RedeHorarioCard({ mentoria }) {
 
           localStorage.setItem('updatedMentoria', JSON.stringify(newMentoria));
           enqueue('Mentoria cadastrada com sucesso', 'success');
-        } else {
-          console.log('Falha ao marcar mentoria. Código: ', res.status);
         }
       })
       .catch((err) => {
