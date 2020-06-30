@@ -7,23 +7,23 @@ import RedeTextArea from '../RedeTextArea/RedeTextArea';
 import RedeButton from '../RedeButton/RedeButton';
 
 const RedeMarcarMentoria = ({
-  image, title, userImage, userName, date, hour, onConfirm, opened, onClose,
+  image, title, userImage, userName, date, hour, mentoringOption, onConfirm, opened, onClose,
   // descricao, onClick, desabilitado, cancelar, claro, loading,
 }) => {
   const [descricao, setDescricao] = useState('');
-  const [tipoMentoria, setTipoMentoria] = useState('');
+  const [typeMentoring, setTypeMentoring] = useState('');
   const handleClose = () => {
     onClose();
     setTimeout(() => {
       setDescricao('');
-      setTipoMentoria('');
+      setTypeMentoring('');
     }, 400);
   };
 
   const confirm = () => {
     handleClose();
     onConfirm({
-      typeMentoring: tipoMentoria,
+      typeMentoring,
       descProject: descricao,
       date,
       hour,
@@ -65,20 +65,20 @@ const RedeMarcarMentoria = ({
           />
         </div>
         <div className="radios">
-          <label htmlFor="online">
-            <input type="radio" id="online" name="tipo" value="Online" checked={tipoMentoria === 'Online'} onChange={(evt) => setTipoMentoria(evt.target.value)} />
-            Online
-          </label>
-          <label htmlFor="presencial">
-            <input type="radio" id="presencial" name="tipo" value="Presencial" checked={tipoMentoria === 'Presencial'} onChange={(evt) => setTipoMentoria(evt.target.value)} />
-            Presencial
-          </label>
+          {mentoringOption.map((each) => (
+            <>
+              <label htmlFor={each}>
+                <input type="radio" name="tipo" id={each} value={each} onChange={(event) => setTypeMentoring(event.target.value)} />
+                {each}
+              </label>
+            </>
+          ))}
         </div>
         <div className="botao">
           <RedeButton
             descricao="MARCAR MENTORIA"
             onClick={confirm}
-            desabilitado={!tipoMentoria || !descricao}
+            desabilitado={!typeMentoring || !descricao}
           />
         </div>
 

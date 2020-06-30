@@ -16,7 +16,6 @@ function RedeHorarioCard({ mentoria }) {
 
   const { enqueueSnackbar } = useSnackbar();
 
-
   const enqueue = (msg = '', variant = 'error', autoHideDuration = 2500) => {
     enqueueSnackbar(msg, { variant, autoHideDuration });
   };
@@ -83,6 +82,11 @@ function RedeHorarioCard({ mentoria }) {
           userImage={`${urlFiles}/${mentoria.mentorInfos.image}`}
           date={dateInfo}
           hour={timeInfo}
+          mentoringOption={
+              Array.isArray(mentoria.mentoringOption)
+                ? mentoria.mentoringOption
+                : mentoria.mentoringOption.split()
+          }
           onClose={() => setOpen(false)}
           onConfirm={(evt) => onConfirm(evt)}
         />

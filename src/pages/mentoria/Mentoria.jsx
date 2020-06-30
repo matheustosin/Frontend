@@ -21,7 +21,6 @@ function Mentoria() {
 
   // Http.put(`/mentoria/choice/${mentoria.idMentoria}`, data, headers);
 
-  console.log(mentoria);
   return (redirectTo) ? <Redirect to={redirectTo} /> : (
     <Container>
       <CaminhoAp>
