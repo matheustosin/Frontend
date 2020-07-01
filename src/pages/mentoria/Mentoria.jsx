@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import Container from './StyledComponents';
 import Caminho from '../mentorias/StyledComponents/Caminho';
@@ -13,15 +13,30 @@ import Legend from './StyledComponents/Legend';
 import HeaderCard from './StyledComponents/HeaderCard';
 import RedeHorarioCard from '../../components/RedeHorarioCard/RedeHorarioCard';
 import RedeHorarioButton from '../../components/RedeHorarioButton/RedeHorarioButton';
+import { buscarMentoria } from '../../services/mentoria';
 
 function Mentoria() {
   const [redirectTo, setRedirectTo] = useState('');
-  const mentoria = JSON.parse(sessionStorage.getItem('mentoriaSelected'));
+  const [mentoria, setMentoria] = useState(null);
   const areaConhecimento = sessionStorage.getItem('areaSelected');
 
-  // Http.put(`/mentoria/choice/${mentoria.idMentoria}`, data, headers);
-
-  return (redirectTo) ? <Redirect to={redirectTo} /> : (
+  useEffect(() => {
+    async function fetchMentoria() {
+      const token = sessionStorage.getItem('token');
+      const { idMentoria } = JSON.parse(sessionStorage.getItem('mentoriaSelected'));
+      await buscarMentoria({ headers: { Authorization: `Bearer ${token}`, id: idMentoria } }).then(
+        (res) => {
+          const helpObj = res.data;
+          helpObj.idMentoria = res.data.id;
+          setMentoria(helpObj);
+        },
+      ).catch(() => null);
+    }
+    fetchMentoria();
+  }, []);
+  console.log(mentoria);
+  if (!mentoria) return null;
+  return (redirectTo) ? (<Redirect to={redirectTo} />) : (
     <Container>
       <CaminhoAp>
         <CaminhoTitleDesabilitado onClick={() => setRedirectTo('/mentorado')}>Home</CaminhoTitleDesabilitado>
