@@ -97,6 +97,11 @@ function RedeHorarioCard({ mentoria }) {
           userImage={`${urlFiles}/${mentoriaSelect.mentorInfos.image}`}
           date={dateInfo}
           hour={timeInfo}
+          mentoringOption={
+              Array.isArray(mentoria.mentoringOption)
+                ? mentoria.mentoringOption
+                : mentoria.mentoringOption.split()
+          }
           onClose={() => setOpen(false)}
           onConfirm={(evt) => onConfirm(evt)}
         />
