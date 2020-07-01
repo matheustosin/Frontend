@@ -6,3 +6,4 @@ export const marcarMentoria = (headers, data) => Http.put(`/mentoria/choice/${da
 export const mentoriasByMentor = (headers) => Http.get('/mentoriaSession', headers);
 export const cadastrarMentoria = (headers, data) => Http.post('/cadastroMentoria', data, headers);
 export const mudarVisibilidade = (headers) => Http.put('/mentoria/changeVisibility/', null, headers);
+export const buscarMentoria = (headers) => Http.get(`/mentoria/${headers.headers.id}`, headers);
